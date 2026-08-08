@@ -1,0 +1,90 @@
+[
+  {
+    "sku": "VFJ-001",
+    "name": "Vestido Festa Junina",
+    "desc": "Viscose exclusiva com estampa de xilogravura nordestina",
+    "price": 299.00,
+    "category": "feminino",
+    "stock": 12,
+    "img": "assets/img/produtos/VFJ-001.jpg",
+    "alt": "Vestido Festa Junina - Arte Que Veste",
+    "weight_kg": 0.3
+  },
+  {
+    "sku": "CBM-001",
+    "name": "Camiseta Bumba Meu Boi",
+    "desc": "Algodão Premium com arte de xilogravura",
+    "price": 129.00,
+    "category": "masculino",
+    "stock": 30,
+    "img": "assets/img/produtos/CBM-001.jpg",
+    "alt": "Camiseta Bumba Meu Boi - Arte Que Veste",
+    "weight_kg": 0.25
+  },
+  {
+    "sku": "BTB-001",
+    "name": "Bolsa Tote Bag",
+    "desc": "Algodão cru com estampa folclórica",
+    "price": 89.00,
+    "category": "acessorios",
+    "stock": 25,
+    "img": "assets/img/produtos/BTB-001.jpg",
+    "alt": "Bolsa Tote Bag - Arte Que Veste",
+    "weight_kg": 0.2
+  },
+  {
+    "sku": "BXI-001",
+    "name": "Brincos Xilogravura",
+    "desc": "Madeira manual com arte nordestina",
+    "price": 45.00,
+    "category": "bijuteria",
+    "stock": 40,
+    "img": "assets/img/produtos/BXI-001.jpg",
+    "alt": "Brincos Xilogravura - Arte Que Veste",
+    "weight_kg": 0.05
+  },
+  {
+    "sku": "SAN-001",
+    "name": "Sandália Nordestina",
+    "desc": "Couro e madeira artesanal",
+    "price": 159.00,
+    "category": "calcados",
+    "stock": 18,
+    "img": "assets/img/produtos/SAN-001.jpg",
+    "alt": "Sandália Nordestina - Arte Que Veste",
+    "weight_kg": 0.5
+  },
+  {
+    "sku": "CAN-001",
+    "name": "Caneca Artesanal",
+    "desc": "Cerâmica pintada à mão",
+    "price": 49.00,
+    "category": "souvenirs",
+    "stock": 50,
+    "img": "assets/img/produtos/CAN-001.jpg",
+    "alt": "Caneca Artesanal - Arte Que Veste",
+    "weight_kg": 0.4
+  },
+  {
+    "sku": "CIB-001",
+    "name": "Camiseta Infantil Boi Bumbá",
+    "desc": "Algodão macio, do 2 ao 16",
+    "price": 79.00,
+    "category": "infantil",
+    "stock": 22,
+    "img": "assets/img/produtos/CIB-001.jpg",
+    "alt": "Camiseta Infantil Boi Bumbá - Arte Que Veste",
+    "weight_kg": 0.2
+  },
+  {
+    "sku": "VIF-001",
+    "name": "Vestido Infantil Florido",
+    "desc": "Algodão macio, do 2 ao 16",
+    "price": 89.00,
+    "category": "infantil",
+    "stock": 15,
+    "img": "assets/img/produtos/VIF-001.jpg",
+    "alt": "Vestido Infantil Florido - Arte Que Veste",
+    "weight_kg": 0.25
+  }
+]

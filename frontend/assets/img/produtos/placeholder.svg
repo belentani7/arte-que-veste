@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" role="img" aria-labelledby="t d">
+  <title id="t">Imagem de produto pendente</title>
+  <desc id="d">Marcador neutro para substituir pela fotografia real do produto.</desc>
+  <rect width="800" height="1000" fill="#ece7dc"/>
+  <path d="M110 740 300 420l100 170 90-140 200 290Z" fill="#20201f" opacity=".82"/>
+  <circle cx="560" cy="300" r="70" fill="#c45f3c"/>
+  <text x="400" y="875" text-anchor="middle" font-family="Georgia,serif" font-size="34" fill="#20201f">FOTO DO PRODUTO</text>
+</svg>

@@ -1,0 +1,8 @@
+{
+  "name": "arte-que-veste-demo",
+  "private": true,
+  "scripts": {
+    "start": "node server.js",
+    "check": "node --check server.js"
+  }
+}

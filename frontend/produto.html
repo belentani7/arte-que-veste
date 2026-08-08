@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Pedro Marcos Santos Belentani">
+    <title>Produto | Arte Que Veste - Moda Autoral Nordestina</title>
+    <meta name="description" content="Detalhes do produto Arte Que Veste - Moda autoral nordestina com xilogravura.">
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <meta name="theme-color" content="#40E0D0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/playfair-display@latest/latin-400-normal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/playfair-display@latest/latin-700-normal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/inter@latest/latin-400-normal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/inter@latest/latin-500-normal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/inter@latest/latin-600-normal.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root { --turquesa:#40E0D0; --rosa:#FF1493; --laranja:#FF6347; --preto:#1a1a1a; --off-white:#faf9f6; }
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Inter',sans-serif;background:var(--off-white);color:var(--preto);overflow-x:hidden}
+        .font-display{font-family:'Playfair Display',serif}
+        .btn-primary{background:var(--turquesa);color:var(--preto);padding:14px 32px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;transition:all .3s;border:2px solid var(--turquesa);cursor:pointer;font-size:13px;width:100%}
+        .btn-primary:hover{background:transparent;color:var(--turquesa)}
+        .btn-secondary{background:transparent;color:var(--preto);padding:14px 32px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;transition:all .3s;border:2px solid #ddd;cursor:pointer;font-size:13px;width:100%}
+        .btn-secondary:hover{border-color:var(--preto)}
+        .size-btn{padding:8px 16px;border:1.5px solid #ddd;background:transparent;cursor:pointer;transition:all .2s;font-weight:600;font-size:13px;text-align:center;min-width:48px}
+        .size-btn:hover,.size-btn.active{background:var(--turquesa);color:var(--preto);border-color:var(--turquesa)}
+        .size-btn.disabled{opacity:0.3;cursor:not-allowed;text-decoration:line-through}
+        .color-btn{width:32px;height:32px;border-radius:50%;border:2px solid #ddd;cursor:pointer;transition:all .2s;padding:0}
+        .color-btn:hover,.color-btn.active{border-color:var(--preto);box-shadow:0 0 0 2px var(--turquesa)}
+        .gallery-thumb{border:2px solid transparent;cursor:pointer;transition:all .2s;opacity:0.6}
+        .gallery-thumb:hover,.gallery-thumb.active{border-color:var(--turquesa);opacity:1}
+        .nav-link{position:relative;transition:color .3s;font-size:12px;text-transform:uppercase}
+        .nav-link::after{content:'';position:absolute;bottom:-5px;left:0;width:0;height:2px;background:var(--turquesa);transition:width .3s}
+        .nav-link:hover::after{width:100%}
+        .accordion-content{max-height:0;overflow:hidden;transition:max-height .4s ease}
+        .accordion-content.open{max-height:500px}
+        .tab-btn{padding:12px 24px;border:none;background:transparent;cursor:pointer;font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:0.05em;border-bottom:2px solid transparent;transition:all .3s}
+        .tab-btn.active{border-bottom-color:var(--turquesa);color:var(--turquesa)}
+        .zoom-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:9999;display:none;align-items:center;justify-content:center;cursor:zoom-out}
+        .zoom-overlay.active{display:flex}
+        .zoom-overlay img{max-width:90vw;max-height:90vh;object-fit:contain}
+        .trust-badge{display:flex;align-items:center;gap:8px;padding:12px 16px;background:white;border:1px solid #f0f0f0;font-size:13px}
+        @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}
+        .loading{animation:pulse 1.5s infinite}
+    </style>
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav class="fixed top-0 left-0 right-0 bg-white z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <a href="index.html" class="font-display text-xl md:text-2xl font-black">ARTE QUE VESTE</a>
+                <div class="hidden lg:flex space-x-6">
+                    <a href="index.html" class="nav-link">Início</a>
+                    <a href="index.html#historia" class="nav-link">História</a>
+                    <a href="index.html#xilogravura" class="nav-link">Xilogravura</a>
+                    <a href="loja.html" class="nav-link">Loja</a>
+                    <a href="index.html#artista" class="nav-link">Artista</a>
+                    <a href="contato.html" class="nav-link">Contato</a>
+                </div>
+                <div class="flex items-center gap-4">
+                    <a href="carrinho.html" class="relative p-2 hover:bg-gray-100 rounded-full transition-colors">
+                        <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+                        <span class="cart-badge absolute -top-1 -right-1 bg-[var(--turquesa)] text-[var(--preto)] text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center" style="display:none">0</span>
+                    </a>
+                    <a href="https://wa.me/5579999999999" target="_blank" class="hidden sm:flex items-center text-xs uppercase tracking-wider border border-[var(--preto)] px-4 py-2 hover:bg-[var(--preto)] hover:text-white transition-colors">
+                        <i data-lucide="message-circle" class="w-4 h-4 mr-2"></i> Fale Conosco
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- BREADCRUMB -->
+    <div class="pt-24 pb-4 bg-white border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <nav class="flex items-center gap-2 text-xs text-gray-500">
+                <a href="index.html" class="hover:text-[var(--turquesa)]">Início</a>
+                <span>/</span>
+                <a href="loja.html" class="hover:text-[var(--turquesa)]">Loja</a>
+                <span>/</span>
+                <span class="text-[var(--preto)]" id="breadcrumb-name">Carregando...</span>
+            </nav>
+        </div>
+    </div>
+
+    <!-- PRODUTO -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-16">
+        <div id="product-loading" class="text-center py-20">
+            <div class="loading inline-block w-8 h-8 border-2 border-[var(--turquesa)] border-t-transparent rounded-full"></div>
+            <p class="mt-4 text-gray-500 text-sm">Carregando produto...</p>
+        </div>
+
+        <div id="product-content" style="display:none">
+            <div class="flex flex-col lg:flex-row gap-12">
+                <!-- GALERIA -->
+                <div class="lg:w-1/2">
+                    <div class="relative overflow-hidden bg-gray-100 aspect-[3/4] mb-4 cursor-zoom-in" id="main-image-container">
+                        <img id="main-image" src="" alt="" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
+                        <div id="product-badge" class="absolute top-4 left-4 px-3 py-1 text-xs uppercase font-semibold"></div>
+                        <button onclick="openZoom()" class="absolute bottom-4 right-4 bg-white/90 backdrop-blur p-2 rounded-full shadow-lg hover:bg-white transition-colors">
+                            <i data-lucide="maximize-2" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+                    <div class="flex gap-2 overflow-x-auto pb-2" id="thumbnails"></div>
+                </div>
+
+                <!-- INFO -->
+                <div class="lg:w-1/2">
+                    <span id="product-category-badge" class="inline-block px-3 py-1 text-[10px] uppercase font-semibold tracking-wider mb-4"></span>
+                    <h1 id="product-name" class="font-display text-3xl lg:text-4xl font-black mb-3"></h1>
+                    <p id="product-desc-short" class="text-gray-500 text-sm mb-6"></p>
+
+                    <!-- PREÇO -->
+                    <div class="mb-6">
+                        <div id="price-container" class="flex items-baseline gap-3">
+                            <span id="product-price" class="text-3xl font-bold"></span>
+                            <span id="product-installment" class="text-sm text-gray-500"></span>
+                        </div>
+                        <p class="text-xs text-gray-400 mt-1">ou <span id="pix-price" class="text-[var(--turquesa)] font-semibold"></span> com Pix (5% OFF)</p>
+                    </div>
+
+                    <!-- SELETOR COR -->
+                    <div id="color-section" class="mb-6" style="display:none">
+                        <p class="text-xs uppercase font-semibold tracking-wider text-gray-500 mb-3">Cor: <span id="selected-color-name"></span></p>
+                        <div class="flex gap-2" id="color-options"></div>
+                    </div>
+
+                    <!-- SELETOR TAMANHO -->
+                    <div id="size-section" class="mb-6" style="display:none">
+                        <div class="flex items-center justify-between mb-3">
+                            <p class="text-xs uppercase font-semibold tracking-wider text-gray-500">Tamanho</p>
+                            <button onclick="openSizeGuide()" class="text-xs text-[var(--turquesa)] underline hover:no-underline">📏 Guia de Tamanhos</button>
+                        </div>
+                        <div class="flex flex-wrap gap-2" id="size-options"></div>
+                    </div>
+
+                    <!-- QUANTIDADE + COMPRAR -->
+                    <div class="flex gap-3 mb-6">
+                        <div class="flex items-center border">
+                            <button onclick="changeQty(-1)" class="px-4 py-3 hover:bg-gray-100 transition-colors text-lg font-semibold">−</button>
+                            <span id="qty-display" class="px-4 py-3 font-semibold min-w-[48px] text-center">1</span>
+                            <button onclick="changeQty(1)" class="px-4 py-3 hover:bg-gray-100 transition-colors text-lg font-semibold">+</button>
+                        </div>
+                        <button id="btn-add-cart" onclick="addToCart()" class="btn-primary flex-1">
+                            <span class="flex items-center justify-center gap-2">
+                                <i data-lucide="shopping-bag" class="w-4 h-4"></i> ADICIONAR AO CARRINHO
+                            </span>
+                        </button>
+                    </div>
+
+                    <!-- COMPRA RÁPIDA PIX -->
+                    <button onclick="buyWithPix()" class="btn-secondary mb-6">
+                        <span class="flex items-center justify-center gap-2">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 15l3-3 3 3"/></svg>
+                            COMPRAR COM PIX (5% OFF)
+                        </span>
+                    </button>
+
+                    <!-- TRUST BADGES -->
+                    <div class="grid grid-cols-2 gap-2 mb-8">
+                        <div class="trust-badge"><i data-lucide="truck" class="w-4 h-4 text-[var(--turquesa)]"></i><span>Frete grátis acima de R$ 199</span></div>
+                        <div class="trust-badge"><i data-lucide="refresh-cw" class="w-4 h-4 text-[var(--turquesa)]"></i><span>Troca grátis em 30 dias</span></div>
+                        <div class="trust-badge"><i data-lucide="shield" class="w-4 h-4 text-[var(--turquesa)]"></i><span>Compra 100% segura</span></div>
+                        <div class="trust-badge"><i data-lucide="clock" class="w-4 h-4 text-[var(--turquesa)]"></i><span>7 dias de arrependimento</span></div>
+                    </div>
+
+                    <!-- ACCORDIONS -->
+                    <div class="border-t">
+                        <div class="border-b">
+                            <button onclick="toggleAccordion('desc')" class="w-full flex justify-between items-center py-4 text-sm font-semibold">
+                                <span>Descrição</span>
+                                <i data-lucide="chevron-down" class="w-4 h-4 transition-transform" id="icon-desc"></i>
+                            </button>
+                            <div class="accordion-content" id="acc-desc">
+                                <p id="product-description" class="text-sm text-gray-600 pb-4 leading-relaxed"></p>
+                            </div>
+                        </div>
+                        <div class="border-b">
+                            <button onclick="toggleAccordion('details')" class="w-full flex justify-between items-center py-4 text-sm font-semibold">
+                                <span>Detalhes & Composição</span>
+                                <i data-lucide="chevron-down" class="w-4 h-4 transition-transform" id="icon-details"></i>
+                            </button>
+                            <div class="accordion-content" id="acc-details">
+                                <div id="product-details" class="text-sm text-gray-600 pb-4"></div>
+                            </div>
+                        </div>
+                        <div class="border-b">
+                            <button onclick="toggleAccordion('shipping')" class="w-full flex justify-between items-center py-4 text-sm font-semibold">
+                                <span>Envio & Entrega</span>
+                                <i data-lucide="chevron-down" class="w-4 h-4 transition-transform" id="icon-shipping"></i>
+                            </button>
+                            <div class="accordion-content" id="acc-shipping">
+                                <div class="text-sm text-gray-600 pb-4 space-y-2">
+                                    <p>📦 PAC: 5-8 dias úteis — estimativa R$ 15-25</p>
+                                    <p>🚀 SEDEX: 2-3 dias úteis — estimativa R$ 25-40</p>
+                                    <p>🏪 Retirada em Aracaju/SE: grátis</p>
+                                    <p class="text-xs text-gray-400 mt-2">* Frete calculado automaticamente no checkout pelo CEP.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="border-b">
+                            <button onclick="toggleAccordion('exchange')" class="w-full flex justify-between items-center py-4 text-sm font-semibold">
+                                <span>Trocas & Devoluções</span>
+                                <i data-lucide="chevron-down" class="w-4 h-4 transition-transform" id="icon-exchange"></i>
+                            </button>
+                            <div class="accordion-content" id="acc-exchange">
+                                <div class="text-sm text-gray-600 pb-4 space-y-2">
+                                    <p>✅ Troca grátis em até 30 dias</p>
+                                    <p>✅ Direito de arrependimento em 7 dias (por lei)</p>
+                                    <p>✅ Defeito de fabricação: troca ou reembolso</p>
+                                    <p>❌ Peça usada, lavada ou sem etiquetas</p>
+                                    <p class="text-xs text-gray-400 mt-2">Veja nossa <a href="politica-trocas.html" class="underline">política completa</a>.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PRODUTOS RELACIONADOS -->
+            <section class="mt-16">
+                <h2 class="font-display text-2xl font-black mb-8">Complete o Look</h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4" id="related-products"></div>
+            </section>
+        </div>
+    </main>
+
+    <!-- GUÍA DE TAMANHOS MODAL -->
+    <div id="size-guide-modal" class="fixed inset-0 bg-black/50 z-50 hidden items-center justify-center p-4" onclick="closeSizeGuide(event)">
+        <div class="bg-white max-w-lg w-full max-h-[80vh] overflow-y-auto p-6 relative" onclick="event.stopPropagation()">
+            <button onclick="closeSizeGuide()" class="absolute top-4 right-4"><i data-lucide="x" class="w-5 h-5"></i></button>
+            <h3 class="font-display text-xl font-bold mb-4">📏 Guia de Tamanhos</h3>
+            <p class="text-sm text-gray-500 mb-4">Medidas em centímetros. Para dúvida entre 2 tamanhos, escolha o MAIOR.</p>
+            <div class="overflow-x-auto">
+                <table class="w-full text-xs border-collapse">
+                    <thead><tr class="bg-gray-100">
+                        <th class="p-2 text-left">Tamanho</th><th class="p-2">Busto</th><th class="p-2">Cintura</th><th class="p-2">Quadril</th><th class="p-2">Comprimento</th>
+                    </tr></thead>
+                    <tbody>
+                        <tr class="border-b"><td class="p-2 font-semibold">PP</td><td class="p-2 text-center">82</td><td class="p-2 text-center">64</td><td class="p-2 text-center">90</td><td class="p-2 text-center">85</td></tr>
+                        <tr class="border-b"><td class="p-2 font-semibold">P</td><td class="p-2 text-center">86</td><td class="p-2 text-center">68</td><td class="p-2 text-center">94</td><td class="p-2 text-center">87</td></tr>
+                        <tr class="border-b"><td class="p-2 font-semibold">M</td><td class="p-2 text-center">90</td><td class="p-2 text-center">72</td><td class="p-2 text-center">98</td><td class="p-2 text-center">89</td></tr>
+                        <tr class="border-b"><td class="p-2 font-semibold">G</td><td class="p-2 text-center">96</td><td class="p-2 text-center">78</td><td class="p-2 text-center">104</td><td class="p-2 text-center">91</td></tr>
+                        <tr class="border-b"><td class="p-2 font-semibold">GG</td><td class="p-2 text-center">102</td><td class="p-2 text-center">84</td><td class="p-2 text-center">110</td><td class="p-2 text-center">93</td></tr>
+                        <tr><td class="p-2 font-semibold">XG</td><td class="p-2 text-center">108</td><td class="p-2 text-center">90</td><td class="p-2 text-center">116</td><td class="p-2 text-center">95</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="text-xs text-gray-400 mt-4">📸 Modelo na foto veste tamanho M: Busto 88cm | Cintura 70cm | Quadril 96cm | Altura 1,72m</p>
+            <p class="text-xs text-gray-400 mt-2">💡 Em dúvida? Fale conosco no <a href="https://wa.me/5579999999999" class="text-[var(--turquesa)] underline">WhatsApp</a></p>
+        </div>
+    </div>
+
+    <!-- ZOOM MODAL -->
+    <div id="zoom-modal" class="zoom-overlay" onclick="closeZoom()">
+        <img id="zoom-image" src="" alt="">
+        <button class="absolute top-6 right-6 text-white"><i data-lucide="x" class="w-8 h-8"></i></button>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-[var(--preto)] text-white py-12 mt-16">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <h4 class="font-display text-lg font-bold mb-4">Arte Que Veste</h4>
+                    <p class="text-gray-400 text-sm leading-relaxed">Moda autoral nordestina com xilogravura de Mestre Nivaldo Oliveira. De São Cristóvão, Sergipe para o mundo.</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-sm uppercase tracking-wider mb-4">Navegação</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="loja.html" class="hover:text-[var(--turquesa)] transition-colors">Loja</a></li>
+                        <li><a href="sobre.html" class="hover:text-[var(--turquesa)] transition-colors">Sobre Nós</a></li>
+                        <li><a href="contato.html" class="hover:text-[var(--turquesa)] transition-colors">Contato</a></li>
+                        <li><a href="faq.html" class="hover:text-[var(--turquesa)] transition-colors">FAQ</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-sm uppercase tracking-wider mb-4">Políticas</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="politica-privacidade.html" class="hover:text-[var(--turquesa)] transition-colors">Privacidade (LGPD)</a></li>
+                        <li><a href="politica-trocas.html" class="hover:text-[var(--turquesa)] transition-colors">Trocas & Devoluções</a></li>
+                        <li><a href="politica-envio.html" class="hover:text-[var(--turquesa)] transition-colors">Envio</a></li>
+                        <li><a href="termos-de-uso.html" class="hover:text-[var(--turquesa)] transition-colors">Termos de Uso</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-sm uppercase tracking-wider mb-4">Contato</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li class="flex items-center gap-2"><i data-lucide="message-circle" class="w-4 h-4 text-[var(--turquesa)]"></i> WhatsApp</li>
+                        <li class="flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4 text-[var(--turquesa)]"></i> contato@artequeveste.com.br</li>
+                        <li class="flex items-center gap-2"><i data-lucide="map-pin" class="w-4 h-4 text-[var(--turquesa)]"></i> Aracaju/SE</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-6 text-center">
+                <p class="text-gray-500 text-sm">© 2026 Arte Que Veste. Todos os direitos reservados.</p>
+                <p class="text-gray-700 text-xs italic mt-2">"Xilogravura no tecido, cordel no corpo."</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/cart.js"></script>
+    <script>
+    const API_BASE = (location.hostname === 'localhost' || location.hostname === '127.0.0.1')
+        ? 'http://localhost:8000' : 'https://SEU-APP.railway.app';
+
+    const CATEGORIAS = {
+        masculino:{label:'Masculino',bg:'var(--turquesa)',text:'#1a1a1a'},
+        feminino:{label:'Feminino',bg:'var(--rosa)',text:'#fff'},
+        infantil:{label:'Infantil',bg:'var(--laranja)',text:'#fff'},
+        unissex:{label:'Unissex',bg:'var(--preto)',text:'#fff'},
+        acessorios:{label:'Acessório',bg:'var(--laranja)',text:'#fff'},
+        bijuteria:{label:'Bijuteria',bg:'var(--preto)',text:'#fff'},
+        calcados:{label:'Calçado',bg:'var(--rosa)',text:'#fff'},
+        souvenirs:{label:'Souvenir',bg:'var(--turquesa)',text:'#1a1a1a'}
+    };
+
+    let currentProduct = null;
+    let selectedSize = null;
+    let selectedColor = null;
+    let quantity = 1;
+
+    // Parse SKU from URL
+    const params = new URLSearchParams(location.search);
+    const skuParam = params.get('sku');
+
+    async function loadProduct() {
+        if (!skuParam) { window.location.href = 'loja.html'; return; }
+        try {
+            const r = await fetch(`${API_BASE}/api/produtos/${skuParam}`);
+            if (!r.ok) throw new Error('Produto não encontrado');
+            currentProduct = await r.json();
+        } catch {
+            try {
+                const r2 = await fetch('./products.json');
+                const all = await r2.json();
+                currentProduct = all.find(p => p.sku === skuParam);
+                if (!currentProduct) { window.location.href = 'loja.html'; return; }
+            } catch { window.location.href = 'loja.html'; return; }
+        }
+        renderProduct();
+        loadRelated();
+    }
+
+    function renderProduct() {
+        const p = currentProduct;
+        document.title = `${p.name} | Arte Que Veste`;
+        document.getElementById('breadcrumb-name').textContent = p.name;
+        document.getElementById('main-image').src = p.img;
+        document.getElementById('main-image').alt = p.alt || p.name;
+        document.getElementById('product-name').textContent = p.name;
+        document.getElementById('product-desc-short').textContent = p.desc;
+        document.getElementById('product-description').textContent = `Descubra o ${p.name} da Arte Que Veste — peça autoral nordestina com identidade visual única, produzida com materiais de qualidade em Aracaju/SE. Cada peça carrega a essência da xilogravura nordestina em tecido, conectando tradição e moda contemporânea.`;
+
+        const priceFmt = p.price.toFixed(2).replace('.', ',');
+        document.getElementById('product-price').textContent = `R$ ${priceFmt}`;
+        const installments = Math.min(Math.ceil(p.price / 30), 6);
+        const installmentVal = (p.price / installments).toFixed(2).replace('.', ',');
+        document.getElementById('product-installment').textContent = `até ${installments}x de R$ ${installmentVal} sem juros`;
+        const pixVal = (p.price * 0.95).toFixed(2).replace('.', ',');
+        document.getElementById('pix-price').textContent = `R$ ${pixVal}`;
+
+        const cat = CATEGORIAS[p.category] || {label:'',bg:'var(--preto)',text:'#fff'};
+        const badge = document.getElementById('product-badge');
+        badge.textContent = cat.label;
+        badge.style.background = cat.bg;
+        badge.style.color = cat.text;
+        const catBadge = document.getElementById('product-category-badge');
+        catBadge.textContent = cat.label;
+        catBadge.style.background = cat.bg;
+        catBadge.style.color = cat.text;
+
+        // Thumbnails
+        const thumbs = document.getElementById('thumbnails');
+        thumbs.innerHTML = `<img src="${p.img}" class="gallery-thumb active w-16 h-20 object-cover" onclick="changeImage(this.src, this)">`;
+
+        // Size options for clothing
+        const clothingCategories = ['masculino','feminino','infantil','unissex'];
+        if (clothingCategories.includes(p.category)) {
+            document.getElementById('size-section').style.display = 'block';
+            const sizes = p.category === 'infantil' ? ['2','4','6','8','10','12','14','16'] : ['PP','P','M','G','GG','XG'];
+            document.getElementById('size-options').innerHTML = sizes.map(s =>
+                `<button class="size-btn" onclick="selectSize('${s}', this)">${s}</button>`
+            ).join('');
+        }
+
+        // Product details
+        document.getElementById('product-details').innerHTML = `
+            <p><strong>SKU:</strong> ${p.sku}</p>
+            <p><strong>Categoria:</strong> ${cat.label}</p>
+            <p><strong>Origem:</strong> Aracaju/SE, Brasil</p>
+            <p><strong>Arte:</strong> Xilogravura nordestina</p>
+            <p class="mt-2 text-xs text-gray-400">* Imagens meramente ilustrativas. A peça real pode ter variações naturais de cor e textura.</p>`;
+
+        document.getElementById('product-content').style.display = 'block';
+        document.getElementById('product-loading').style.display = 'none';
+        lucide.createIcons();
+
+        gsap.from('#product-content', { opacity: 0, y: 30, duration: 0.8, ease: 'power3.out' });
+    }
+
+    async function loadRelated() {
+        try {
+            let allProducts = [];
+            try {
+                const r = await fetch(`${API_BASE}/api/produtos`);
+                if (r.ok) allProducts = await r.json();
+            } catch {
+                const r2 = await fetch('./products.json');
+                if (r2.ok) allProducts = await r2.json();
+            }
+            const related = allProducts.filter(p => p.sku !== currentProduct.sku).slice(0, 4);
+            const grid = document.getElementById('related-products');
+            grid.innerHTML = related.map(p => {
+                const c = CATEGORIAS[p.category] || {label:'',bg:'var(--preto)',text:'#fff'};
+                return `<a href="produto.html?sku=${p.sku}" class="product-card block">
+                    <div class="relative overflow-hidden bg-gray-100 aspect-[3/4]">
+                        <img src="${p.img}" class="w-full h-full object-cover" alt="${p.alt}" loading="lazy">
+                        <div class="absolute top-2 left-2 px-2 py-1 text-[10px] uppercase" style="background:${c.bg};color:${c.text}">${c.label}</div>
+                    </div>
+                    <div class="p-2">
+                        <h3 class="font-display text-sm font-bold truncate">${p.name}</h3>
+                        <span class="text-sm font-bold">R$ ${p.price.toFixed(2).replace('.',',')}</span>
+                    </div>
+                </a>`;
+            }).join('');
+        } catch(e) { console.warn('Related products error:', e); }
+    }
+
+    function selectSize(size, btn) {
+        selectedSize = size;
+        document.querySelectorAll('#size-options .size-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+    }
+
+    function changeQty(delta) {
+        quantity = Math.max(1, Math.min(100, quantity + delta));
+        document.getElementById('qty-display').textContent = quantity;
+    }
+
+    function addToCart() {
+        if (!currentProduct) return;
+        const clothingCategories = ['masculino','feminino','infantil','unissex'];
+        if (clothingCategories.includes(currentProduct.category) && !selectedSize) {
+            alert('Por favor, selecione um tamanho.');
+            return;
+        }
+        Cart.add(currentProduct, quantity, selectedSize, selectedColor);
+    }
+
+    function buyWithPix() {
+        addToCart();
+        window.location.href = 'carrinho.html?pix=1';
+    }
+
+    function changeImage(src, thumb) {
+        document.getElementById('main-image').src = src;
+        document.querySelectorAll('.gallery-thumb').forEach(t => t.classList.remove('active'));
+        thumb.classList.add('active');
+    }
+
+    function openZoom() {
+        document.getElementById('zoom-image').src = document.getElementById('main-image').src;
+        document.getElementById('zoom-modal').classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeZoom() {
+        document.getElementById('zoom-modal').classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    function openSizeGuide() {
+        const modal = document.getElementById('size-guide-modal');
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeSizeGuide(e) {
+        if (e && e.target !== e.currentTarget) return;
+        const modal = document.getElementById('size-guide-modal');
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        document.body.style.overflow = '';
+    }
+
+    function toggleAccordion(id) {
+        const content = document.getElementById('acc-' + id);
+        const icon = document.getElementById('icon-' + id);
+        content.classList.toggle('open');
+        if (icon) icon.style.transform = content.classList.contains('open') ? 'rotate(180deg)' : '';
+    }
+
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') { closeZoom(); closeSizeGuide(); }
+    });
+
+    loadProduct();
+    </script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre Nós | Arte Que Veste</title>
+    <meta name="description" content="Conheça a história da Arte Que Veste — moda autoral nordestina com xilogravura.">
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/playfair-display@latest/latin-400-normal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/playfair-display@latest/latin-700-normal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/playfair-display@latest/latin-900-normal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/inter@latest/latin-400-normal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/inter@latest/latin-500-normal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/inter@latest/latin-600-normal.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body{font-family:'Inter',sans-serif;background:#faf9f6;color:#1a1a1a;overflow-x:hidden}.font-display{font-family:'Playfair Display',serif}
+        .nav-link{position:relative;transition:color .3s;font-size:12px;text-transform:uppercase}
+        .nav-link::after{content:'';position:absolute;bottom:-5px;left:0;width:0;height:2px;background:#40E0D0;transition:width .3s}
+        .nav-link:hover::after{width:100%}
+        .fade-in{opacity:0;transform:translateY(30px)}
+    </style>
+</head>
+<body>
+    <nav class="fixed top-0 left-0 right-0 bg-white z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <a href="index.html" class="font-display text-xl md:text-2xl font-black">ARTE QUE VESTE</a>
+                <div class="hidden lg:flex space-x-6">
+                    <a href="index.html" class="nav-link">Início</a>
+                    <a href="loja.html" class="nav-link">Loja</a>
+                    <a href="sobre.html" class="nav-link border-b-2 border-[#40E0D0] pb-1">Sobre</a>
+                    <a href="faq.html" class="nav-link">FAQ</a>
+                    <a href="contato.html" class="nav-link">Contato</a>
+                </div>
+                <a href="https://wa.me/5579999999999" target="_blank" class="hidden sm:flex items-center text-xs uppercase tracking-wider border border-[#1a1a1a] px-4 py-2 hover:bg-[#1a1a1a] hover:text-white transition-colors">
+                    <i data-lucide="message-circle" class="w-4 h-4 mr-2"></i> Fale Conosco
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <header class="pt-40 pb-20 bg-[#1a1a1a] text-white text-center">
+        <div class="max-w-4xl mx-auto px-4">
+            <span class="text-[#40E0D0] uppercase tracking-widest text-xs font-semibold mb-4 block">Nossa História</span>
+            <h1 class="font-display text-5xl md:text-7xl font-black mb-6">Sobre a Arte Que Veste</h1>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-4 py-16">
+        <!-- HISTÓRIA -->
+        <section class="mb-16 fade-in">
+            <h2 class="font-display text-3xl font-black mb-6">De São Cristóvão Para o Mundo</h2>
+            <div class="text-gray-600 text-base leading-relaxed space-y-4">
+                <p>A <strong>Arte Que Veste</strong> nasce da convergência entre a xilogravura nordestina — arte secular do cordel e das festas juninas — e a moda contemporânea. Nosso propósito é vestir o Brasil com a identidade visual do nosso povo.</p>
+                <p>Toda peça carrega em si a essência do <strong>Mestre Nivaldo Oliveira</strong>, xilogravador de São Cristóvão/SE, cujas figuras ganham vida em tecidos, acessórios e artefatos que conectam tradição e modernidade.</p>
+                <p>De <strong>Aracaju/SE</strong>, produzimos com mão de obra local, materiais de qualidade e o cuidado que só o artesanato nordestino oferece. Cada estampa conta uma história. Cada peça é única.</p>
+            </div>
+        </section>
+
+        <!-- VALORES -->
+        <section class="mb-16 fade-in">
+            <h2 class="font-display text-3xl font-black mb-8">Nossos Valores</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white p-6 shadow-sm text-center">
+                    <div class="w-12 h-12 bg-[#40E0D0]/10 rounded-full flex items-center justify-center mx-auto mb-4"><i data-lucide="palette" class="w-6 h-6 text-[#40E0D0]"></i></div>
+                    <h3 class="font-display text-lg font-bold mb-2">Arte Autoral</h3>
+                    <p class="text-sm text-gray-500">Cada peça é uma obra de arte, com estampas exclusivas baseadas em xilogravura nordestina.</p>
+                </div>
+                <div class="bg-white p-6 shadow-sm text-center">
+                    <div class="w-12 h-12 bg-[#FF1493]/10 rounded-full flex items-center justify-center mx-auto mb-4"><i data-lucide="heart" class="w-6 h-6 text-[#FF1493]"></i></div>
+                    <h3 class="font-display text-lg font-bold mb-2">Feito com Amor</h3>
+                    <p class="text-sm text-gray-500">Produção artesanal em Sergipe, valorizando o trabalho manual e os artistas locais.</p>
+                </div>
+                <div class="bg-white p-6 shadow-sm text-center">
+                    <div class="w-12 h-12 bg-[#FF6347]/10 rounded-full flex items-center justify-center mx-auto mb-4"><i data-lucide="leaf" class="w-6 h-6 text-[#FF6347]"></i></div>
+                    <h3 class="font-display text-lg font-bold mb-2">Sustentabilidade</h3>
+                    <p class="text-sm text-gray-500">Materiais responsáveis, embalagens recicláveis e produção que respeita o meio ambiente.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ARTISTA -->
+        <section class="mb-16 fade-in">
+            <h2 class="font-display text-3xl font-black mb-6">O Artista</h2>
+            <div class="bg-white p-8 shadow-sm">
+                <p class="text-gray-600 leading-relaxed mb-4"><strong>Mestre Nivaldo Oliveira</strong> é xilogravador de São Cristóvão/SE. Suas gravuras retratam a cultura nordestina: bumba-meu-boi, festas juninas, vaqueiros,forró e a vida do sertão. Cada traço é feito à mão em madeira, depois transferido para o tecido com a fidelidade que só a arte manual permite.</p>
+                <p class="text-gray-500 text-sm">"A xilogravura é a alma do povo nordestino impressa em papel. Agora, ela veste o Brasil inteiro."</p>
+            </div>
+        </section>
+
+        <!-- MARCA -->
+        <section class="mb-16 fade-in">
+            <h2 class="font-display text-3xl font-black mb-6">A Marca</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                <div class="bg-white p-4 shadow-sm"><p class="font-display text-3xl font-black text-[#40E0D0]">2026</p><p class="text-xs text-gray-500 mt-1">Fundação</p></div>
+                <div class="bg-white p-4 shadow-sm"><p class="font-display text-3xl font-black text-[#FF1493]">100%</p><p class="text-xs text-gray-500 mt-1">Autoral</p></div>
+                <div class="bg-white p-4 shadow-sm"><p class="font-display text-3xl font-black text-[#FF6347]">SE</p><p class="text-xs text-gray-500 mt-1">Sergipe, Brasil</p></div>
+                <div class="bg-white p-4 shadow-sm"><p class="font-display text-3xl font-black text-[#1a1a1a]">1</p><p class="text-xs text-gray-500 mt-1">Missão</p></div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-[#1a1a1a] text-white py-12 mt-16">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-gray-400 text-sm">© 2026 Arte Que Veste. Todos os direitos reservados.</p>
+            <p class="text-gray-700 text-xs italic mt-2">"Xilogravura no tecido, cordel no corpo."</p>
+        </div>
+    </footer>
+
+    <script>
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.utils.toArray('.fade-in').forEach(el => {
+        gsap.to(el, { opacity:1, y:0, duration:0.8, ease:'power3.out',
+            scrollTrigger: { trigger:el, start:'top 85%', toggleActions:'play none none none' }});
+    });
+    lucide.createIcons();
+    </script>
+</body>
+</html>

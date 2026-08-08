@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedido Confirmado! | Arte Que Veste</title>
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/playfair-display@latest/latin-400-normal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/inter@latest/latin-400-normal.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root{--turquesa:#40E0D0;--preto:#1a1a1a;--off-white:#faf9f6}
+        body{font-family:'Inter',sans-serif;background:var(--off-white);color:var(--preto)}
+        .font-display{font-family:'Playfair Display',serif}
+        .btn-primary{background:var(--turquesa);color:var(--preto);padding:14px 32px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;transition:all .3s;border:2px solid var(--turquesa);cursor:pointer;font-size:13px}
+        .btn-primary:hover{background:transparent;color:var(--turquesa)}
+        @keyframes checkmark{0%{transform:scale(0)}50%{transform:scale(1.2)}100%{transform:scale(1)}}
+        .check-anim{animation:checkmark .6s cubic-bezier(0.16,1,0.3,1)}
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center px-4">
+    <div class="max-w-md w-full text-center">
+        <div class="bg-white p-8 shadow-sm">
+            <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6 check-anim">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <h1 class="font-display text-3xl font-black mb-3">Pedido Confirmado!</h1>
+            <p class="text-gray-500 mb-2">Obrigado por escolher a Arte Que Veste.</p>
+            <p class="text-sm text-gray-400 mb-6" id="order-info"></p>
+
+            <div class="bg-gray-50 p-4 rounded mb-6 text-left">
+                <h3 class="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-3">Próximos passos</h3>
+                <div class="space-y-3 text-sm">
+                    <div class="flex items-start gap-3">
+                        <div class="w-6 h-6 bg-[var(--turquesa)] rounded-full flex items-center justify-center flex-shrink-0 text-xs font-bold text-[var(--preto)]">1</div>
+                        <p>Verifique seu <strong>e-mail</strong> e <strong>WhatsApp</strong> para confirmação.</p>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <div class="w-6 h-6 bg-[var(--turquesa)] rounded-full flex items-center justify-center flex-shrink-0 text-xs font-bold text-[var(--preto)]">2</div>
+                        <p>Se pagou com Pix, o pedido já está sendo processado.</p>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <div class="w-6 h-6 bg-[var(--turquesa)] rounded-full flex items-center justify-center flex-shrink-0 text-xs font-bold text-[var(--preto)]">3</div>
+                        <p>Você receberá o código de rastreamento quando o pedido for enviado.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-3 justify-center">
+                <a href="loja.html" class="btn-primary">CONTINUAR COMPRANDO</a>
+                <a href="https://wa.me/5579999999999?text=Olá! Tenho uma dúvida sobre meu pedido" target="_blank" class="btn-primary" style="background:transparent;color:var(--preto);border-color:#ddd">WHATSAPP</a>
+            </div>
+        </div>
+        <p class="text-xs text-gray-400 mt-6">© 2026 Arte Que Veste — "Xilogravura no tecido, cordel no corpo."</p>
+    </div>
+
+    <script>
+    const params = new URLSearchParams(location.search);
+    const orderId = params.get('id');
+    const total = params.get('total');
+    if (orderId) {
+        document.getElementById('order-info').textContent = `Pedido #${orderId}${total ? ` — R$ ${parseFloat(total).toFixed(2).replace('.',',')}` : ''}`;
+    }
+    lucide.createIcons();
+    </script>
+</body>
+</html>

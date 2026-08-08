@@ -1,0 +1,82 @@
+[
+  {
+    "sku": "VFJ-001",
+    "name": "Vestido Festa Junina",
+    "desc": "Viscose exclusiva com estampa de xilogravura nordestina",
+    "price": 299.0,
+    "category": "feminino",
+    "stock": 12,
+    "img": "assets/img/produtos/placeholder.svg",
+    "alt": "Vestido Festa Junina - Arte Que Veste"
+  },
+  {
+    "sku": "CBM-001",
+    "name": "Camiseta Bumba Meu Boi",
+    "desc": "Algodão Premium com arte de xilogravura",
+    "price": 129.0,
+    "category": "masculino",
+    "stock": 30,
+    "img": "assets/img/produtos/placeholder.svg",
+    "alt": "Camiseta Bumba Meu Boi - Arte Que Veste"
+  },
+  {
+    "sku": "BTB-001",
+    "name": "Bolsa Tote Bag",
+    "desc": "Algodão cru com estampa folclórica",
+    "price": 89.0,
+    "category": "acessorios",
+    "stock": 25,
+    "img": "assets/img/produtos/placeholder.svg",
+    "alt": "Bolsa Tote Bag - Arte Que Veste"
+  },
+  {
+    "sku": "BXI-001",
+    "name": "Brincos Xilogravura",
+    "desc": "Madeira manual com arte nordestina",
+    "price": 45.0,
+    "category": "bijuteria",
+    "stock": 40,
+    "img": "assets/img/produtos/placeholder.svg",
+    "alt": "Brincos Xilogravura - Arte Que Veste"
+  },
+  {
+    "sku": "SAN-001",
+    "name": "Sandália Nordestina",
+    "desc": "Couro e madeira artesanal",
+    "price": 159.0,
+    "category": "calcados",
+    "stock": 18,
+    "img": "assets/img/produtos/placeholder.svg",
+    "alt": "Sandália Nordestina - Arte Que Veste"
+  },
+  {
+    "sku": "CAN-001",
+    "name": "Caneca Artesanal",
+    "desc": "Cerâmica pintada à mão",
+    "price": 49.0,
+    "category": "souvenirs",
+    "stock": 50,
+    "img": "assets/img/produtos/placeholder.svg",
+    "alt": "Caneca Artesanal - Arte Que Veste"
+  },
+  {
+    "sku": "CIB-001",
+    "name": "Camiseta Infantil Boi Bumbá",
+    "desc": "Algodão macio, do 2 ao 16",
+    "price": 79.0,
+    "category": "infantil",
+    "stock": 22,
+    "img": "assets/img/produtos/placeholder.svg",
+    "alt": "Camiseta Infantil Boi Bumbá - Arte Que Veste"
+  },
+  {
+    "sku": "VIF-001",
+    "name": "Vestido Infantil Florido",
+    "desc": "Algodão macio, do 2 ao 16",
+    "price": 89.0,
+    "category": "infantil",
+    "stock": 15,
+    "img": "assets/img/produtos/placeholder.svg",
+    "alt": "Vestido Infantil Florido - Arte Que Veste"
+  }
+]

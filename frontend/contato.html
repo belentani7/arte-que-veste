@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contato | Arte Que Veste</title>
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/playfair-display@latest/latin-400-normal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/inter@latest/latin-400-normal.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body{font-family:'Inter',sans-serif;background:#faf9f6;color:#1a1a1a}.font-display{font-family:'Playfair Display',serif}
+        .nav-link{position:relative;transition:color .3s;font-size:12px;text-transform:uppercase}
+        .nav-link::after{content:'';position:absolute;bottom:-5px;left:0;width:0;height:2px;background:#40E0D0;transition:width .3s}
+        .nav-link:hover::after{width:100%}
+        .contact-card{transition:all .3s;border:2px solid transparent}
+        .contact-card:hover{border-color:#40E0D0;transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,0.08)}
+        .form-input{width:100%;border:1.5px solid #ddd;padding:12px 16px;font-size:14px;transition:border-color .2s;background:white;font-family:'Inter',sans-serif}
+        .form-input:focus{outline:none;border-color:#40E0D0}
+        .btn-primary{background:#40E0D0;color:#1a1a1a;padding:14px 32px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;transition:all .3s;border:2px solid #40E0D0;cursor:pointer;font-size:13px;width:100%}
+        .btn-primary:hover{background:transparent;color:#40E0D0}
+    </style>
+</head>
+<body>
+    <nav class="fixed top-0 left-0 right-0 bg-white z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <a href="index.html" class="font-display text-xl md:text-2xl font-black">ARTE QUE VESTE</a>
+                <div class="hidden lg:flex space-x-6">
+                    <a href="index.html" class="nav-link">Início</a>
+                    <a href="loja.html" class="nav-link">Loja</a>
+                    <a href="sobre.html" class="nav-link">Sobre</a>
+                    <a href="contato.html" class="nav-link border-b-2 border-[#40E0D0] pb-1">Contato</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <header class="pt-40 pb-16 bg-[#1a1a1a] text-white text-center">
+        <div class="max-w-4xl mx-auto px-4">
+            <span class="text-[#40E0D0] uppercase tracking-widest text-xs font-semibold mb-4 block">Fale Conosco</span>
+            <h1 class="font-display text-5xl md:text-7xl font-black mb-6">Contato</h1>
+            <p class="text-gray-300 max-w-2xl mx-auto">Estamos prontos para ajudar. Dúvidas, encomendas, parcerias — entre em contato!</p>
+        </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-4 py-16">
+        <!-- CANAIS -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+            <a href="https://wa.me/5579999999999" target="_blank" class="contact-card bg-white p-6 shadow-sm text-center">
+                <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4"><i data-lucide="message-circle" class="w-6 h-6 text-green-600"></i></div>
+                <h3 class="font-display text-lg font-bold mb-1">WhatsApp</h3>
+                <p class="text-sm text-gray-500">(79) 99999-9999</p>
+                <p class="text-xs text-gray-400 mt-2">Resposta em até 2h</p>
+            </a>
+            <a href="mailto:contato@artequeveste.com.br" class="contact-card bg-white p-6 shadow-sm text-center">
+                <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4"><i data-lucide="mail" class="w-6 h-6 text-blue-600"></i></div>
+                <h3 class="font-display text-lg font-bold mb-1">E-mail</h3>
+                <p class="text-sm text-gray-500">contato@artequeveste.com.br</p>
+                <p class="text-xs text-gray-400 mt-2">Resposta em até 24h</p>
+            </a>
+            <a href="https://instagram.com/artequeveste" target="_blank" class="contact-card bg-white p-6 shadow-sm text-center">
+                <div class="w-12 h-12 bg-pink-100 rounded-full flex items-center justify-center mx-auto mb-4"><i data-lucide="instagram" class="w-6 h-6 text-pink-600"></i></div>
+                <h3 class="font-display text-lg font-bold mb-1">Instagram</h3>
+                <p class="text-sm text-gray-500">@artequeveste</p>
+                <p class="text-xs text-gray-400 mt-2">DM aberto</p>
+            </a>
+        </div>
+
+        <!-- FORMULÁRIO -->
+        <div class="max-w-2xl mx-auto">
+            <h2 class="font-display text-2xl font-black mb-6 text-center">Envie sua mensagem</h2>
+            <form onsubmit="sendMessage(event)" class="bg-white p-8 shadow-sm space-y-4">
+                <div class="grid grid-cols-2 gap-4">
+                    <div><label class="block text-xs font-semibold uppercase tracking-wider text-gray-500 mb-2">Nome *</label><input type="text" id="c-name" class="form-input" required></div>
+                    <div><label class="block text-xs font-semibold uppercase tracking-wider text-gray-500 mb-2">E-mail *</label><input type="email" id="c-email" class="form-input" required></div>
+                </div>
+                <div><label class="block text-xs font-semibold uppercase tracking-wider text-gray-500 mb-2">Assunto</label>
+                    <select id="c-subject" class="form-input">
+                        <option>Dúvida sobre produto</option>
+                        <option>Sobre minha encomenda</option>
+                        <option>Troca ou devolução</option>
+                        <option>Parceria / Atacado</option>
+                        <option>Outro assunto</option>
+                    </select>
+                </div>
+                <div><label class="block text-xs font-semibold uppercase tracking-wider text-gray-500 mb-2">Mensagem *</label><textarea id="c-message" class="form-input" rows="5" required></textarea></div>
+                <button type="submit" class="btn-primary">ENVIAR MENSAGEM</button>
+                <p class="text-xs text-gray-400 text-center">Ou envie direto pelo <a href="https://wa.me/5579999999999" class="text-[#40E0D0] underline">WhatsApp</a></p>
+            </form>
+        </div>
+    </main>
+
+    <footer class="bg-[#1a1a1a] text-white py-8 mt-12"><div class="max-w-7xl mx-auto px-4 text-center"><p class="text-gray-400 text-sm">© 2026 Arte Que Veste. Todos os direitos reservados.</p></div></footer>
+
+    <script>
+    function sendMessage(e) {
+        e.preventDefault();
+        const name = document.getElementById('c-name').value;
+        const email = document.getElementById('c-email').value;
+        const subject = document.getElementById('c-subject').value;
+        const message = document.getElementById('c-message').value;
+        const text = `Olá! Meu nome é ${name}.\n\nAssunto: ${subject}\n\n${message}\n\n(E-mail: ${email})`;
+        window.open('https://wa.me/5579999999999?text=' + encodeURIComponent(text), '_blank');
+    }
+    lucide.createIcons();
+    </script>
+</body>
+</html>

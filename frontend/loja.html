@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Pedro Marcos Santos Belentani">
+    <title>Loja | Arte Que Veste - Moda Autoral Nordestina</title>
+    <meta name="description" content="Catálogo completo Arte Que Veste: vestuário, acessórios, bijuteria, calçados e souvenirs com xilogravura nordestina.">
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <link rel="canonical" href="https://artequeveste.com.br/loja.html">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Loja | Arte Que Veste">
+    <meta property="og:image" content="https://artequeveste.com.br/assets/og-image.jpg">
+    <meta name="theme-color" content="#40E0D0">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- GSAP y ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+    <!-- Fuentes y Iconos -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/playfair-display@latest/latin-400-normal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/inter@latest/latin-400-normal.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        :root {
+            --turquesa: #40E0D0;
+            --rosa: #FF1493;
+            --laranja: #FF6347;
+            --preto: #1a1a1a;
+            --off-white: #faf9f6;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--off-white); color: var(--preto); overflow-x: hidden; }
+        .font-display { font-family: 'Playfair Display', serif; }
+
+        .btn-primary {
+            background: var(--turquesa); color: var(--preto); padding: 0.75rem 1.5rem;
+            font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em;
+            transition: all 0.3s ease; border: 2px solid var(--turquesa); cursor: pointer; font-size: 0.75rem;
+        }
+        .btn-primary:hover { background: transparent; color: var(--turquesa); }
+
+        .product-card { transition: transform 0.4s ease, box-shadow 0.4s ease; cursor: pointer; background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .product-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .product-image { transition: transform 0.6s ease; }
+        .product-card:hover .product-image { transform: scale(1.08); }
+
+        .filter-btn {
+            padding: 0.4rem 1rem; border: 1px solid #ddd; background: transparent; cursor: pointer;
+            transition: all 0.3s ease; font-weight: 500; font-size: 0.75rem; width: 100%; text-align: left;
+        }
+        .filter-btn.active, .filter-btn:hover { background: var(--preto); color: white; border-color: var(--preto); }
+
+        .size-btn {
+            padding: 0.4rem 0; border: 1px solid #ddd; background: transparent; cursor: pointer;
+            transition: all 0.2s ease; font-weight: 600; font-size: 0.75rem; text-align: center;
+        }
+        .size-btn:hover, .size-btn.active { background: var(--turquesa); color: var(--preto); border-color: var(--turquesa); }
+
+        .filter-checkbox { display: flex; align-items: center; margin-bottom: 0.5rem; cursor: pointer; font-size: 0.875rem; transition: color 0.2s; }
+        .filter-checkbox:hover { color: var(--turquesa); }
+        .filter-checkbox input { margin-right: 0.5rem; accent-color: var(--turquesa); width: 16px; height: 16px; }
+
+        .nav-link { position: relative; transition: color 0.3s ease; font-size: 0.75rem; text-transform: uppercase; }
+        .nav-link::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background: var(--turquesa); transition: width 0.3s ease; }
+        .nav-link:hover::after { width: 100%; }
+
+        .anim-load { opacity: 0; transform: translateY(20px); }
+        .anim-scroll { opacity: 0; transform: translateY(40px); }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="fixed top-0 left-0 right-0 bg-white z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <a href="index.html" class="font-display text-xl md:text-2xl font-black">ARTE QUE VESTE</a>
+                <div class="hidden lg:flex space-x-6">
+                    <a href="index.html#home" class="nav-link">Início</a>
+                    <a href="index.html#historia" class="nav-link">História</a>
+                    <a href="index.html#xilogravura" class="nav-link">Xilogravura</a>
+                    <a href="loja.html" class="nav-link border-b-2 border-[var(--turquesa)] pb-1">Loja</a>
+                    <a href="sobre.html" class="nav-link">Sobre</a>
+                    <a href="contato.html" class="nav-link">Contato</a>
+                </div>
+                <div class="flex items-center gap-3">
+                    <a href="carrinho.html" class="relative p-2 hover:bg-gray-100 rounded-full transition-colors">
+                        <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+                        <span class="cart-badge absolute -top-1 -right-1 bg-[var(--turquesa)] text-[var(--preto)] text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center" style="display:none">0</span>
+                    </a>
+                    <a href="https://wa.me/5579999999999" target="_blank" rel="noopener" class="hidden sm:flex items-center text-xs uppercase tracking-wider border border-[var(--preto)] px-4 py-2 hover:bg-[var(--preto)] hover:text-white transition-colors">
+                        <i data-lucide="message-circle" class="w-4 h-4 mr-2"></i> Fale Conosco
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO DA LOJA -->
+    <header class="pt-40 pb-16 bg-[var(--preto)] text-white text-center relative overflow-hidden">
+        <div class="max-w-4xl mx-auto px-4 relative z-10">
+            <span class="anim-load text-[var(--turquesa)] uppercase tracking-widest text-xs font-semibold mb-4 block">Catálogo Completo</span>
+            <h1 class="anim-load font-display text-5xl md:text-7xl font-black mb-6">Nossa Coleção</h1>
+            <p class="anim-load text-gray-300 max-w-2xl mx-auto text-lg">Explore todo o espectro da moda autoral nordestina: vestuário masculino, feminino, infantil, acessórios, bijuteria, calçados e souvenirs.</p>
+        </div>
+    </header>
+
+    <!-- LAYOUT DA LOJA -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div class="flex flex-col lg:flex-row gap-12">
+
+            <!-- SIDEBAR DE FILTROS -->
+            <aside class="lg:w-1/4 space-y-10 anim-scroll">
+                <div>
+                    <h3 class="font-display text-lg font-bold mb-4 border-b-2 border-[var(--preto)] pb-2">Categorias</h3>
+                    <div class="space-y-2">
+                        <button class="filter-btn active" data-filter="all">Todos os Produtos</button>
+                        <button class="filter-btn" data-filter="masculino">Roupas Masculinas</button>
+                        <button class="filter-btn" data-filter="feminino">Roupas Femininas</button>
+                        <button class="filter-btn" data-filter="infantil">Roupas Infantis</button>
+                        <button class="filter-btn" data-filter="unissex">Unissex</button>
+                        <button class="filter-btn" data-filter="acessorios">Acessórios</button>
+                        <button class="filter-btn" data-filter="bijuteria">Bijuteria</button>
+                        <button class="filter-btn" data-filter="calcados">Calçados & Sandálias</button>
+                        <button class="filter-btn" data-filter="souvenirs">Souvenirs</button>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="font-display text-lg font-bold mb-4 border-b-2 border-[var(--preto)] pb-2">Tamanhos (BR)</h3>
+
+                    <p class="text-xs uppercase text-gray-500 mt-4 mb-2 font-semibold">Vestuário Adulto</p>
+                    <div class="grid grid-cols-3 gap-2">
+                        <button class="size-btn">PP</button><button class="size-btn">P</button><button class="size-btn">M</button>
+                        <button class="size-btn">G</button><button class="size-btn">GG</button><button class="size-btn">XGG</button>
+                        <button class="size-btn col-span-3">Tamanho Único</button>
+                    </div>
+
+                    <p class="text-xs uppercase text-gray-500 mt-4 mb-2 font-semibold">Infantil (anos)</p>
+                    <div class="grid grid-cols-4 gap-2">
+                        <button class="size-btn">2</button><button class="size-btn">4</button><button class="size-btn">6</button><button class="size-btn">8</button>
+                        <button class="size-btn">10</button><button class="size-btn">12</button><button class="size-btn">14</button><button class="size-btn">16</button>
+                    </div>
+
+                    <p class="text-xs uppercase text-gray-500 mt-4 mb-2 font-semibold">Calçados</p>
+                    <div class="grid grid-cols-4 gap-2">
+                        <button class="size-btn">33</button><button class="size-btn">34</button><button class="size-btn">35</button><button class="size-btn">36</button>
+                        <button class="size-btn">37</button><button class="size-btn">38</button><button class="size-btn">39</button><button class="size-btn">40</button>
+                        <button class="size-btn">41</button><button class="size-btn">42</button><button class="size-btn">43</button><button class="size-btn">44</button>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="font-display text-lg font-bold mb-4 border-b-2 border-[var(--preto)] pb-2">Tipo de Peça</h3>
+                    <label class="filter-checkbox"><input type="checkbox"> Camisetas</label>
+                    <label class="filter-checkbox"><input type="checkbox"> Vestidos</label>
+                    <label class="filter-checkbox"><input type="checkbox"> Kimonos</label>
+                    <label class="filter-checkbox"><input type="checkbox"> Gorros & Chapéus</label>
+                    <label class="filter-checkbox"><input type="checkbox"> Cinturões</label>
+                    <label class="filter-checkbox"><input type="checkbox"> Sandálias</label>
+                    <label class="filter-checkbox"><input type="checkbox"> Gafas/Óculos</label>
+                    <label class="filter-checkbox"><input type="checkbox"> Brincos & Colares</label>
+                    <label class="filter-checkbox"><input type="checkbox"> Bolsas</label>
+                    <label class="filter-checkbox"><input type="checkbox"> Canecas</label>
+                </div>
+            </aside>
+
+            <!-- GRID DE PRODUTOS -->
+            <div class="lg:w-3/4">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 anim-scroll">
+                    <p class="text-sm text-gray-500 mb-4 sm:mb-0" id="productCount"></p>
+                    <select class="border p-2 text-sm bg-white w-full sm:w-auto">
+                        <option>Ordenar por: Mais recentes</option>
+                        <option>Menor preço</option>
+                        <option>Maior preço</option>
+                        <option>Mais vendidos</option>
+                    </select>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6" id="productGrid"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-[var(--preto)] text-white py-12 mt-12">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <h4 class="font-display text-lg font-bold mb-4">Arte Que Veste</h4>
+                    <p class="text-gray-400 text-sm leading-relaxed">Moda autoral nordestina com xilogravura de Mestre Nivaldo Oliveira. De São Cristóvão, Sergipe para o mundo.</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-sm uppercase tracking-wider mb-4">Navegação</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="loja.html" class="hover:text-[var(--turquesa)] transition-colors">Loja</a></li>
+                        <li><a href="sobre.html" class="hover:text-[var(--turquesa)] transition-colors">Sobre Nós</a></li>
+                        <li><a href="contato.html" class="hover:text-[var(--turquesa)] transition-colors">Contato</a></li>
+                        <li><a href="faq.html" class="hover:text-[var(--turquesa)] transition-colors">FAQ</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-sm uppercase tracking-wider mb-4">Políticas</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="politica-privacidade.html" class="hover:text-[var(--turquesa)] transition-colors">Privacidade (LGPD)</a></li>
+                        <li><a href="politica-trocas.html" class="hover:text-[var(--turquesa)] transition-colors">Trocas & Devoluções</a></li>
+                        <li><a href="politica-envio.html" class="hover:text-[var(--turquesa)] transition-colors">Envio</a></li>
+                        <li><a href="termos-de-uso.html" class="hover:text-[var(--turquesa)] transition-colors">Termos de Uso</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-sm uppercase tracking-wider mb-4">Contato</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li class="flex items-center gap-2"><i data-lucide="message-circle" class="w-4 h-4 text-[var(--turquesa)]"></i> WhatsApp</li>
+                        <li class="flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4 text-[var(--turquesa)]"></i> contato@artequeveste.com.br</li>
+                        <li class="flex items-center gap-2"><i data-lucide="map-pin" class="w-4 h-4 text-[var(--turquesa)]"></i> Aracaju/SE</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-6 text-center">
+                <p class="text-gray-500 text-sm">© 2026 Arte Que Veste. Todos os direitos reservados.</p>
+                <p class="text-gray-700 text-xs italic mt-2">"Xilogravura no tecido, cordel no corpo."</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ══════════════════════════════════════════════════════════ -->
+    <!-- HIDDEN SIGNATURE -->
+    <!-- ══════════════════════════════════════════════════════════ -->
+    <div style="display:none;" aria-hidden="true" id="pmb-hidden-signature">
+        Pedro Marcos Santos Belentani | @Belentani_ | 21-06-2026 06:03h | Criador do Conceito Original, Identidade Visual e Código | Barcelona
+    </div>
+
+    <script src="js/cart.js"></script>
+    <script>
+    /*
+     * ═══════════════════════════════════════════════════════════
+     * ARTE QUE VESTE — LOJA
+     * Author: Pedro Marcos Santos Belentani | @Belentani_
+     * Role: Criador do Conceito Original, Identidade Visual e Código
+     * Date: 21-06-2026, 06:03h | Barcelona, España
+     * © 2026 Pedro Marcos Santos Belentani. Todos os direitos reservados.
+     * ═══════════════════════════════════════════════════════════
+     */
+
+    // ==========================================================
+    // CATÁLOGO DE PRODUTOS — "BACKEND" SIMPLES
+    // Para adicionar um produto novo, copie um bloco {...} abaixo
+    // e mude name / desc / price / category / img / alt.
+    // A cor e o nome do selo (badge) saem sozinhos da categoria.
+    // Categorias válidas: masculino, feminino, infantil, unissex,
+    // acessorios, bijuteria, calcados, souvenirs
+    // ==========================================================
+    const CATEGORIAS = {
+        masculino:  { label: 'Masculino', bg: 'var(--turquesa)', text: '#1a1a1a' },
+        feminino:   { label: 'Feminino',  bg: 'var(--rosa)',     text: '#fff'    },
+        infantil:   { label: 'Infantil',  bg: 'var(--laranja)',  text: '#fff'    },
+        unissex:    { label: 'Unissex',   bg: 'var(--preto)',    text: '#fff'    },
+        acessorios: { label: 'Acessório', bg: 'var(--laranja)',  text: '#fff'    },
+        bijuteria:  { label: 'Bijuteria', bg: 'var(--preto)',    text: '#fff'    },
+        calcados:   { label: 'Calçado',   bg: 'var(--rosa)',     text: '#fff'    },
+        souvenirs:  { label: 'Souvenir',  bg: 'var(--turquesa)', text: '#1a1a1a' }
+    };
+
+    // ==========================================================
+    // CATÁLOGO — agora vem da API real (com fallback local)
+    // Configure API_BASE para a URL do seu backend ao publicar.
+    // ==========================================================
+    const API_BASE = (location.hostname === 'localhost' || location.hostname === '127.0.0.1')
+        ? 'http://localhost:8000' : 'https://SEU-APP.railway.app';  // <- troque pela URL real do backend em produção
+
+    let PRODUTOS = [];
+
+    async function carregarProdutos() {
+        try {
+            const r = await fetch(API_BASE + '/api/produtos');
+            if (!r.ok) throw new Error('API indisponível');
+            PRODUTOS = await r.json();
+        } catch (e) {
+            console.warn('Backend indisponível, usando products.json local.', e);
+            const r2 = await fetch('./products.json');
+            PRODUTOS = await r2.json();
+        }
+    }
+
+    function renderProducts() {
+        const grid = document.getElementById('productGrid');
+        grid.innerHTML = PRODUTOS.map(p => {
+            const c = CATEGORIAS[p.category] || { label: '', bg: 'var(--preto)', text: '#fff' };
+            const priceFmt = p.price.toFixed(2).replace('.', ',');
+            return '<div class="product-card anim-scroll" data-category="' + p.category + '">' +
+                '<div class="relative overflow-hidden mb-3 bg-gray-100 aspect-[3/4]">' +
+                '<img src="' + p.img + '" class="product-image w-full h-full object-cover" alt="' + p.alt + '" loading="lazy">' +
+                '<div class="absolute top-2 left-2 px-2 py-1 text-[10px] uppercase" style="background:' + c.bg + ';color:' + c.text + '">' + c.label + '</div>' +
+                '</div>' +
+                '<div class="p-2">' +
+                '<h3 class="font-display text-sm font-bold mb-1 truncate">' + p.name + '</h3>' +
+                '<p class="text-xs text-gray-500 mb-2">' + p.desc + '</p>' +
+                '<div class="flex justify-between items-center">' +
+                '<span class="text-base font-bold">R$ ' + priceFmt + '</span>' +
+                '<a href="produto.html?sku=' + p.sku + '" class="btn-primary text-[10px] py-1 px-2 inline-block text-center no-underline">Ver</a>' +
+                '</div></div></div>';
+        }).join('');
+
+        const countEl = document.getElementById('productCount');
+        if (countEl) countEl.textContent = 'Mostrando ' + PRODUTOS.length + ' de ' + PRODUTOS.length + ' produtos';
+    }
+
+    // Product cards now link to produto.html?sku=XXX
+
+    // ==========================================================
+    // RENDER + ANIMAÇÕES (GSAP)
+    // ==========================================================
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.to('.anim-load', { opacity: 1, y: 0, duration: 1, stagger: 0.15, ease: 'power3.out' });
+
+    // Anima de imediato tudo que NÃO depende do catálogo (sidebar, toolbar, paginação)
+    gsap.utils.toArray('.anim-scroll').forEach(element => {
+        gsap.to(element, {
+            opacity: 1, y: 0, duration: 0.8, ease: 'power3.out',
+            scrollTrigger: { trigger: element, start: 'top 85%', toggleActions: 'play none none none' }
+        });
+    });
+
+    (async () => {
+        await carregarProdutos();
+        renderProducts();
+        // Os cards de produto só existem agora — registrar a animação deles aqui
+        gsap.utils.toArray('#productGrid .anim-scroll').forEach(element => {
+            gsap.to(element, {
+                opacity: 1, y: 0, duration: 0.6, ease: 'power3.out',
+                scrollTrigger: { trigger: element, start: 'top 90%', toggleActions: 'play none none none' }
+            });
+        });
+        lucide.createIcons();
+    })();
+
+    // ==========================================================
+    // FILTROS E TAMANHOS
+    // ==========================================================
+    document.querySelectorAll('.filter-btn[data-filter]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.filter-btn[data-filter]').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const filter = btn.dataset.filter;
+            document.querySelectorAll('.product-card').forEach(card => {
+                if (filter === 'all' || card.dataset.category === filter) {
+                    gsap.to(card, { opacity: 1, scale: 1, duration: 0.4, ease: 'power2.out' });
+                    card.style.display = 'block';
+                } else {
+                    gsap.to(card, { opacity: 0, scale: 0.9, duration: 0.3, ease: 'power2.in', onComplete: () => { card.style.display = 'none'; } });
+                }
+            });
+        });
+    });
+
+    document.querySelectorAll('.size-btn').forEach(btn => {
+        btn.addEventListener('click', () => btn.classList.toggle('active'));
+    });
+
+    lucide.createIcons();
+
+    console.log('%c╔══════════════════════════════════════════════════════════════╗', 'color: #40E0D0; font-weight: bold;');
+    console.log('%c║  ARTE QUE VESTE — Loja                                        ║', 'color: #40E0D0; font-weight: bold;');
+    console.log('%c║  Design & Development: Pedro Marcos Santos Belentani          ║', 'color: #FF1493; font-weight: bold;');
+    console.log('%c║  Instagram: @Belentani_                                       ║', 'color: #FF1493;');
+    console.log('%c║  Role: Criador do Conceito Original, Identidade Visual e Código║', 'color: #FF1493;');
+    console.log('%c║  Date: 21-06-2026, 06:03h | Barcelona, España                ║', 'color: #FF1493;');
+    console.log('%c║  © 2026 Pedro Marcos Santos Belentani. All rights reserved.   ║', 'color: #FFD700; font-weight: bold;');
+    console.log('%c╚══════════════════════════════════════════════════════════════╝', 'color: #40E0D0; font-weight: bold;');
+    </script>
+</body>
+</html>

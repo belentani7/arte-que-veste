@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ — Perguntas Frequentes | Arte Que Veste</title>
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/playfair-display@latest/latin-400-normal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/inter@latest/latin-400-normal.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body{font-family:'Inter',sans-serif;background:#faf9f6;color:#1a1a1a}.font-display{font-family:'Playfair Display',serif}
+        .faq-item{border-bottom:1px solid #eee}
+        .faq-question{width:100%;text-align:left;padding:16px 0;font-weight:600;font-size:14px;display:flex;justify-content:space-between;align-items:center;background:none;border:none;cursor:pointer;transition:color .2s}
+        .faq-question:hover{color:#40E0D0}
+        .faq-answer{max-height:0;overflow:hidden;transition:max-height .4s ease}
+        .faq-answer.open{max-height:500px}
+        .faq-answer p{padding-bottom:16px;font-size:14px;color:#6b7280;line-height:1.7}
+        .nav-link{position:relative;transition:color .3s;font-size:12px;text-transform:uppercase}
+        .nav-link::after{content:'';position:absolute;bottom:-5px;left:0;width:0;height:2px;background:#40E0D0;transition:width .3s}
+        .nav-link:hover::after{width:100%}
+    </style>
+</head>
+<body>
+    <nav class="fixed top-0 left-0 right-0 bg-white z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <a href="index.html" class="font-display text-xl md:text-2xl font-black">ARTE QUE VESTE</a>
+                <div class="hidden lg:flex space-x-6">
+                    <a href="index.html" class="nav-link">Início</a>
+                    <a href="loja.html" class="nav-link">Loja</a>
+                    <a href="sobre.html" class="nav-link">Sobre</a>
+                    <a href="contato.html" class="nav-link">Contato</a>
+                </div>
+                <a href="https://wa.me/5579999999999" target="_blank" class="hidden sm:flex items-center text-xs uppercase tracking-wider border border-[#1a1a1a] px-4 py-2 hover:bg-[#1a1a1a] hover:text-white transition-colors">
+                    <i data-lucide="message-circle" class="w-4 h-4 mr-2"></i> Fale Conosco
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="pt-40 pb-16 bg-[#1a1a1a] text-white text-center">
+        <div class="max-w-4xl mx-auto px-4">
+            <span class="text-[#40E0D0] uppercase tracking-widest text-xs font-semibold mb-4 block">Ajuda</span>
+            <h1 class="font-display text-5xl md:text-7xl font-black mb-6">Perguntas Frequentes</h1>
+            <p class="text-gray-300 max-w-2xl mx-auto">Tire suas dúvidas sobre compras, entregas, trocas e pagamentos.</p>
+        </div>
+    </header>
+
+    <main class="max-w-3xl mx-auto px-4 py-16">
+        <div class="bg-white shadow-sm p-6 md:p-8">
+            <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)"><span>Como faço uma compra?</span><i data-lucide="chevron-down" class="w-5 h-5 flex-shrink-0"></i></button><div class="faq-answer"><p>Escolha seus produtos na loja, adicione ao carrinho, preencha seus dados de entrega e escolha a forma de pagamento (Pix, cartão ou boleto). Após a confirmação, você receberá um e-mail e WhatsApp com os detalhes do pedido.</p></div></div>
+
+            <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)"><span>Quais formas de pagamento são aceitas?</span><i data-lucide="chevron-down" class="w-5 h-5 flex-shrink-0"></i></button><div class="faq-answer"><p>Aceitamos <strong>Pix</strong> (com 5% de desconto), <strong>cartão de crédito</strong> (até 6x sem juros), <strong>boleto bancário</strong> e <strong>pagamento manual via WhatsApp</strong>. O processamento de pagamentos é feito com segurança pelo Mercado Pago.</p></div></div>
+
+            <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)"><span>Qual o prazo de entrega?</span><i data-lucide="chevron-down" class="w-5 h-5 flex-shrink-0"></i></button><div class="faq-answer"><p>O prazo depende da modalidade escolhida: <strong>PAC</strong> (5-8 dias úteis), <strong>SEDEX</strong> (2-3 dias úteis) ou <strong>retirada em Aracaju/SE</strong> (imediato). O frete é calculado pelo CEP no checkout. Enviamos de Aracaju/SE.</p></div></div>
+
+            <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)"><span>Posso trocar ou devolver uma peça?</span><i data-lucide="chevron-down" class="w-5 h-5 flex-shrink-0"></i></button><div class="faq-answer"><p>Sim! Oferecemos <strong>troca grátis em até 30 dias</strong>. Basta entrar em contato pelo WhatsApp com o número do pedido e motivo. Enviamos uma etiqueta de postagem gratuita. Consulte nossa <a href="politica-trocas.html" class="text-[#40E0D0] underline">política completa</a>.</p></div></div>
+
+            <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)"><span>Como sei qual tamanho escolher?</span><i data-lucide="chevron-down" class="w-5 h-5 flex-shrink-0"></i></button><div class="faq-answer"><p>Na página de cada produto de vestuário, clique em "Guia de Tamanhos" para ver as medidas em centímetros. Se estiver em dúvida entre dois tamanhos, escolha o maior. Também pode tirar dúvidas conosco no WhatsApp!</p></div></div>
+
+            <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)"><span>O Pix tem desconto?</span><i data-lucide="chevron-down" class="w-5 h-5 flex-shrink-0"></i></button><div class="faq-answer"><p>Sim! Ao pagar com <strong>Pix você ganha 5% de desconto</strong> em qualquer pedido. O QR Code é gerado automaticamente após a confirmação do pedido.</p></div></div>
+
+            <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)"><span>Tem frete grátis?</span><i data-lucide="chevron-down" class="w-5 h-5 flex-shrink-0"></i></button><div class="faq-answer"><p>Sim! Para compras acima de <strong>R$ 199,00</strong>, o frete é por nossa conta (via PAC). Acima de R$ 500,00, oferecemos frete grátis via SEDEX.</p></div></div>
+
+            <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)"><span>Posso comprar pelo WhatsApp?</span><i data-lucide="chevron-down" class="w-5 h-5 flex-shrink-0"></i></button><div class="faq-answer"><p>Clique no botão "Comprar" de qualquer produto e você será redirecionado para nosso WhatsApp com a mensagem pronta. Lá podemos ajudar com dúvidas, tamanhos, personalizações e pagamentos manuais.</p></div></div>
+
+            <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)"><span>As peças são artesanais?</span><i data-lucide="chevron-down" class="w-5 h-5 flex-shrink-0"></i></button><div class="faq-answer"><p>Todas as peças da Arte Que Veste são <strong>autorais</strong>, produzidas em Aracaju/SE com xilogravuras nordestinas. Peças artesanais podem ter variações naturais de cor e textura — isso é parte da beleza da arte manual!</p></div></div>
+
+            <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)"><span>Como entro em contato?</span><i data-lucide="chevron-down" class="w-5 h-5 flex-shrink-0"></i></button><div class="faq-answer"><p>Você pode nos encontrar pelo <strong>WhatsApp</strong> (79) 99999-9999, pelo <strong>e-mail</strong> contato@artequeveste.com.br ou pelo <strong>Instagram</strong> @artequeveste. Respondemos em até 24 horas!</p></div></div>
+        </div>
+
+        <div class="text-center mt-12">
+            <p class="text-gray-500 text-sm mb-4">Não encontrou sua resposta?</p>
+            <a href="https://wa.me/5579999999999?text=Olá! Tenho uma dúvida" target="_blank" class="inline-flex items-center gap-2 bg-[#40E0D0] text-[#1a1a1a] px-6 py-3 font-semibold text-sm uppercase tracking-wider hover:bg-transparent hover:text-[#40E0D0] border-2 border-[#40E0D0] transition-all">
+                <i data-lucide="message-circle" class="w-4 h-4"></i> Fale Conosco no WhatsApp
+            </a>
+        </div>
+    </main>
+
+    <footer class="bg-[#1a1a1a] text-white py-8 mt-12"><div class="max-w-7xl mx-auto px-4 text-center"><p class="text-gray-400 text-sm">© 2026 Arte Que Veste. Todos os direitos reservados.</p><p class="text-gray-700 text-xs italic mt-2">"Xilogravura no tecido, cordel no corpo."</p></div></footer>
+
+    <script>
+    function toggleFaq(btn) {
+        const answer = btn.nextElementSibling;
+        const icon = btn.querySelector('i');
+        const wasOpen = answer.classList.contains('open');
+        document.querySelectorAll('.faq-answer').forEach(a => a.classList.remove('open'));
+        if (!wasOpen) answer.classList.add('open');
+    }
+    lucide.createIcons();
+    gsap.from('.faq-item', { opacity: 0, y: 20, duration: 0.5, stagger: 0.05, ease: 'power3.out' });
+    </script>
+</body>
+</html>

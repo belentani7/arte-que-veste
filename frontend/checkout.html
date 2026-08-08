@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout | Arte Que Veste</title>
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <meta name="theme-color" content="#40E0D0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/playfair-display@latest/latin-400-normal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/inter@latest/latin-400-normal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/inter@latest/latin-500-normal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/inter@latest/latin-600-normal.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root{--turquesa:#40E0D0;--preto:#1a1a1a;--off-white:#faf9f6}
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Inter',sans-serif;background:var(--off-white);color:var(--preto)}
+        .font-display{font-family:'Playfair Display',serif}
+        .step{display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:2px solid #eee;cursor:pointer;transition:all .3s}
+        .step.active{border-bottom-color:var(--turquesa);background:rgba(64,224,208,0.05)}
+        .step.done{border-bottom-color:#22c55e}
+        .step-num{width:28px;height:28px;border-radius:50%;border:2px solid #ddd;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;transition:all .3s}
+        .step.active .step-num{background:var(--turquesa);border-color:var(--turquesa);color:var(--preto)}
+        .step.done .step-num{background:#22c55e;border-color:#22c55e;color:#fff}
+        .form-input{width:100%;border:1.5px solid #ddd;padding:12px 16px;font-size:14px;transition:border-color .2s;background:white}
+        .form-input:focus{outline:none;border-color:var(--turquesa)}
+        .form-input.error{border-color:#ef4444}
+        .form-label{display:block;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:#6b7280;margin-bottom:6px}
+        .payment-option{border:2px solid #eee;padding:16px;cursor:pointer;transition:all .3s;display:flex;align-items:center;gap:12px}
+        .payment-option:hover{border-color:#ccc}
+        .payment-option.selected{border-color:var(--turquesa);background:rgba(64,224,208,0.05)}
+        .payment-option input[type="radio"]{accent-color:var(--turquesa);width:18px;height:18px}
+        .btn-primary{background:var(--turquesa);color:var(--preto);padding:16px 32px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;transition:all .3s;border:2px solid var(--turquesa);cursor:pointer;font-size:13px;width:100%}
+        .btn-primary:hover{background:transparent;color:var(--turquesa)}
+        .btn-primary:disabled{opacity:0.5;cursor:not-allowed}
+        .shipping-option{border:1.5px solid #eee;padding:12px 16px;cursor:pointer;transition:all .2s;display:flex;justify-content:space-between;align-items:center}
+        .shipping-option:hover{border-color:#ccc}
+        .shipping-option.selected{border-color:var(--turquesa);background:rgba(64,224,208,0.05)}
+        .nav-link{position:relative;transition:color .3s;font-size:12px;text-transform:uppercase}
+        .nav-link::after{content:'';position:absolute;bottom:-5px;left:0;width:0;height:2px;background:var(--turquesa);transition:width .3s}
+        .nav-link:hover::after{width:100%}
+        .spinner{display:inline-block;width:18px;height:18px;border:2px solid var(--preto);border-top-color:transparent;border-radius:50%;animation:spin .6s linear infinite}
+        @keyframes spin{to{transform:rotate(360deg)}}
+    </style>
+</head>
+<body>
+    <nav class="fixed top-0 left-0 right-0 bg-white z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <a href="index.html" class="font-display text-xl md:text-2xl font-black">ARTE QUE VESTE</a>
+                <div class="hidden lg:flex space-x-6">
+                    <a href="loja.html" class="nav-link">Loja</a>
+                    <a href="carrinho.html" class="nav-link">Carrinho</a>
+                </div>
+                <div class="flex items-center gap-2 text-sm font-semibold">
+                    <i data-lucide="lock" class="w-4 h-4 text-[var(--turquesa)]"></i> Checkout Seguro
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="pt-28 pb-16 max-w-5xl mx-auto px-4">
+        <!-- CHECKOUT VAZIO -->
+        <div id="checkout-empty" class="text-center py-20" style="display:none">
+            <i data-lucide="shopping-cart" class="w-16 h-16 mx-auto text-gray-300 mb-4"></i>
+            <h2 class="font-display text-2xl font-bold mb-2">Seu carrinho está vazio</h2>
+            <p class="text-gray-500 mb-6">Adicione produtos antes de finalizar a compra.</p>
+            <a href="loja.html" class="btn-primary inline-block max-w-xs">VER A LOJA</a>
+        </div>
+
+        <div id="checkout-content" style="display:none">
+            <!-- STEPS HEADER -->
+            <div class="bg-white shadow-sm mb-8">
+                <div class="flex">
+                    <div class="step active" data-step="1"><div class="step-num">1</div><div><p class="text-xs font-semibold">Identificação</p><p class="text-[10px] text-gray-400">Seus dados</p></div></div>
+                    <div class="step" data-step="2"><div class="step-num">2</div><div><p class="text-xs font-semibold">Endereço</p><p class="text-[10px] text-gray-400">Entrega</p></div></div>
+                    <div class="step" data-step="3"><div class="step-num">3</div><div><p class="text-xs font-semibold">Pagamento</p><p class="text-[10px] text-gray-400">Finalizar</p></div></div>
+                </div>
+            </div>
+
+            <div class="flex flex-col lg:flex-row gap-8">
+                <div class="lg:w-2/3">
+                    <!-- STEP 1: IDENTIFICAÇÃO -->
+                    <div id="step-1" class="bg-white p-6 shadow-sm">
+                        <h2 class="font-display text-xl font-bold mb-6">Seus Dados</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="md:col-span-2"><label class="form-label">Nome completo *</label><input type="text" id="f-name" class="form-input" placeholder="Maria da Silva" required></div>
+                            <div><label class="form-label">E-mail *</label><input type="email" id="f-email" class="form-input" placeholder="email@exemplo.com" required></div>
+                            <div><label class="form-label">WhatsApp *</label><input type="tel" id="f-whatsapp" class="form-input" placeholder="(79) 99999-9999" required></div>
+                            <div><label class="form-label">CPF</label><input type="text" id="f-cpf" class="form-input" placeholder="000.000.000-00"></div>
+                            <div></div>
+                        </div>
+                        <div class="flex justify-end mt-6">
+                            <button onclick="goToStep(2)" class="btn-primary max-w-xs" id="btn-step1">PRÓXIMO: ENDEREÇO</button>
+                        </div>
+                    </div>
+
+                    <!-- STEP 2: ENDEREÇO -->
+                    <div id="step-2" class="bg-white p-6 shadow-sm mt-4" style="display:none">
+                        <h2 class="font-display text-xl font-bold mb-6">Endereço de Entrega</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div><label class="form-label">CEP *</label><input type="text" id="f-cep" class="form-input" placeholder="00000-000" maxlength="9" onblur="lookupCEP()"></div>
+                            <div class="md:col-span-2"><label class="form-label">Rua *</label><input type="text" id="f-rua" class="form-input" placeholder="Rua, Avenida..."></div>
+                            <div><label class="form-label">Número *</label><input type="text" id="f-numero" class="form-input" placeholder="123"></div>
+                            <div><label class="form-label">Complemento</label><input type="text" id="f-complemento" class="form-input" placeholder="Apto, Bloco..."></div>
+                            <div><label class="form-label">Bairro *</label><input type="text" id="f-bairro" class="form-input"></div>
+                            <div><label class="form-label">Cidade *</label><input type="text" id="f-cidade" class="form-input" readonly></div>
+                            <div><label class="form-label">Estado *</label><input type="text" id="f-estado" class="form-input" readonly maxlength="2"></div>
+                        </div>
+
+                        <!-- FRETE -->
+                        <div id="shipping-options" class="mt-6" style="display:none">
+                            <h3 class="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-3">Forma de Entrega</h3>
+                            <div class="space-y-2" id="shipping-list"></div>
+                        </div>
+
+                        <div class="flex justify-between mt-6">
+                            <button onclick="goToStep(1)" class="text-sm text-gray-500 hover:text-[var(--turquesa)] transition-colors">← Voltar</button>
+                            <button onclick="goToStep(3)" class="btn-primary max-w-xs" id="btn-step2">PRÓXIMO: PAGAMENTO</button>
+                        </div>
+                    </div>
+
+                    <!-- STEP 3: PAGAMENTO -->
+                    <div id="step-3" class="bg-white p-6 shadow-sm mt-4" style="display:none">
+                        <h2 class="font-display text-xl font-bold mb-6">Forma de Pagamento</h2>
+
+                        <div class="space-y-3">
+                            <div class="payment-option selected" onclick="selectPayment('pix', this)">
+                                <input type="radio" name="payment" value="pix" checked>
+                                <div class="flex-1">
+                                    <p class="font-semibold text-sm">💠 Pix (5% OFF)</p>
+                                    <p class="text-xs text-gray-500">Aprovação instantânea. QR Code gerado após o pedido.</p>
+                                </div>
+                                <span class="text-sm font-bold text-green-600" id="pix-total"></span>
+                            </div>
+
+                            <div class="payment-option" onclick="selectPayment('card', this)">
+                                <input type="radio" name="payment" value="card">
+                                <div class="flex-1">
+                                    <p class="font-semibold text-sm">💳 Cartão de Crédito</p>
+                                    <p class="text-xs text-gray-500">Até 6x sem juros. Visa, Mastercard, Elo.</p>
+                                </div>
+                            </div>
+
+                            <div class="payment-option" onclick="selectPayment('boleto', this)">
+                                <input type="radio" name="payment" value="boleto">
+                                <div class="flex-1">
+                                    <p class="font-semibold text-sm">📄 Boleto Bancário</p>
+                                    <p class="text-xs text-gray-500">Compensa em 1-3 dias úteis.</p>
+                                </div>
+                            </div>
+
+                            <div class="payment-option" onclick="selectPayment('manual', this)">
+                                <input type="radio" name="payment" value="manual">
+                                <div class="flex-1">
+                                    <p class="font-semibold text-sm">📱 Pagamento Manual (WhatsApp)</p>
+                                    <p class="text-xs text-gray-500">Envie o comprovante pelo WhatsApp. Processamos em até 24h.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- CARD FORM (hidden by default) -->
+                        <div id="card-form" class="mt-6 p-4 border rounded hidden">
+                            <p class="text-xs text-gray-500 mb-4">🔒 Dados processados com segurança pelo Mercado Pago.</p>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="col-span-2"><label class="form-label">Número do Cartão</label><input type="text" class="form-input" placeholder="0000 0000 0000 0000" maxlength="19"></div>
+                                <div><label class="form-label">Validade</label><input type="text" class="form-input" placeholder="MM/AA" maxlength="5"></div>
+                                <div><label class="form-label">CVV</label><input type="text" class="form-input" placeholder="000" maxlength="4"></div>
+                                <div class="col-span-2"><label class="form-label">Nome no Cartão</label><input type="text" class="form-input" placeholder="Como está no cartão"></div>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-between mt-6">
+                            <button onclick="goToStep(2)" class="text-sm text-gray-500 hover:text-[var(--turquesa)] transition-colors">← Voltar</button>
+                            <button onclick="submitOrder()" class="btn-primary max-w-xs" id="btn-submit">
+                                <span id="btn-submit-text">CONFIRMAR PEDIDO</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SIDEBAR RESUMO -->
+                <div class="lg:w-1/3">
+                    <div class="bg-white p-6 shadow-sm sticky top-28">
+                        <h3 class="font-display text-lg font-bold mb-4 pb-3 border-b">Seu Pedido</h3>
+                        <div id="checkout-items" class="space-y-3 mb-4 max-h-60 overflow-y-auto"></div>
+                        <div class="border-t pt-3 space-y-2 text-sm">
+                            <div class="flex justify-between"><span class="text-gray-500">Subtotal</span><span id="co-subtotal" class="font-semibold"></span></div>
+                            <div id="co-discount-row" class="flex justify-between text-green-600" style="display:none"><span>Desconto</span><span id="co-discount"></span></div>
+                            <div class="flex justify-between"><span class="text-gray-500">Frete</span><span id="co-shipping" class="text-gray-400 text-xs">Selecione o CEP</span></div>
+                            <div class="flex justify-between text-lg font-bold pt-2 border-t"><span>Total</span><span id="co-total"></span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-[var(--preto)] text-white py-8 mt-12">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-gray-400 text-sm">© 2026 Arte Que Veste. Checkout seguro via Mercado Pago.</p>
+        </div>
+    </footer>
+
+    <script src="js/cart.js"></script>
+    <script>
+    const API_BASE = (location.hostname === 'localhost' || location.hostname === '127.0.0.1')
+        ? 'http://localhost:8000' : 'https://SEU-APP.railway.app';
+
+    let currentStep = 1;
+    let selectedPayment = 'pix';
+    let shippingCost = 0;
+    let shippingType = '';
+
+    function init() {
+        const items = Cart.get();
+        if (items.length === 0) {
+            document.getElementById('checkout-empty').style.display = 'block';
+            return;
+        }
+        document.getElementById('checkout-content').style.display = 'block';
+        renderCheckoutItems();
+        updateTotals();
+        lucide.createIcons();
+    }
+
+    function renderCheckoutItems() {
+        const items = Cart.get();
+        document.getElementById('checkout-items').innerHTML = items.map(i =>
+            `<div class="flex gap-3 items-center">
+                <img src="${i.img}" class="w-12 h-14 object-cover bg-gray-100" alt="${i.name}">
+                <div class="flex-1 min-w-0">
+                    <p class="text-xs font-semibold truncate">${i.name}${i.tamanho ? ` (${i.tamanho})` : ''}</p>
+                    <p class="text-[10px] text-gray-400">Qtd: ${i.quantidade}</p>
+                </div>
+                <span class="text-xs font-bold">R$ ${(i.price * i.quantidade).toFixed(2).replace('.',',')}</span>
+            </div>`
+        ).join('');
+    }
+
+    function updateTotals() {
+        const subtotal = Cart.getSubtotal();
+        const pixTotal = subtotal * 0.95;
+        document.getElementById('co-subtotal').textContent = `R$ ${subtotal.toFixed(2).replace('.',',')}`;
+        document.getElementById('co-total').textContent = `R$ ${subtotal.toFixed(2).replace('.',',')}`;
+        document.getElementById('pix-total').textContent = `R$ ${pixTotal.toFixed(2).replace('.',',')}`;
+
+        if (shippingCost > 0) {
+            document.getElementById('co-shipping').textContent = `R$ ${shippingCost.toFixed(2).replace('.',',')}`;
+            document.getElementById('co-total').textContent = `R$ ${(subtotal + shippingCost).toFixed(2).replace('.',',')}`;
+        }
+    }
+
+    function goToStep(step) {
+        if (step === 2 && !validateStep1()) return;
+        if (step === 3 && !validateStep2()) return;
+
+        for (let i = 1; i <= 3; i++) {
+            document.getElementById(`step-${i}`).style.display = i === step ? 'block' : 'none';
+            const stepEl = document.querySelector(`.step[data-step="${i}"]`);
+            stepEl.classList.remove('active', 'done');
+            if (i < step) stepEl.classList.add('done');
+            else if (i === step) stepEl.classList.add('active');
+        }
+        currentStep = step;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function validateStep1() {
+        const name = document.getElementById('f-name').value.trim();
+        const email = document.getElementById('f-email').value.trim();
+        const whatsapp = document.getElementById('f-whatsapp').value.trim();
+        if (!name || !email || !whatsapp) {
+            alert('Por favor, preencha nome, e-mail e WhatsApp.');
+            return false;
+        }
+        return true;
+    }
+
+    function validateStep2() {
+        const cep = document.getElementById('f-cep').value.trim();
+        const rua = document.getElementById('f-rua').value.trim();
+        const numero = document.getElementById('f-numero').value.trim();
+        if (!cep || !rua || !numero) {
+            alert('Por favor, preencha CEP, rua e número.');
+            return false;
+        }
+        return true;
+    }
+
+    function selectPayment(method, el) {
+        selectedPayment = method;
+        document.querySelectorAll('.payment-option').forEach(o => o.classList.remove('selected'));
+        el.classList.add('selected');
+        el.querySelector('input').checked = true;
+        document.getElementById('card-form').classList.toggle('hidden', method !== 'card');
+    }
+
+    async function lookupCEP() {
+        const cep = document.getElementById('f-cep').value.replace(/\D/g, '');
+        if (cep.length !== 8) return;
+        try {
+            const r = await fetch(`https://brasilapi.com.br/api/cep/v2/${cep}`);
+            const data = await r.json();
+            if (!data.erro) {
+                document.getElementById('f-rua').value = data.logradouro || '';
+                document.getElementById('f-bairro').value = data.bairro || '';
+                document.getElementById('f-cidade').value = data.localidade || '';
+                document.getElementById('f-estado').value = data.estado || '';
+            }
+        } catch {}
+        // Calculate shipping
+        if (cep.length === 8) calculateShipping(cep);
+    }
+
+    async function calculateShipping(cep) {
+        try {
+            const r = await fetch(`${API_BASE}/api/frete/${cep}`);
+            const data = await r.json();
+            const list = document.getElementById('shipping-list');
+            const options = [];
+            if (data.pac) options.push(data.pac);
+            if (data.sedex) options.push(data.sedex);
+
+            if (options.length > 0) {
+                list.innerHTML = options.map((o, i) =>
+                    `<div class="shipping-option ${i === 0 ? 'selected' : ''}" onclick="selectShipping(${o.preco}, '${o.nome}', this)">
+                        <div><p class="text-sm font-semibold">${o.nome}</p><p class="text-xs text-gray-400">${o.prazo} dias úteis</p></div>
+                        <span class="text-sm font-bold">R$ ${o.preco.toFixed(2).replace('.',',')}</span>
+                    </div>`
+                ).join('');
+                document.getElementById('shipping-options').style.display = 'block';
+                selectShipping(options[0].preco, options[0].nome, list.firstElementChild);
+            }
+        } catch {}
+    }
+
+    function selectShipping(cost, type, el) {
+        shippingCost = cost;
+        shippingType = type;
+        document.querySelectorAll('.shipping-option').forEach(o => o.classList.remove('selected'));
+        if (el) el.classList.add('selected');
+        updateTotals();
+    }
+
+    async function submitOrder() {
+        const btn = document.getElementById('btn-submit');
+        const btnText = document.getElementById('btn-submit-text');
+        btn.disabled = true;
+        btnText.innerHTML = '<span class="spinner"></span> Processando...';
+
+        const items = Cart.get().map(i => ({ sku: i.sku, quantidade: i.quantidade }));
+
+        const body = {
+            cliente_nome: document.getElementById('f-name').value.trim(),
+            cliente_whatsapp: document.getElementById('f-whatsapp').value.trim().replace(/\D/g, ''),
+            cliente_email: document.getElementById('f-email').value.trim(),
+            cliente_cpf: document.getElementById('f-cpf').value.trim().replace(/\D/g, '') || null,
+            cep_destino: document.getElementById('f-cep').value.trim().replace(/\D/g, '') || null,
+            endereco: `${document.getElementById('f-rua').value}, ${document.getElementById('f-numero').value}${document.getElementById('f-complemento').value ? ' - ' + document.getElementById('f-complemento').value : ''}, ${document.getElementById('f-bairro').value}`.trim(),
+            itens: items,
+            frete_tipo: shippingType || null
+        };
+
+        try {
+            const r = await fetch(`${API_BASE}/api/pedidos`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(body)
+            });
+            const data = await r.json();
+
+            if (!r.ok) {
+                throw new Error(data.detail || 'Erro ao criar pedido');
+            }
+
+            Cart.clear();
+
+            if (data.checkout_url) {
+                window.location.href = data.checkout_url;
+            } else {
+                window.location.href = `pedido-sucesso.html?id=${data.pedido_id}&total=${data.total}`;
+            }
+        } catch (e) {
+            alert('Erro: ' + e.message);
+            btn.disabled = false;
+            btnText.textContent = 'CONFIRMAR PEDIDO';
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
