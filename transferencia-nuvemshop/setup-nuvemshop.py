@@ -3,6 +3,7 @@ Arte Que Veste — Setup automático en Nuvemshop
 Ejecutar: python setup-nuvemshop.py
 """
 import asyncio
+import os
 from browser_use import Agent, Browser
 from langchain_anthropic import ChatAnthropic
 
@@ -104,6 +105,16 @@ STEP-BY-STEP INSTRUCTIONS:
 """
 
 async def main():
+    if os.getenv("AQV_ALLOW_EXTERNAL_SETUP") != "YES":
+        raise RuntimeError(
+            "External setup disabled. The owner must review the catalog and explicitly "
+            "set AQV_ALLOW_EXTERNAL_SETUP=YES before any account action."
+        )
+    owner_email = os.getenv("AQV_OWNER_EMAIL")
+    owner_password = os.getenv("AQV_OWNER_PASSWORD")
+    if not owner_email or not owner_password:
+        raise RuntimeError("Missing AQV_OWNER_EMAIL or AQV_OWNER_PASSWORD.")
+
     browser = Browser(
         headless=False,
         window_size={'width': 1280, 'height': 900},
@@ -114,8 +125,8 @@ async def main():
         llm=llm,
         browser=browser,
         sensitive_data={
-            "email": "artequeveste@atomicmail.io",
-            "password": "Barcelona12345!!!"
+            "email": owner_email,
+            "password": owner_password
         },
         max_steps=200,
         generate_gif=True,

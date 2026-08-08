@@ -6,6 +6,8 @@ Fecha: 8 de agosto de 2026.
 
 La fuente queda cerrada como demostrador y estructura transferible. No es una tienda comercial activa.
 
+Seguridad: la demostración no solicita datos de tarjeta ni procesa pagos. El script de configuración externa está bloqueado por defecto y solo acepta credenciales mediante variables de entorno proporcionadas localmente por el propietario.
+
 Funciona:
 
 - catálogo estático de ocho referencias;
