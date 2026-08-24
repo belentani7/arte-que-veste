@@ -92,5 +92,13 @@
     lucide.createIcons();
     gsap.from('.faq-item', { opacity: 0, y: 20, duration: 0.5, stagger: 0.05, ease: 'power3.out' });
     </script>
+
+<!-- FRONT-UPGRADE: Lenis smooth scroll (GSAP ya presente, sin duplicar) -->
+<script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
+<script>
+(function(){try{
+if(window.Lenis){var l=new Lenis({duration:1.1});var r=function(t){l.raf(t);requestAnimationFrame(r)};requestAnimationFrame(r);}
+}}catch(e){}})();
+</script>
 </body>
 </html>

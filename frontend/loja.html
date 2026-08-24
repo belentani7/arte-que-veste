@@ -375,5 +375,13 @@
     console.log('%c║  © 2026 Pedro Marcos Santos Belentani. All rights reserved.   ║', 'color: #FFD700; font-weight: bold;');
     console.log('%c╚══════════════════════════════════════════════════════════════╝', 'color: #40E0D0; font-weight: bold;');
     </script>
+
+<!-- FRONT-UPGRADE: Lenis smooth scroll (GSAP ya presente, sin duplicar) -->
+<script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
+<script>
+(function(){try{
+if(window.Lenis){var l=new Lenis({duration:1.1});var r=function(t){l.raf(t);requestAnimationFrame(r)};requestAnimationFrame(r);}
+}}catch(e){}})();
+</script>
 </body>
 </html>
