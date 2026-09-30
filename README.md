@@ -1,17 +1,27 @@
-# arte-que-veste
+# Arte Que Veste
 
-Arte Que Veste - moda autoral y arte vestible; catalogo y tienda creativa.
+Moda autoral y arte vestible: catálogo y tienda creativa.
 
-## Stack
+## Qué es
 
-- Primary language: HTML
+Una pieza de **arte vestible**. No es una tienda de ropa al uso: cada prenda es obra, y el
+catálogo se presenta como una galería. El sitio vive en Vercel.
 
-## Getting started
+En línea: <https://arte-que-veste.vercel.app>
 
-```bash
-git clone https://github.com/belentani7/arte-que-veste.git
+## Estructura
+
+```
+backend/     servicio de catálogo
+index.html   catálogo y presentación
+ecosistema.html
 ```
 
----
+## Detalle sensible
 
-License: not specified
+El repositorio incluye `PAQUETE-SEGURO-2026-08-08.md` y `ESTADO-Y-TRANSFERENCIA.md`. Son
+documentos de traspaso: conviene revisarlos antes de publicar cualquier cosa nueva aquí.
+
+## Licencia
+
+MIT — ver `LICENSE`.
