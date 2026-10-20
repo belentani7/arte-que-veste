@@ -25,3 +25,14 @@ documentos de traspaso: conviene revisarlos antes de publicar cualquier cosa nue
 ## Licencia
 
 MIT — ver `LICENSE`.
+## Verificación local
+
+La base estática usa Node.js 20 y no necesita instalar dependencias para sus chequeos:
+
+```sh
+cd frontend
+npm run check
+npm test
+```
+
+Las pruebas del servidor están en `tests/`, fuera del directorio publicado por GitHub Pages.
