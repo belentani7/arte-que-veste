@@ -10,7 +10,13 @@ const AQV_CART_KEY = 'aqv_carrinho';
 const Cart = {
     get() {
         try {
-            return JSON.parse(localStorage.getItem(AQV_CART_KEY)) || [];
+            const stored = JSON.parse(localStorage.getItem(AQV_CART_KEY));
+            if (!Array.isArray(stored)) return [];
+            return stored.filter(i => i && typeof i === 'object' &&
+                typeof i.sku === 'string' && typeof i.key === 'string' &&
+                typeof i.name === 'string' &&
+                Number.isFinite(i.price) && i.price >= 0 &&
+                Number.isInteger(i.quantidade) && i.quantidade >= 1 && i.quantidade <= 100);
         } catch { return []; }
     },
 
@@ -21,6 +27,10 @@ const Cart = {
     },
 
     add(product, qty = 1, size = null, color = null) {
+        if (!product || typeof product.sku !== 'string' ||
+            !Number.isFinite(product.price) || product.price < 0 ||
+            !Number.isInteger(qty) || qty <= 0) return;
+        qty = Math.min(qty, 100);
         const items = this.get();
         const key = `${product.sku}-${size || ''}-${color || ''}`;
         const existing = items.find(i => i.key === key);
@@ -52,6 +62,7 @@ const Cart = {
             this.remove(key);
             return;
         }
+        if (!Number.isInteger(qty) || !Number.isFinite(qty)) return;
         item.quantidade = Math.min(qty, 100);
         this.save(items);
     },
@@ -103,9 +114,10 @@ const Cart = {
                         <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
                         <polyline points="22 4 12 14.01 9 11.01"/>
                     </svg>
-                    <span>${msg}</span>
+                    <span id="aqv-toast-message"></span>
                 </div>
             </div>`;
+        toast.querySelector('#aqv-toast-message').textContent = String(msg);
         document.body.appendChild(toast);
         requestAnimationFrame(() => {
             const d = toast.firstElementChild;
