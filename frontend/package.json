@@ -4,6 +4,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "check": "node --check server.js"
+    "check": "node --check server.js && node --check js/cart.js",
+    "test": "node --test tests/cart.test.cjs ../tests/static-server.test.cjs"
   }
 }
