@@ -304,15 +304,30 @@
             if (data.pac) options.push(data.pac);
             if (data.sedex) options.push(data.sedex);
 
-            if (options.length > 0) {
-                list.innerHTML = options.map((o, i) =>
-                    `<div class="shipping-option ${i === 0 ? 'selected' : ''}" onclick="selectShipping(${o.preco}, '${o.nome}', this)">
-                        <div><p class="text-sm font-semibold">${o.nome}</p><p class="text-xs text-gray-400">${o.prazo} dias úteis</p></div>
-                        <span class="text-sm font-bold">R$ ${o.preco.toFixed(2).replace('.',',')}</span>
-                    </div>`
-                ).join('');
+            const validOptions = options.filter(option =>
+                option && Number.isFinite(Number(option.preco)) && Number(option.preco) >= 0);
+            list.replaceChildren();
+            if (validOptions.length > 0) {
+                validOptions.forEach(option => {
+                    const price = Number(option.preco);
+                    const card = document.createElement('button');
+                    card.type = 'button';
+                    card.className = 'shipping-option';
+                    card.style.cssText = 'width:100%;text-align:left;';
+                    const label = document.createElement('strong');
+                    label.textContent = String(option.nome || 'Entrega');
+                    const period = document.createElement('p');
+                    period.className = 'text-xs text-gray-400';
+                    period.textContent = String(option.prazo ?? '?') + ' dias úteis';
+                    const amount = document.createElement('span');
+                    amount.className = 'text-sm font-bold';
+                    amount.textContent = 'R$ ' + price.toFixed(2).replace('.', ',');
+                    card.append(label, period, amount);
+                    card.addEventListener('click', () => selectShipping(price, option.nome, card));
+                    list.appendChild(card);
+                });
                 document.getElementById('shipping-options').style.display = 'block';
-                selectShipping(options[0].preco, options[0].nome, list.firstElementChild);
+                selectShipping(Number(validOptions[0].preco), validOptions[0].nome, list.firstElementChild);
             }
         } catch {}
     }
@@ -361,12 +376,24 @@
                 throw new Error(data.detail || 'Erro ao criar pedido');
             }
 
-            Cart.clear();
-
             if (data.checkout_url) {
-                window.location.href = data.checkout_url;
+                const checkout = new URL(data.checkout_url, location.href);
+                const trustedHosts = Array.isArray(window.AQV_PAYMENT_ALLOWED_HOSTS)
+                    ? window.AQV_PAYMENT_ALLOWED_HOSTS : [];
+                const sameOrigin = checkout.origin === location.origin;
+                const approvedExternal = checkout.protocol === 'https:' &&
+                    trustedHosts.includes(checkout.hostname);
+                if ((!sameOrigin && !approvedExternal) || checkout.username || checkout.password) {
+                    throw new Error('O destino de pagamento não foi aprovado pela loja.');
+                }
+                Cart.clear();
+                window.location.assign(checkout.href);
+            } else if (data.pedido_id) {
+                Cart.clear();
+                // Creating an order does not mean the payment has been confirmed.
+                window.location.href = 'pedido-pendente.html?id=' + encodeURIComponent(data.pedido_id);
             } else {
-                window.location.href = `pedido-sucesso.html?id=${data.pedido_id}&total=${data.total}`;
+                throw new Error('Resposta inválida do serviço de pedidos.');
             }
         } catch (e) {
             alert('Erro: ' + e.message);
