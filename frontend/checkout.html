@@ -105,8 +105,8 @@
                             <div><label class="form-label">Número *</label><input type="text" id="f-numero" class="form-input" placeholder="123"></div>
                             <div><label class="form-label">Complemento</label><input type="text" id="f-complemento" class="form-input" placeholder="Apto, Bloco..."></div>
                             <div><label class="form-label">Bairro *</label><input type="text" id="f-bairro" class="form-input"></div>
-                            <div><label class="form-label">Cidade *</label><input type="text" id="f-cidade" class="form-input" readonly></div>
-                            <div><label class="form-label">Estado *</label><input type="text" id="f-estado" class="form-input" readonly maxlength="2"></div>
+                            <div><label class="form-label">Cidade *</label><input type="text" id="f-cidade" class="form-input" autocomplete="address-level2" required></div>
+                            <div><label class="form-label">Estado *</label><input type="text" id="f-estado" class="form-input" maxlength="2" autocomplete="address-level1" required></div>
                         </div>
 
                         <!-- FRETE -->
@@ -222,15 +222,11 @@
 
     function updateTotals() {
         const subtotal = Cart.getSubtotal();
-        const pixTotal = subtotal * 0.95;
+        // Never render a removed PIX-only discount field or invent a checkout discount.
         document.getElementById('co-subtotal').textContent = `R$ ${subtotal.toFixed(2).replace('.',',')}`;
-        document.getElementById('co-total').textContent = `R$ ${subtotal.toFixed(2).replace('.',',')}`;
-        document.getElementById('pix-total').textContent = `R$ ${pixTotal.toFixed(2).replace('.',',')}`;
-
-        if (shippingCost > 0) {
-            document.getElementById('co-shipping').textContent = `R$ ${shippingCost.toFixed(2).replace('.',',')}`;
-            document.getElementById('co-total').textContent = `R$ ${(subtotal + shippingCost).toFixed(2).replace('.',',')}`;
-        }
+        document.getElementById('co-total').textContent = `R$ ${(subtotal + shippingCost).toFixed(2).replace('.',',')}`;
+        document.getElementById('co-shipping').textContent = shippingType
+            ? `R$ ${shippingCost.toFixed(2).replace('.',',')}` : 'Selecione o CEP';
     }
 
     function goToStep(step) {
@@ -263,7 +259,10 @@
         const cep = document.getElementById('f-cep').value.trim();
         const rua = document.getElementById('f-rua').value.trim();
         const numero = document.getElementById('f-numero').value.trim();
-        if (!cep || !rua || !numero) {
+        const bairro = document.getElementById('f-bairro').value.trim();
+        const cidade = document.getElementById('f-cidade').value.trim();
+        const estado = document.getElementById('f-estado').value.trim();
+        if (!/^\\d{8}$/.test(cep.replace(/\\D/g,'')) || !rua || !numero || !bairro || !cidade || !/^[A-Za-z]{2}$/.test(estado)) {
             alert('Por favor, preencha CEP, rua e número.');
             return false;
         }
@@ -279,19 +278,27 @@
 
     async function lookupCEP() {
         const cep = document.getElementById('f-cep').value.replace(/\D/g, '');
+        // A changed postcode invalidates a previously selected shipping quote.
+        shippingCost = 0;
+        shippingType = '';
+        document.getElementById('shipping-options').style.display = 'none';
+        document.getElementById('shipping-list').replaceChildren();
+        updateTotals();
         if (cep.length !== 8) return;
         try {
             const r = await fetch(`https://brasilapi.com.br/api/cep/v2/${cep}`);
-            const data = await r.json();
-            if (!data.erro) {
-                document.getElementById('f-rua').value = data.logradouro || '';
-                document.getElementById('f-bairro').value = data.bairro || '';
-                document.getElementById('f-cidade').value = data.localidade || '';
-                document.getElementById('f-estado').value = data.estado || '';
+            if (r.ok) {
+                const data = await r.json();
+                if (!data.erro) {
+                    // BrasilAPI v2 uses street/neighborhood/city/state; tolerate ViaCEP-shaped payloads.
+                    document.getElementById('f-rua').value = data.street || data.logradouro || '';
+                    document.getElementById('f-bairro').value = data.neighborhood || data.bairro || '';
+                    document.getElementById('f-cidade').value = data.city || data.localidade || '';
+                    document.getElementById('f-estado').value = data.state || data.uf || data.estado || '';
+                }
             }
-        } catch {}
-        // Calculate shipping
-        if (cep.length === 8) calculateShipping(cep);
+        } catch { /* Manual address fields remain available if the postcode service is offline. */ }
+        calculateShipping(cep);
     }
 
     async function calculateShipping(cep) {
