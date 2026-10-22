@@ -118,3 +118,68 @@ test("cart refuses to persist oversized product descriptions", () => {
   assert.equal(getStore(), "[]");
   assert.match(message, /Não foi possível salvar/);
 });
+
+test("checkout totals use only elements present and handle free shipping without PIX assumptions", () => {
+  const checkout = fs.readFileSync(path.join(__dirname, "../checkout.html"), "utf8");
+  const start = checkout.indexOf("function updateTotals() {");
+  const end = checkout.indexOf("function goToStep(step)",start);
+  assert.ok(start >= 0 && end > start);
+  const segment = checkout.slice(start,end);
+  const elements = Object.fromEntries(["co-subtotal","co-total","co-shipping"].map(id => [id,{textContent:""}]));
+  const sandbox = {
+    Cart: { getSubtotal: () => 120 },
+    shippingCost: 0,
+    shippingType: "",
+    document: { getElementById(id) { assert.ok(elements[id],"unknown price element "+id); return elements[id]; } },
+  };
+  vm.runInNewContext(segment + "\nupdateTotals()",sandbox);
+  assert.equal(elements["co-total"].textContent,"R$ 120,00");
+  assert.equal(elements["co-shipping"].textContent,"Selecione o CEP");
+  sandbox.shippingType="Retirada local";
+  vm.runInNewContext("updateTotals()",sandbox);
+  assert.equal(elements["co-shipping"].textContent,"R$ 0,00");
+  sandbox.shippingCost=15.5;
+  vm.runInNewContext("updateTotals()",sandbox);
+  assert.equal(elements["co-total"].textContent,"R$ 135,50");
+  assert.doesNotMatch(segment,/pix-total|pixTotal/);
+});
+
+test("BrasilAPI v2 address fills and invalidates stale shipping when CEP changes", async () => {
+  const checkout = fs.readFileSync(path.join(__dirname, "../checkout.html"),"utf8");
+  const start=checkout.indexOf("async function lookupCEP() {");
+  const end=checkout.indexOf("async function calculateShipping(cep)",start);
+  assert.ok(start >= 0 && end > start);
+  const fields = {
+    "f-cep": {value:"01310-100"},
+    "f-rua": {value:""},
+    "f-bairro": {value:""},
+    "f-cidade": {value:""},
+    "f-estado": {value:""},
+    "shipping-options": {style:{display:"block"}},
+    "shipping-list": {replaceChildren() { this.cleared=true; }},
+  };
+  let lookedUp="";
+  let requested="";
+  const sandbox = {
+    shippingCost: 99,
+    shippingType: "Old quote",
+    document: {getElementById(id) { assert.ok(fields[id],"missing field "+id);return fields[id];}},
+    updateTotals() {},
+    fetch: async url => {
+      requested=url;
+      return {ok:true,json:async()=>({street:"Avenida Paulista",neighborhood:"Bela Vista",city:"São Paulo",state:"SP"})};
+    },
+    calculateShipping: cep => {lookedUp=cep;},
+  };
+  await vm.runInNewContext("(async()=>{"+checkout.slice(start,end)+";await lookupCEP()})()",sandbox);
+  assert.equal(requested,"https://brasilapi.com.br/api/cep/v2/01310100");
+  assert.equal(fields["f-rua"].value,"Avenida Paulista");
+  assert.equal(fields["f-bairro"].value,"Bela Vista");
+  assert.equal(fields["f-cidade"].value,"São Paulo");
+  assert.equal(fields["f-estado"].value,"SP");
+  assert.equal(lookedUp,"01310100");
+  assert.equal(sandbox.shippingCost,0);
+  assert.equal(sandbox.shippingType,"");
+  assert.equal(fields["shipping-options"].style.display,"none");
+  assert.equal(fields["shipping-list"].cleared,true);
+});
