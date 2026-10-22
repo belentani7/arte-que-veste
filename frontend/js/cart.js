@@ -6,16 +6,22 @@
  */
 
 const AQV_CART_KEY = 'aqv_carrinho';
+const AQV_CART_MAX_BYTES = 128_000;
+const AQV_CART_MAX_LINES = 200;
+const AQV_CART_MAX_PRICE = 10_000_000;
 
 const Cart = {
     get() {
         try {
-            const stored = JSON.parse(localStorage.getItem(AQV_CART_KEY));
-            if (!Array.isArray(stored)) return [];
+            const raw = localStorage.getItem(AQV_CART_KEY);
+            if (!raw || raw.length > AQV_CART_MAX_BYTES) return [];
+            const stored = JSON.parse(raw);
+            if (!Array.isArray(stored) || stored.length > AQV_CART_MAX_LINES) return [];
             return stored.filter(i => i && typeof i === 'object' &&
-                typeof i.sku === 'string' && typeof i.key === 'string' &&
-                typeof i.name === 'string' &&
-                Number.isFinite(i.price) && i.price >= 0 &&
+                typeof i.sku === 'string' && i.sku.length > 0 && i.sku.length <= 120 &&
+                typeof i.key === 'string' && i.key.length > 0 && i.key.length <= 300 &&
+                typeof i.name === 'string' && i.name.length > 0 && i.name.length <= 200 &&
+                Number.isFinite(i.price) && i.price >= 0 && i.price <= AQV_CART_MAX_PRICE &&
                 Number.isInteger(i.quantidade) && i.quantidade >= 1 && i.quantidade <= 100);
         } catch { return []; }
     },
@@ -27,8 +33,9 @@ const Cart = {
     },
 
     add(product, qty = 1, size = null, color = null) {
-        if (!product || typeof product.sku !== 'string' ||
-            !Number.isFinite(product.price) || product.price < 0 ||
+        if (!product || typeof product.sku !== 'string' || product.sku.length < 1 || product.sku.length > 120 ||
+            typeof product.name !== 'string' || product.name.length < 1 || product.name.length > 200 ||
+            !Number.isFinite(product.price) || product.price < 0 || product.price > AQV_CART_MAX_PRICE ||
             !Number.isInteger(qty) || qty <= 0) return;
         qty = Math.min(qty, 100);
         const items = this.get();
@@ -37,6 +44,7 @@ const Cart = {
         if (existing) {
             existing.quantidade = Math.min(existing.quantidade + qty, 100);
         } else {
+            if (items.length >= AQV_CART_MAX_LINES || key.length > 300) return;
             items.push({
                 key,
                 sku: product.sku,
