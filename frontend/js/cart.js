@@ -27,9 +27,18 @@ const Cart = {
     },
 
     save(items) {
-        localStorage.setItem(AQV_CART_KEY, JSON.stringify(items));
+        // Private browsing and quota exhaustion must never report a save that
+        // did not happen. Avoid serializing unbounded product descriptions.
+        try {
+            const serialized = JSON.stringify(items);
+            if (serialized.length > AQV_CART_MAX_BYTES) return false;
+            localStorage.setItem(AQV_CART_KEY, serialized);
+        } catch {
+            return false;
+        }
         this.updateBadge();
         window.dispatchEvent(new CustomEvent('cart-updated', { detail: { items } }));
+        return true;
     },
 
     add(product, qty = 1, size = null, color = null) {
@@ -58,8 +67,11 @@ const Cart = {
                 quantidade: qty
             });
         }
-        this.save(items);
-        this.showToast(`${product.name} adicionado ao carrinho!`);
+        if (this.save(items)) {
+            this.showToast(`${product.name} adicionado ao carrinho!`);
+        } else {
+            this.showToast('Não foi possível salvar o carrinho neste navegador.');
+        }
     },
 
     update(key, qty) {
