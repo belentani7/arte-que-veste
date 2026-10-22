@@ -77,3 +77,25 @@ test("public checkout does not contain a placeholder payments API", () => {
   assert.match(checkout, /Checkout temporariamente indisponível/);
   assert.match(checkout, /AQV_PAYMENT_ALLOWED_HOSTS/);
 });
+
+test("oversized or extremely priced browser cart entries never inflate totals", () => {
+  const huge = createCart(" ".repeat(128_001));
+  assert.equal(huge.cart.getItemCount(), 0);
+  const priceAttack = createCart(JSON.stringify([
+    { sku: "SK", key: "SK", name: "Unexpected total", price: 1e308, quantidade: 100 },
+  ]));
+  assert.equal(priceAttack.cart.getSubtotal(), 0);
+  const many = createCart(JSON.stringify(Array.from({ length: 201 }, (_, i) => ({
+    sku: "SKU-" + i, key: "SKU-" + i, name: "Entry " + i,
+    price: 10, quantidade: 1,
+  }))));
+  assert.equal(many.cart.getItemCount(), 0);
+});
+
+test("new item validation rejects missing labels and astronomical prices", () => {
+  const { cart } = createCart();
+  cart.add({ sku: "X", price: 10 }, 1);
+  cart.add({ sku: "X", name: "Item", price: 1e308 }, 1);
+  cart.add({ sku: "", name: "Item", price: 10 }, 1);
+  assert.equal(cart.get().length, 0);
+});
