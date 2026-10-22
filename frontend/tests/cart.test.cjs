@@ -6,14 +6,14 @@ const path = require("node:path");
 
 const source = fs.readFileSync(path.join(__dirname, "../js/cart.js"), "utf8");
 
-function createCart(initial = "[]") {
+function createCart(initial = "[]", failWrite = false) {
   let stored = initial;
   let toastMarkup = "";
   let toastText = "";
   const context = {
     localStorage: {
       getItem: () => stored,
-      setItem: (_, value) => { stored = value; },
+      setItem: (_, value) => { if (failWrite) throw new Error("Browser storage disabled"); stored = value; },
       removeItem: () => { stored = null; },
     },
     document: {
@@ -98,4 +98,23 @@ test("new item validation rejects missing labels and astronomical prices", () =>
   cart.add({ sku: "X", name: "Item", price: 1e308 }, 1);
   cart.add({ sku: "", name: "Item", price: 10 }, 1);
   assert.equal(cart.get().length, 0);
+});
+
+test("blocked browser storage is visibly reported instead of claiming the cart was saved", () => {
+  const { cart, getStore } = createCart("[]", true);
+  let message = "";
+  cart.showToast = (value) => { message = value; };
+  assert.equal(cart.save([{ sku: "X", key: "X", name: "Item", price: 1, quantidade: 1 }]), false);
+  cart.add({ sku: "X", name: "Item", price: 1 }, 1);
+  assert.equal(getStore(), "[]");
+  assert.match(message, /Não foi possível salvar/);
+});
+
+test("cart refuses to persist oversized product descriptions", () => {
+  const { cart, getStore } = createCart();
+  let message = "";
+  cart.showToast = (value) => { message = value; };
+  cart.add({ sku: "X", name: "Valid name", price: 10, desc: "X".repeat(128_001) }, 1);
+  assert.equal(getStore(), "[]");
+  assert.match(message, /Não foi possível salvar/);
 });
