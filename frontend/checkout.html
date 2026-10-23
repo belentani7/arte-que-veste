@@ -262,8 +262,8 @@
         const bairro = document.getElementById('f-bairro').value.trim();
         const cidade = document.getElementById('f-cidade').value.trim();
         const estado = document.getElementById('f-estado').value.trim();
-        if (!/^\\d{8}$/.test(cep.replace(/\\D/g,'')) || !rua || !numero || !bairro || !cidade || !/^[A-Za-z]{2}$/.test(estado)) {
-            alert('Por favor, preencha CEP, rua e número.');
+        if (!/^\d{8}$/.test(cep.replace(/\D/g,'')) || !rua || !numero || !bairro || !cidade || !/^[A-Za-z]{2}$/.test(estado)) {
+            alert('Por favor, preencha CEP, rua, número, bairro, cidade e estado válidos.');
             return false;
         }
         return true;
