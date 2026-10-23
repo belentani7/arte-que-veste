@@ -221,3 +221,51 @@ test("checkout address accepts valid Brazilian CEP and rejects invalid or incomp
   assert.equal(validate(), false, "invalid state code must fail");
   assert.equal(alerts.length, 3);
 });
+
+
+test("checkout inputs have programmatic labels and visible keyboard focus", () => {
+  const checkout = fs.readFileSync(path.join(__dirname, "../checkout.html"), "utf8");
+  const ids = [...checkout.matchAll(/<input[^>]*\bid="(f-[^"]+)"/g)].map(match => match[1]);
+  assert.ok(ids.length >= 10, "expected all customer and address fields");
+  for (const id of ids) {
+    assert.match(checkout, new RegExp('<label[^>]+for="' + id + '"[^>]*>'), id + " needs a label");
+  }
+  assert.match(checkout, /\.form-input:focus-visible\s*\{[^}]*outline:/);
+  assert.match(checkout, /prefers-reduced-motion:\s*reduce/);
+});
+
+test("checkout step navigation focuses heading and respects reduced motion", () => {
+  const checkout = fs.readFileSync(path.join(__dirname, "../checkout.html"), "utf8");
+  const start = checkout.indexOf("function goToStep(step) {");
+  const end = checkout.indexOf("function validateStep1() {", start);
+  assert.ok(start >= 0 && end > start);
+  const segment = checkout.slice(start, end);
+  const heading = { attrs: {}, setAttribute(name, value) { this.attrs[name] = value; }, focus(options) { this.focusOptions = options; } };
+  const panels = [1, 2, 3].map(() => ({ style: {} }));
+  const steps = [1, 2, 3].map(() => ({ classList: { remove() {}, add() {} } }));
+  let scrollBehavior = "";
+  const sandbox = {
+    currentStep: 1,
+    validateStep1: () => true,
+    validateStep2: () => true,
+    document: {
+      getElementById(id) { return panels[Number(id.slice(-1)) - 1]; },
+      querySelector(selector) {
+        if (selector === "#step-2 h2") return heading;
+        const match = selector.match(/\.step\[data-step="(\d)"\]/);
+        return match ? steps[Number(match[1]) - 1] : null;
+      },
+    },
+    window: {
+      matchMedia: () => ({ matches: true }),
+      scrollTo: options => { scrollBehavior = options.behavior; },
+    },
+  };
+  vm.runInNewContext(segment + "\ngoToStep(2)", sandbox);
+  assert.equal(sandbox.currentStep, 2);
+  assert.equal(panels[1].style.display, "block");
+  assert.equal(panels[0].style.display, "none");
+  assert.equal(scrollBehavior, "auto");
+  assert.equal(heading.attrs.tabindex, "-1");
+  assert.equal(heading.focusOptions.preventScroll, true);
+});
