@@ -10,29 +10,31 @@ function createCart(initial = "[]", failWrite = false) {
   let stored = initial;
   let toastMarkup = "";
   let toastText = "";
+  const toastAttributes = {};
   const context = {
     localStorage: {
       getItem: () => stored,
       setItem: (_, value) => { if (failWrite) throw new Error("Browser storage disabled"); stored = value; },
-      removeItem: () => { stored = null; },
+      removeItem: () => { if (failWrite) throw new Error("Browser storage disabled"); stored = null; },
     },
     document: {
       addEventListener() {},
       querySelectorAll: () => [],
       getElementById: () => null,
       createElement: () => ({
+        setAttribute(name, value) { toastAttributes[name] = value; },
         set innerHTML(value) { toastMarkup = value; },
         querySelector() { return { set textContent(value) { toastText = value; } }; },
       }),
       body: { appendChild() {} },
     },
-    window: { dispatchEvent() {} },
+    window: { dispatchEvent() {}, matchMedia: () => ({ matches: false }) },
     CustomEvent: class {},
     requestAnimationFrame() {},
     setTimeout() {},
   };
   const cart = vm.runInNewContext(source + "\nCart;", context);
-  return { cart, getStore: () => stored, getMarkup: () => toastMarkup, getText: () => toastText };
+  return { cart, getStore: () => stored, getMarkup: () => toastMarkup, getText: () => toastText, getToastAttributes: () => toastAttributes };
 }
 
 test("invalid JSON and non-array cart data are safely ignored", () => {
@@ -69,6 +71,26 @@ test("toast user-controlled names are assigned as text, never parsed HTML", () =
   cart.showToast(payload);
   assert.equal(getText(), payload);
   assert.doesNotMatch(getMarkup(), /onerror=/);
+});
+
+test("cart toast announces text to assistive technology", () => {
+  const { cart, getToastAttributes, getText } = createCart();
+  cart.showToast("Produto adicionado");
+  assert.equal(getToastAttributes().role, "status");
+  assert.equal(getToastAttributes()["aria-live"], "polite");
+  assert.equal(getToastAttributes()["aria-atomic"], "true");
+  assert.equal(getText(), "Produto adicionado");
+});
+
+test("blocked browser storage cannot falsely clear a saved cart", () => {
+  const item = { sku: "X", key: "X", name: "Produto", price: 12, quantidade: 1 };
+  const { cart, getStore } = createCart(JSON.stringify([item]), true);
+  let warning = "";
+  cart.showToast = (text) => { warning = text; };
+  assert.equal(cart.clear(), false);
+  assert.equal(cart.getItemCount(), 1);
+  assert.match(warning, /Não foi possível limpar/);
+  assert.equal(JSON.parse(getStore()).length, 1);
 });
 
 test("public checkout does not contain a placeholder payments API", () => {
