@@ -93,9 +93,15 @@ const Cart = {
     },
 
     clear() {
-        localStorage.removeItem(AQV_CART_KEY);
+        try {
+            localStorage.removeItem(AQV_CART_KEY);
+        } catch {
+            this.showToast('Não foi possível limpar o carrinho neste navegador.');
+            return false;
+        }
         this.updateBadge();
         window.dispatchEvent(new CustomEvent('cart-updated', { detail: { items: [] } }));
+        return true;
     },
 
     getSubtotal() {
@@ -124,6 +130,9 @@ const Cart = {
 
         const toast = document.createElement('div');
         toast.id = 'aqv-toast';
+        toast.setAttribute('role', 'status');
+        toast.setAttribute('aria-live', 'polite');
+        toast.setAttribute('aria-atomic', 'true');
         toast.innerHTML = `
             <div style="position:fixed;bottom:24px;right:24px;z-index:9999;background:#1a1a1a;color:#fff;
                 padding:16px 24px;border-left:4px solid #40E0D0;font-family:'Inter',sans-serif;font-size:14px;
@@ -139,12 +148,25 @@ const Cart = {
             </div>`;
         toast.querySelector('#aqv-toast-message').textContent = String(msg);
         document.body.appendChild(toast);
-        requestAnimationFrame(() => {
+        const reduceMotion = typeof window.matchMedia === 'function' &&
+            window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (reduceMotion) {
             const d = toast.firstElementChild;
-            d.style.transform = 'translateY(0)';
+            d.style.transition = 'none';
+            d.style.transform = 'none';
             d.style.opacity = '1';
-        });
+        } else {
+            requestAnimationFrame(() => {
+                const d = toast.firstElementChild;
+                d.style.transform = 'translateY(0)';
+                d.style.opacity = '1';
+            });
+        }
         setTimeout(() => {
+            if (reduceMotion) {
+                toast.remove();
+                return;
+            }
             const d = toast.firstElementChild;
             if (d) { d.style.transform = 'translateY(20px)'; d.style.opacity = '0'; }
             setTimeout(() => toast.remove(), 400);
