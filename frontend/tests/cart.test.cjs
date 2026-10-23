@@ -6,11 +6,12 @@ const path = require("node:path");
 
 const source = fs.readFileSync(path.join(__dirname, "../js/cart.js"), "utf8");
 
-function createCart(initial = "[]", failWrite = false) {
+function createCart(initial = "[]", failWrite = false, reduceMotion = false) {
   let stored = initial;
   let toastMarkup = "";
   let toastText = "";
   const toastAttributes = {};
+  const toastStyle = {};
   const context = {
     localStorage: {
       getItem: () => stored,
@@ -22,19 +23,20 @@ function createCart(initial = "[]", failWrite = false) {
       querySelectorAll: () => [],
       getElementById: () => null,
       createElement: () => ({
+        firstElementChild: { style: toastStyle },
         setAttribute(name, value) { toastAttributes[name] = value; },
         set innerHTML(value) { toastMarkup = value; },
         querySelector() { return { set textContent(value) { toastText = value; } }; },
       }),
       body: { appendChild() {} },
     },
-    window: { dispatchEvent() {}, matchMedia: () => ({ matches: false }) },
+    window: { dispatchEvent() {}, matchMedia: () => ({ matches: reduceMotion }) },
     CustomEvent: class {},
     requestAnimationFrame() {},
     setTimeout() {},
   };
   const cart = vm.runInNewContext(source + "\nCart;", context);
-  return { cart, getStore: () => stored, getMarkup: () => toastMarkup, getText: () => toastText, getToastAttributes: () => toastAttributes };
+  return { cart, getStore: () => stored, getMarkup: () => toastMarkup, getText: () => toastText, getToastAttributes: () => toastAttributes, getToastStyle: () => toastStyle };
 }
 
 test("invalid JSON and non-array cart data are safely ignored", () => {
@@ -80,6 +82,14 @@ test("cart toast announces text to assistive technology", () => {
   assert.equal(getToastAttributes()["aria-live"], "polite");
   assert.equal(getToastAttributes()["aria-atomic"], "true");
   assert.equal(getText(), "Produto adicionado");
+});
+
+test("reduced-motion preference shows notifications without animated movement", () => {
+  const { cart, getToastStyle } = createCart("[]", false, true);
+  cart.showToast("Pronto");
+  assert.equal(getToastStyle().transition, "none");
+  assert.equal(getToastStyle().transform, "none");
+  assert.equal(getToastStyle().opacity, "1");
 });
 
 test("blocked browser storage cannot falsely clear a saved cart", () => {
