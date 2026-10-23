@@ -183,3 +183,41 @@ test("BrasilAPI v2 address fills and invalidates stale shipping when CEP changes
   assert.equal(fields["shipping-options"].style.display,"none");
   assert.equal(fields["shipping-list"].cleared,true);
 });
+
+
+test("checkout address accepts valid Brazilian CEP and rejects invalid or incomplete addresses", () => {
+  const checkout = fs.readFileSync(path.join(__dirname, "../checkout.html"), "utf8");
+  const start = checkout.indexOf("function validateStep2() {");
+  const end = checkout.indexOf("function selectPayment(method", start);
+  assert.ok(start >= 0 && end > start, "checkout address validation function must exist");
+  const segment = checkout.slice(start, end);
+  const values = {
+    "f-cep": "01310-100",
+    "f-rua": "Avenida Paulista",
+    "f-numero": "100",
+    "f-bairro": "Bela Vista",
+    "f-cidade": "São Paulo",
+    "f-estado": "SP",
+  };
+  const alerts = [];
+  const sandbox = {
+    document: { getElementById(id) {
+      assert.ok(Object.hasOwn(values, id), "unexpected form field " + id);
+      return { value: values[id] };
+    }},
+    alert: message => alerts.push(message),
+  };
+  const validate = () => vm.runInNewContext(segment + "\nvalidateStep2()", sandbox);
+  assert.equal(validate(), true, "formatted 8-digit CEP should pass");
+  values["f-cep"] = "01310100";
+  assert.equal(validate(), true, "unformatted 8-digit CEP should pass");
+  values["f-cep"] = "01310-10";
+  assert.equal(validate(), false, "short CEP must fail");
+  values["f-cep"] = "01310-100";
+  values["f-cidade"] = "";
+  assert.equal(validate(), false, "missing city must fail");
+  values["f-cidade"] = "São Paulo";
+  values["f-estado"] = "S";
+  assert.equal(validate(), false, "invalid state code must fail");
+  assert.equal(alerts.length, 3);
+});
