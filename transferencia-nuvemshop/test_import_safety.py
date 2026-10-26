@@ -1,7 +1,5 @@
 """Fail-first tests: import must be idempotent and reject bad CSV before writes."""
 import importlib.util
-import io
-import urllib.error
 import subprocess
 import sys
 import tempfile
@@ -9,7 +7,7 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 
-from safe_nuvemshop import safe_api_url
+from safe_nuvemshop import safe_api_path
 
 SCRIPT = Path(__file__).with_name("upload-products.py")
 spec = importlib.util.spec_from_file_location("upload_products", SCRIPT)
@@ -20,8 +18,8 @@ spec.loader.exec_module(module)
 class ImportSafetyTests(unittest.TestCase):
     def test_sku_lookup_only_allowlisted(self):
         self.assertEqual(
-            safe_api_url("/123/products/sku/VFJ-001"),
-            "https://api.nuvemshop.com.br/v1/123/products/sku/VFJ-001",
+            safe_api_path("/123/products/sku/VFJ-001"),
+            "/v1/123/products/sku/VFJ-001",
         )
         for path in (
             "/123/products/sku/../orders",
@@ -29,24 +27,30 @@ class ImportSafetyTests(unittest.TestCase):
             "/123/products/sku/evil%2Forders",
         ):
             with self.subTest(path=path), self.assertRaises(ValueError):
-                safe_api_url(path)
+                safe_api_path(path)
 
     def test_404_means_absent_only_when_explicitly_allowed(self):
-        target = "https://api.nuvemshop.com.br/v1/123/products/sku/ABC"
-
-        def http_error(code):
-            return urllib.error.HTTPError(target, code, "status", {}, io.BytesIO(b"{}"))
-
-        with patch.object(module, "open_nuvemshop", side_effect=http_error(404)):
-            self.assertIsNone(
-                module.api_request("GET", "/123/products/sku/ABC", token="x", missing_ok=True)
-            )
-        with patch.object(module, "open_nuvemshop", side_effect=http_error(404)):
-            with self.assertRaises(urllib.error.HTTPError):
-                module.api_request("GET", "/123/products/sku/ABC", token="x")
-        with patch.object(module, "open_nuvemshop", side_effect=http_error(401)):
-            with self.assertRaises(urllib.error.HTTPError):
-                module.api_request("GET", "/123/products/sku/ABC", token="x", missing_ok=True)
+        for status, missing_ok, expected in (
+            (404, True, None), (404, False, "error"), (401, True, "error")
+        ):
+            with self.subTest(status=status, missing_ok=missing_ok):
+                with patch.object(module.http.client, "HTTPSConnection") as factory:
+                    response = factory.return_value.getresponse.return_value
+                    response.status = status
+                    response.read.return_value = b"{}"
+                    if expected is None:
+                        self.assertIsNone(
+                            module.api_request(
+                                "GET", "/123/products/sku/ABC", token="x",
+                                missing_ok=missing_ok
+                            )
+                        )
+                    else:
+                        with self.assertRaises(RuntimeError):
+                            module.api_request(
+                                "GET", "/123/products/sku/ABC", token="x",
+                                missing_ok=missing_ok
+                            )
 
     def test_categories_from_second_page_are_not_duplicated(self):
         batch = [{"name": {"pt": f"Other-{i}"}, "id": i + 1} for i in range(200)]
