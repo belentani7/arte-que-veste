@@ -12,13 +12,14 @@ import re
 import urllib.error
 import urllib.request
 from pathlib import Path
+from decimal import Decimal, InvalidOperation
 
 from safe_nuvemshop import open_nuvemshop, safe_api_url
 
 USER_AGENT = "ArteQueVeste Upload Script (contato@belentani.com)"
 
 
-def api_request(method, path, data=None, token=None):
+def api_request(method, path, data=None, token=None, missing_ok=False):
     """Realiza una petición a la API de Nuvemshop."""
     url = safe_api_url(path)
     headers = {
@@ -34,6 +35,8 @@ def api_request(method, path, data=None, token=None):
         with open_nuvemshop(req) as resp:
             return json.loads(resp.read().decode("utf-8"))
     except urllib.error.HTTPError as e:
+        if missing_ok and e.code == 404:
+            return None
         error_body = e.read().decode("utf-8") if e.fp else ""
         print(f"  ERROR {e.code}: {error_body[:300]}")
         raise
@@ -71,6 +74,11 @@ def get_or_create_categories(token, store_id):
 
 
 def create_product(token, store_id, product_data, categories):
+    sku = product_data["sku"]
+    existing = api_request("GET", f"/{store_id}/products/sku/{sku}", token=token, missing_ok=True)
+    if existing is not None:
+        print(f"  SKU ya existente: {sku}; se omite sin modificarlo")
+        return None
     """Crea un producto en la tienda."""
     # Mapear categoría del CSV al ID de Nuvemshop
     cat_name_map = {
@@ -121,7 +129,42 @@ def load_products_from_csv(csv_path):
         reader = csv.DictReader(f, delimiter=";")
         for row in reader:
             products.append(row)
+    validate_products(products)
     return products
+
+
+def validate_products(products):
+    """Fail the entire import before the first network call on inconsistent data."""
+    required = (
+        "sku", "nome", "descricao", "preco", "categoria", "estoque",
+        "peso_kg", "largura_cm", "altura_cm", "comprimento_cm",
+    )
+    categories = {"feminino", "masculino", "infantil", "acessorios", "bijuteria", "calcados", "souvenirs"}
+    if not products:
+        raise ValueError("El CSV no contiene productos")
+    seen = set()
+    for line, product in enumerate(products, start=2):
+        for field in required:
+            if field not in product or not isinstance(product[field], str) or not product[field].strip():
+                raise ValueError(f"Línea {line}: campo obligatorio ausente: {field}")
+            product[field] = product[field].strip()
+        sku = product["sku"]
+        if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._~-]{0,63}", sku):
+            raise ValueError(f"Línea {line}: SKU no admitido ({sku!r})")
+        if sku in seen:
+            raise ValueError(f"Línea {line}: SKU duplicado en CSV: {sku}")
+        seen.add(sku)
+        if product["categoria"] not in categories:
+            raise ValueError(f"Línea {line}: categoria desconocida: {product['categoria']}")
+        if not re.fullmatch(r"[0-9]+", product["estoque"]):
+            raise ValueError(f"Línea {line}: estoque debe ser un entero no negativo")
+        for field in ("preco", "peso_kg", "largura_cm", "altura_cm", "comprimento_cm"):
+            try:
+                value = Decimal(product[field])
+            except InvalidOperation as exc:
+                raise ValueError(f"Línea {line}: {field} inválido") from exc
+            if not value.is_finite() or value <= 0:
+                raise ValueError(f"Línea {line}: {field} debe ser positivo y finito")
 
 
 def main():
@@ -142,7 +185,10 @@ def main():
 
     # Cargar productos
     print(f"\n1. Cargando productos desde {args.csv}...")
-    products = load_products_from_csv(args.csv)
+    try:
+        products = load_products_from_csv(args.csv)
+    except (ValueError, OSError, UnicodeError) as exc:
+        parser.error(str(exc))
     print(f"   {len(products)} productos encontrados")
 
     if args.dry_run:
@@ -166,19 +212,25 @@ def main():
     print(f"\n3. Subiendo {len(products)} productos...")
     created = 0
     errors = 0
+    skipped = 0
 
     for product in products:
         try:
-            create_product(args.token, args.store_id, product, categories)
-            created += 1
+            uploaded = create_product(args.token, args.store_id, product, categories)
+            if uploaded is None:
+                skipped += 1
+            else:
+                created += 1
             time.sleep(0.5)  # Rate limit: 2 req/s
         except Exception as e:
             print(f"  ERROR creando {product['nome']}: {e}")
             errors += 1
 
     print(f"\n{'=' * 60}")
-    print(f"RESUMEN: {created} productos creados, {errors} errores")
+    print(f"RESUMEN: {created} productos creados, {skipped} existentes, {errors} errores")
     print(f"{'=' * 60}")
+    if errors:
+        raise SystemExit(1)
 
 
 if __name__ == "__main__":
