@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/inter@latest/latin-400-normal.css">
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
+        @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; } }
         body{font-family:'Inter',sans-serif;background:#faf9f6;color:#1a1a1a}.font-display{font-family:'Playfair Display',serif}
         .nav-link{position:relative;transition:color .3s;font-size:12px;text-transform:uppercase}
         .nav-link::after{content:'';position:absolute;bottom:-5px;left:0;width:0;height:2px;background:#40E0D0;transition:width .3s}
@@ -47,12 +48,12 @@
     <main class="max-w-5xl mx-auto px-4 py-16">
         <!-- CANAIS -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-            <a href="https://wa.me/5579999999999" target="_blank" class="contact-card bg-white p-6 shadow-sm text-center">
+            <div class="contact-card bg-white p-6 shadow-sm text-center" aria-label="WhatsApp indisponível até confirmar o número">
                 <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4"><i data-lucide="message-circle" class="w-6 h-6 text-green-600"></i></div>
                 <h3 class="font-display text-lg font-bold mb-1">WhatsApp</h3>
-                <p class="text-sm text-gray-500">(79) 99999-9999</p>
-                <p class="text-xs text-gray-400 mt-2">Resposta em até 2h</p>
-            </a>
+                <p class="text-sm text-gray-500">Número em confirmação</p>
+                <p class="text-xs text-gray-400 mt-2">Canal indisponível no momento</p>
+            </div>
             <a href="mailto:contato@artequeveste.com.br" class="contact-card bg-white p-6 shadow-sm text-center">
                 <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4"><i data-lucide="mail" class="w-6 h-6 text-blue-600"></i></div>
                 <h3 class="font-display text-lg font-bold mb-1">E-mail</h3>
@@ -70,7 +71,7 @@
         <!-- FORMULÁRIO -->
         <div class="max-w-2xl mx-auto">
             <h2 class="font-display text-2xl font-black mb-6 text-center">Envie sua mensagem</h2>
-            <form onsubmit="sendMessage(event)" class="bg-white p-8 shadow-sm space-y-4">
+            <form class="bg-white p-8 shadow-sm space-y-4" aria-describedby="contact-unavailable" onsubmit="event.preventDefault()">
                 <div class="grid grid-cols-2 gap-4">
                     <div><label class="block text-xs font-semibold uppercase tracking-wider text-gray-500 mb-2">Nome *</label><input type="text" id="c-name" class="form-input" required></div>
                     <div><label class="block text-xs font-semibold uppercase tracking-wider text-gray-500 mb-2">E-mail *</label><input type="email" id="c-email" class="form-input" required></div>
@@ -85,8 +86,8 @@
                     </select>
                 </div>
                 <div><label class="block text-xs font-semibold uppercase tracking-wider text-gray-500 mb-2">Mensagem *</label><textarea id="c-message" class="form-input" rows="5" required></textarea></div>
-                <button type="submit" class="btn-primary">ENVIAR MENSAGEM</button>
-                <p class="text-xs text-gray-400 text-center">Ou envie direto pelo <a href="https://wa.me/5579999999999" class="text-[#40E0D0] underline">WhatsApp</a></p>
+                <button type="submit" class="btn-primary" disabled aria-disabled="true" style="opacity:.55;cursor:not-allowed">ENVIO TEMPORARIAMENTE INDISPONÍVEL</button>
+                <p id="contact-unavailable" role="status" class="text-sm text-gray-600 text-center">O formulário ainda não possui um serviço de envio verificado. Nenhuma mensagem será enviada nem armazenada. Não informe dados pessoais aqui.</p>
             </form>
         </div>
     </main>
@@ -94,16 +95,7 @@
     <footer class="bg-[#1a1a1a] text-white py-8 mt-12"><div class="max-w-7xl mx-auto px-4 text-center"><p class="text-gray-400 text-sm">© 2026 Arte Que Veste. Todos os direitos reservados.</p></div></footer>
 
     <script>
-    function sendMessage(e) {
-        e.preventDefault();
-        const name = document.getElementById('c-name').value;
-        const email = document.getElementById('c-email').value;
-        const subject = document.getElementById('c-subject').value;
-        const message = document.getElementById('c-message').value;
-        const text = `Olá! Meu nome é ${name}.\n\nAssunto: ${subject}\n\n${message}\n\n(E-mail: ${email})`;
-        window.open('https://wa.me/5579999999999?text=' + encodeURIComponent(text), '_blank');
-    }
-    lucide.createIcons();
+    if (window.lucide) window.lucide.createIcons();
     </script>
 
 <!-- FRONT-UPGRADE: Lenis + GSAP -->
@@ -112,8 +104,8 @@
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js"></script>
 <script>
 (function(){try{
-if(window.Lenis){var l=new Lenis({duration:1.1});var r=function(t){l.raf(t);requestAnimationFrame(r)};requestAnimationFrame(r);}
-if(window.gsap&&window.ScrollTrigger){gsap.registerPlugin(ScrollTrigger);
+if(!window.matchMedia("(prefers-reduced-motion: reduce)").matches && window.Lenis){var l=new Lenis({duration:1.1});var r=function(t){l.raf(t);requestAnimationFrame(r)};requestAnimationFrame(r);}
+if(!window.matchMedia("(prefers-reduced-motion: reduce)").matches && window.gsap&&window.ScrollTrigger){gsap.registerPlugin(ScrollTrigger);
 document.querySelectorAll('section,h1,h2,.card,img').forEach(function(el){
 gsap.from(el,{opacity:0,y:26,duration:0.8,ease:'power2.out',scrollTrigger:{trigger:el,start:'top 90%'}});
 });
