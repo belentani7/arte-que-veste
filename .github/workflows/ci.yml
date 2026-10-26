@@ -23,5 +23,8 @@ jobs:
       - name: Check frontend Node server
         working-directory: frontend
         run: npm run check
+      - name: Test storefront HTTP security
+        working-directory: frontend
+        run: npm test
       - name: Test safe Nuvemshop importer
         run: python -m unittest discover -s transferencia-nuvemshop -p 'test_*.py' -v
