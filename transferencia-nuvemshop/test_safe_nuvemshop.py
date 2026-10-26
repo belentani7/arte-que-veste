@@ -1,25 +1,22 @@
-"""Regression tests for the authenticated Nuvemshop migration importer."""
-import importlib.util
-import subprocess
-import sys
-import tempfile
+"""Nuvemshop transport path and authentication boundary tests."""
 import unittest
+from unittest.mock import patch
+from safe_nuvemshop import safe_api_path
+import importlib.util
 from pathlib import Path
-from unittest.mock import Mock, patch
-import urllib.request
-
-from safe_nuvemshop import RejectRedirect, open_nuvemshop, safe_api_url
-
 
 SCRIPT = Path(__file__).with_name("upload-products.py")
+spec = importlib.util.spec_from_file_location("upload_products", SCRIPT)
+module = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(module)
 
 
 class TransportSecurityTests(unittest.TestCase):
-    def test_valid_products_url(self):
-        self.assertEqual(safe_api_url("/123/products"), "https://api.nuvemshop.com.br/v1/123/products")
+    def test_valid_products_path(self):
+        self.assertEqual(safe_api_path("/123/products"), "/v1/123/products")
 
-    def test_valid_categories_url(self):
-        self.assertEqual(safe_api_url("/123/categories"), "https://api.nuvemshop.com.br/v1/123/categories")
+    def test_valid_categories_path(self):
+        self.assertEqual(safe_api_path("/123/categories"), "/v1/123/categories")
 
     def test_malformed_store_or_resource_is_rejected(self):
         invalid = (
@@ -29,33 +26,44 @@ class TransportSecurityTests(unittest.TestCase):
             "/123/products#fragment", "/9999999999999999999999/products",
         )
         for path in invalid:
-            with self.subTest(path=path):
-                with self.assertRaises(ValueError):
-                    safe_api_url(path)
+            with self.subTest(path=path), self.assertRaises(ValueError):
+                safe_api_path(path)
 
-    def test_http_redirect_is_not_followed(self):
-        self.assertIsNone(
-            RejectRedirect().redirect_request(None, None, 302, "Redirect", {}, "https://evil.test")
-        )
+    def test_fixed_https_host_and_json_response(self):
+        with patch.object(module.http.client, "HTTPSConnection") as factory:
+            response = factory.return_value.getresponse.return_value
+            response.status = 200
+            response.read.return_value = b'{"ok": true}'
+            self.assertEqual(module.api_request("GET", "/123/categories", token="dummy"), {"ok": True})
+        factory.assert_called_once_with("api.nuvemshop.com.br", timeout=20)
+        self.assertEqual(factory.return_value.request.call_args.args[:2],
+                         ("GET", "/v1/123/categories"))
+        self.assertEqual(factory.return_value.request.call_count, 1)
+        factory.return_value.close.assert_called_once()
 
-    def test_open_uses_no_redirect_handler_and_timeout(self):
-        sentinel = object()
-        opener = Mock()
-        opener.open.return_value = sentinel
-        req = urllib.request.Request("https://api.nuvemshop.com.br/v1/123/products")
-        with patch("safe_nuvemshop.urllib.request.build_opener", return_value=opener) as build:
-            self.assertIs(open_nuvemshop(req), sentinel)
-        self.assertTrue(any(isinstance(x, RejectRedirect) for x in build.call_args.args))
-        opener.open.assert_called_once_with(req, timeout=20)
+    def test_http_redirect_does_not_trigger_second_request(self):
+        with patch.object(module.http.client, "HTTPSConnection") as factory:
+            response = factory.return_value.getresponse.return_value
+            response.status = 302
+            response.read.return_value = b''
+            with self.assertRaisesRegex(RuntimeError, "HTTP 302"):
+                module.api_request("GET", "/123/categories", token="dummy")
+        factory.return_value.request.assert_called_once()
+        factory.return_value.close.assert_called_once()
 
 
 class ImporterCliTests(unittest.TestCase):
     def make_csv(self, directory):
         csv_file = Path(directory) / "test.csv"
-        csv_file.write_text("sku;nome;descricao;preco;categoria;estoque;peso_kg;largura_cm;altura_cm;comprimento_cm\nABC-1;Produto teste;Test;10.00;feminino;1;0.5;10;20;30\n", encoding="utf-8")
+        csv_file.write_text(
+            "sku;nome;descricao;preco;categoria;estoque;peso_kg;largura_cm;altura_cm;comprimento_cm\n"
+            "ABC-1;Produto teste;Test;10.00;feminino;1;0.5;10;20;30\n",
+            encoding="utf-8",
+        )
         return csv_file
 
     def test_dry_run_never_requires_credentials_or_store_id(self):
+        import subprocess, sys, tempfile
         with tempfile.TemporaryDirectory() as directory:
             csv_file = self.make_csv(directory)
             result = subprocess.run(
@@ -66,6 +74,7 @@ class ImporterCliTests(unittest.TestCase):
         self.assertIn("Produto teste", result.stdout)
 
     def test_invalid_store_id_blocks_all_network_access(self):
+        import subprocess, sys, tempfile
         with tempfile.TemporaryDirectory() as directory:
             csv_file = self.make_csv(directory)
             result = subprocess.run(
