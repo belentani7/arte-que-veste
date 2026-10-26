@@ -3,35 +3,42 @@ Arte Que Veste — Subir productos a Nuvemshop via API REST
 Uso: python upload-products.py --token TOKEN --store-id STORE_ID
 """
 import csv
+import http.client
 import json
 import time
 import argparse
-import urllib.request
-import urllib.error
 
-API_BASE = "https://api.nuvemshop.com.br/v1"
+API_HOST = "api.nuvemshop.com.br"
 USER_AGENT = "ArteQueVeste Upload Script (contato@belentani.com)"
 
 
 def api_request(method, path, data=None, token=None):
-    """Realiza una petición a la API de Nuvemshop."""
-    url = f"{API_BASE}{path}"
+    """Realiza una petición a la API de Nuvemshop.
+
+    El host va fijado por constante y separado del path: el script nunca
+    construye una URL completa a partir de entrada externa (anti-SSRF).
+    """
+    if not path.startswith("/"):
+        raise ValueError(f"path inesperado: {path!r}")
+
     headers = {
         "Authorization": f"Bearer {token}",
         "Content-Type": "application/json; charset=utf-8",
         "User-Agent": USER_AGENT,
     }
-
     body = json.dumps(data).encode("utf-8") if data else None
-    req = urllib.request.Request(url, data=body, headers=headers, method=method)
 
+    conn = http.client.HTTPSConnection(API_HOST)
     try:
-        with urllib.request.urlopen(req) as resp:
-            return json.loads(resp.read().decode("utf-8"))
-    except urllib.error.HTTPError as e:
-        error_body = e.read().decode("utf-8") if e.fp else ""
-        print(f"  ERROR {e.code}: {error_body[:300]}")
-        raise
+        conn.request(method, f"/v1{path}", body=body, headers=headers)
+        resp = conn.getresponse()
+        payload = resp.read().decode("utf-8")
+        if resp.status >= 400:
+            print(f"  ERROR {resp.status}: {payload[:300]}")
+            raise RuntimeError(f"HTTP {resp.status} en {path}")
+        return json.loads(payload)
+    finally:
+        conn.close()
 
 
 def create_category(token, store_id, name_pt):
@@ -130,6 +137,9 @@ def main():
     )
     parser.add_argument("--dry-run", action="store_true", help="Solo mostrar, no subir")
     args = parser.parse_args()
+
+    if not args.store_id.isdigit():
+        parser.error("--store-id debe ser numérico (ID de tienda Nuvemshop)")
 
     print("=" * 60)
     print("Arte Que Veste — Upload a Nuvemshop")

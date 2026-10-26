@@ -23,7 +23,7 @@ frontend/                 tienda + servidor Node mínimo
   products.json           catálogo de productos
   server.js               servidor estático (node server.js)
   assets/img/produtos/    imágenes de producto
-backend/seed.json         datos de catálogo
+backend/seed.json         datos seed del catálogo — sin servicio activo: la tienda sirve frontend/products.json
 magic/                    piezas experimentales (shader, sfx, lore, plugin)
 transferencia-nuvemshop/  guía de migración a Nuvemshop, identidad visual y CSV de productos
 ecosistema.html           índice del ecosistema
