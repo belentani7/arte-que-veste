@@ -6,27 +6,54 @@
  */
 
 const AQV_CART_KEY = 'aqv_carrinho';
+const AQV_CART_MAX_BYTES = 128_000;
+const AQV_CART_MAX_LINES = 200;
+const AQV_CART_MAX_PRICE = 10_000_000;
 
 const Cart = {
     get() {
         try {
-            return JSON.parse(localStorage.getItem(AQV_CART_KEY)) || [];
+            const raw = localStorage.getItem(AQV_CART_KEY);
+            if (!raw || raw.length > AQV_CART_MAX_BYTES) return [];
+            const stored = JSON.parse(raw);
+            if (!Array.isArray(stored) || stored.length > AQV_CART_MAX_LINES) return [];
+            return stored.filter(i => i && typeof i === 'object' &&
+                typeof i.sku === 'string' && i.sku.length > 0 && i.sku.length <= 120 &&
+                typeof i.key === 'string' && i.key.length > 0 && i.key.length <= 300 &&
+                typeof i.name === 'string' && i.name.length > 0 && i.name.length <= 200 &&
+                Number.isFinite(i.price) && i.price >= 0 && i.price <= AQV_CART_MAX_PRICE &&
+                Number.isInteger(i.quantidade) && i.quantidade >= 1 && i.quantidade <= 100);
         } catch { return []; }
     },
 
     save(items) {
-        localStorage.setItem(AQV_CART_KEY, JSON.stringify(items));
+        // Private browsing and quota exhaustion must never report a save that
+        // did not happen. Avoid serializing unbounded product descriptions.
+        try {
+            const serialized = JSON.stringify(items);
+            if (serialized.length > AQV_CART_MAX_BYTES) return false;
+            localStorage.setItem(AQV_CART_KEY, serialized);
+        } catch {
+            return false;
+        }
         this.updateBadge();
         window.dispatchEvent(new CustomEvent('cart-updated', { detail: { items } }));
+        return true;
     },
 
     add(product, qty = 1, size = null, color = null) {
+        if (!product || typeof product.sku !== 'string' || product.sku.length < 1 || product.sku.length > 120 ||
+            typeof product.name !== 'string' || product.name.length < 1 || product.name.length > 200 ||
+            !Number.isFinite(product.price) || product.price < 0 || product.price > AQV_CART_MAX_PRICE ||
+            !Number.isInteger(qty) || qty <= 0) return;
+        qty = Math.min(qty, 100);
         const items = this.get();
         const key = `${product.sku}-${size || ''}-${color || ''}`;
         const existing = items.find(i => i.key === key);
         if (existing) {
             existing.quantidade = Math.min(existing.quantidade + qty, 100);
         } else {
+            if (items.length >= AQV_CART_MAX_LINES || key.length > 300) return;
             items.push({
                 key,
                 sku: product.sku,
@@ -40,8 +67,11 @@ const Cart = {
                 quantidade: qty
             });
         }
-        this.save(items);
-        this.showToast(`${product.name} adicionado ao carrinho!`);
+        if (this.save(items)) {
+            this.showToast(`${product.name} adicionado ao carrinho!`);
+        } else {
+            this.showToast('Não foi possível salvar o carrinho neste navegador.');
+        }
     },
 
     update(key, qty) {
@@ -52,6 +82,7 @@ const Cart = {
             this.remove(key);
             return;
         }
+        if (!Number.isInteger(qty) || !Number.isFinite(qty)) return;
         item.quantidade = Math.min(qty, 100);
         this.save(items);
     },
@@ -62,9 +93,15 @@ const Cart = {
     },
 
     clear() {
-        localStorage.removeItem(AQV_CART_KEY);
+        try {
+            localStorage.removeItem(AQV_CART_KEY);
+        } catch {
+            this.showToast('Não foi possível limpar o carrinho neste navegador.');
+            return false;
+        }
         this.updateBadge();
         window.dispatchEvent(new CustomEvent('cart-updated', { detail: { items: [] } }));
+        return true;
     },
 
     getSubtotal() {
@@ -93,6 +130,9 @@ const Cart = {
 
         const toast = document.createElement('div');
         toast.id = 'aqv-toast';
+        toast.setAttribute('role', 'status');
+        toast.setAttribute('aria-live', 'polite');
+        toast.setAttribute('aria-atomic', 'true');
         toast.innerHTML = `
             <div style="position:fixed;bottom:24px;right:24px;z-index:9999;background:#1a1a1a;color:#fff;
                 padding:16px 24px;border-left:4px solid #40E0D0;font-family:'Inter',sans-serif;font-size:14px;
@@ -103,16 +143,30 @@ const Cart = {
                         <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
                         <polyline points="22 4 12 14.01 9 11.01"/>
                     </svg>
-                    <span>${msg}</span>
+                    <span id="aqv-toast-message"></span>
                 </div>
             </div>`;
+        toast.querySelector('#aqv-toast-message').textContent = String(msg);
         document.body.appendChild(toast);
-        requestAnimationFrame(() => {
+        const reduceMotion = typeof window.matchMedia === 'function' &&
+            window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (reduceMotion) {
             const d = toast.firstElementChild;
-            d.style.transform = 'translateY(0)';
+            d.style.transition = 'none';
+            d.style.transform = 'none';
             d.style.opacity = '1';
-        });
+        } else {
+            requestAnimationFrame(() => {
+                const d = toast.firstElementChild;
+                d.style.transform = 'translateY(0)';
+                d.style.opacity = '1';
+            });
+        }
         setTimeout(() => {
+            if (reduceMotion) {
+                toast.remove();
+                return;
+            }
             const d = toast.firstElementChild;
             if (d) { d.style.transform = 'translateY(20px)'; d.style.opacity = '0'; }
             setTimeout(() => toast.remove(), 400);
