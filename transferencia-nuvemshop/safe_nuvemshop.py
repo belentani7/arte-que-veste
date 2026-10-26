@@ -7,7 +7,7 @@ import re
 import urllib.request
 
 API_BASE = "https://api.nuvemshop.com.br/v1"
-_API_PATH = re.compile(r"/[1-9][0-9]{0,14}/(?:categories|products)\Z", re.ASCII)
+_API_PATH = re.compile(r"/[1-9][0-9]{0,14}/(?:categories|products|products/sku/[A-Za-z0-9][A-Za-z0-9._~-]{0,63})\Z", re.ASCII)
 
 
 class RejectRedirect(urllib.request.HTTPRedirectHandler):
