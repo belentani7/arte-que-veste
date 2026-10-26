@@ -169,8 +169,16 @@
 
     <script src="js/cart.js"></script>
     <script>
-    const API_BASE = (location.hostname === 'localhost' || location.hostname === '127.0.0.1')
-        ? 'http://localhost:8000' : 'https://SEU-APP.railway.app';
+    // In production set window.AQV_API_BASE to the verified HTTPS order service.
+    // A placeholder must never accept checkout or collect personal details.
+    const configuredApi = typeof window.AQV_API_BASE === 'string' ? window.AQV_API_BASE.trim() : '';
+    const isLocal = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+    const API_BASE = /^https:\/\/[^/]+/i.test(configuredApi)
+        ? configuredApi.replace(/\/+$/, '')
+        : (isLocal ? 'http://localhost:8000' : null);
+    const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, c => '&#' + c.charCodeAt(0) + ';');
+    const productImage = value => /^assets\/img\/produtos\/[a-z0-9_.-]+\.(png|jpg|jpeg|webp|svg)$/i.test(String(value))
+        ? value : 'assets/img/produtos/placeholder.svg';
 
     let currentStep = 1;
     let selectedPayment = 'pix';
@@ -184,6 +192,15 @@
             return;
         }
         document.getElementById('checkout-content').style.display = 'block';
+        if (!API_BASE) {
+            const notice = document.createElement('p');
+            notice.setAttribute('role', 'alert');
+            notice.className = 'mb-6 border border-amber-400 bg-amber-50 p-4 text-amber-900 text-sm';
+            notice.textContent = 'Checkout temporariamente indisponível. Não informe seus dados pessoais até a ativação do serviço de pedidos.';
+            document.getElementById('checkout-content').prepend(notice);
+            const submitButton = document.getElementById('btn-submit');
+            if (submitButton) submitButton.disabled = true;
+        }
         renderCheckoutItems();
         updateTotals();
         lucide.createIcons();
@@ -193,9 +210,9 @@
         const items = Cart.get();
         document.getElementById('checkout-items').innerHTML = items.map(i =>
             `<div class="flex gap-3 items-center">
-                <img src="${i.img}" class="w-12 h-14 object-cover bg-gray-100" alt="${i.name}">
+                <img src="${productImage(i.img)}" class="w-12 h-14 object-cover bg-gray-100" alt="${escapeHtml(i.name)}">
                 <div class="flex-1 min-w-0">
-                    <p class="text-xs font-semibold truncate">${i.name}${i.tamanho ? ` (${i.tamanho})` : ''}</p>
+                    <p class="text-xs font-semibold truncate">${escapeHtml(i.name)}${i.tamanho ? ` (${escapeHtml(i.tamanho)})` : ''}</p>
                     <p class="text-[10px] text-gray-400">Qtd: ${i.quantidade}</p>
                 </div>
                 <span class="text-xs font-bold">R$ ${(i.price * i.quantidade).toFixed(2).replace('.',',')}</span>
@@ -278,6 +295,7 @@
     }
 
     async function calculateShipping(cep) {
+        if (!API_BASE) return;
         try {
             const r = await fetch(`${API_BASE}/api/frete/${cep}`);
             const data = await r.json();
@@ -286,28 +304,48 @@
             if (data.pac) options.push(data.pac);
             if (data.sedex) options.push(data.sedex);
 
-            if (options.length > 0) {
-                list.innerHTML = options.map((o, i) =>
-                    `<div class="shipping-option ${i === 0 ? 'selected' : ''}" onclick="selectShipping(${o.preco}, '${o.nome}', this)">
-                        <div><p class="text-sm font-semibold">${o.nome}</p><p class="text-xs text-gray-400">${o.prazo} dias úteis</p></div>
-                        <span class="text-sm font-bold">R$ ${o.preco.toFixed(2).replace('.',',')}</span>
-                    </div>`
-                ).join('');
+            const validOptions = options.filter(option =>
+                option && Number.isFinite(Number(option.preco)) && Number(option.preco) >= 0);
+            list.replaceChildren();
+            if (validOptions.length > 0) {
+                validOptions.forEach(option => {
+                    const price = Number(option.preco);
+                    const card = document.createElement('button');
+                    card.type = 'button';
+                    card.className = 'shipping-option';
+                    card.style.cssText = 'width:100%;text-align:left;';
+                    const label = document.createElement('strong');
+                    label.textContent = String(option.nome || 'Entrega');
+                    const period = document.createElement('p');
+                    period.className = 'text-xs text-gray-400';
+                    period.textContent = String(option.prazo ?? '?') + ' dias úteis';
+                    const amount = document.createElement('span');
+                    amount.className = 'text-sm font-bold';
+                    amount.textContent = 'R$ ' + price.toFixed(2).replace('.', ',');
+                    card.append(label, period, amount);
+                    card.addEventListener('click', () => selectShipping(price, option.nome, card));
+                    list.appendChild(card);
+                });
                 document.getElementById('shipping-options').style.display = 'block';
-                selectShipping(options[0].preco, options[0].nome, list.firstElementChild);
+                selectShipping(Number(validOptions[0].preco), validOptions[0].nome, list.firstElementChild);
             }
         } catch {}
     }
 
     function selectShipping(cost, type, el) {
+        if (!Number.isFinite(cost) || cost < 0) return;
         shippingCost = cost;
-        shippingType = type;
+        shippingType = String(type).slice(0, 100);
         document.querySelectorAll('.shipping-option').forEach(o => o.classList.remove('selected'));
         if (el) el.classList.add('selected');
         updateTotals();
     }
 
     async function submitOrder() {
+        if (!API_BASE) {
+            alert('Pedidos indisponíveis até configurar o checkout.');
+            return;
+        }
         const btn = document.getElementById('btn-submit');
         const btnText = document.getElementById('btn-submit-text');
         btn.disabled = true;
@@ -338,12 +376,24 @@
                 throw new Error(data.detail || 'Erro ao criar pedido');
             }
 
-            Cart.clear();
-
             if (data.checkout_url) {
-                window.location.href = data.checkout_url;
+                const checkout = new URL(data.checkout_url, location.href);
+                const trustedHosts = Array.isArray(window.AQV_PAYMENT_ALLOWED_HOSTS)
+                    ? window.AQV_PAYMENT_ALLOWED_HOSTS : [];
+                const sameOrigin = checkout.origin === location.origin;
+                const approvedExternal = checkout.protocol === 'https:' &&
+                    trustedHosts.includes(checkout.hostname);
+                if ((!sameOrigin && !approvedExternal) || checkout.username || checkout.password) {
+                    throw new Error('O destino de pagamento não foi aprovado pela loja.');
+                }
+                Cart.clear();
+                window.location.assign(checkout.href);
+            } else if (data.pedido_id) {
+                Cart.clear();
+                // Creating an order does not mean the payment has been confirmed.
+                window.location.href = 'pedido-pendente.html?id=' + encodeURIComponent(data.pedido_id);
             } else {
-                window.location.href = `pedido-sucesso.html?id=${data.pedido_id}&total=${data.total}`;
+                throw new Error('Resposta inválida do serviço de pedidos.');
             }
         } catch (e) {
             alert('Erro: ' + e.message);
