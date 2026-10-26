@@ -93,7 +93,7 @@
                         <i data-lucide="shopping-bag" class="w-5 h-5"></i>
                         <span class="cart-badge absolute -top-1 -right-1 bg-[var(--turquesa)] text-[var(--preto)] text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center" style="display:none">0</span>
                     </a>
-                    <a href="https://wa.me/5579999999999" target="_blank" rel="noopener" class="hidden sm:flex items-center text-xs uppercase tracking-wider border border-[var(--preto)] px-4 py-2 hover:bg-[var(--preto)] hover:text-white transition-colors">
+                    <a href="contato.html" class="hidden sm:flex items-center text-xs uppercase tracking-wider border border-[var(--preto)] px-4 py-2 hover:bg-[var(--preto)] hover:text-white transition-colors">
                         <i data-lucide="message-circle" class="w-4 h-4 mr-2"></i> Fale Conosco
                     </a>
                 </div>
@@ -290,25 +290,39 @@
 
     function renderProducts() {
         const grid = document.getElementById('productGrid');
-        grid.innerHTML = PRODUTOS.map(p => {
-            const c = CATEGORIAS[p.category] || { label: '', bg: 'var(--preto)', text: '#fff' };
-            const priceFmt = p.price.toFixed(2).replace('.', ',');
-            return '<div class="product-card anim-scroll" data-category="' + p.category + '">' +
+        // Catalog JSON may be served by a remote API. Never interpolate its
+        // fields into executable HTML without escaping them first.
+        const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, char => ({
+            '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+        })[char]);
+        const safeImage = value => {
+            const image = String(value ?? '');
+            return /^assets\/img\/produtos\/[a-zA-Z0-9_/-]+\.(?:png|jpe?g|webp|svg)$/i.test(image)
+                ? image : 'assets/img/produtos/placeholder.svg';
+        };
+        const safeProducts = Array.isArray(PRODUTOS)
+            ? PRODUTOS.filter(p => p && Number.isFinite(Number(p.price)) && Number(p.price) >= 0)
+            : [];
+        grid.innerHTML = safeProducts.map(p => {
+            const c = Object.hasOwn(CATEGORIAS, p.category)
+                ? CATEGORIAS[p.category] : { label: '', bg: 'var(--preto)', text: '#fff' };
+            const priceFmt = Number(p.price).toFixed(2).replace('.', ',');
+            return '<div class="product-card anim-scroll" data-category="' + escapeHtml(p.category) + '">' +
                 '<div class="relative overflow-hidden mb-3 bg-gray-100 aspect-[3/4]">' +
-                '<img src="' + p.img + '" class="product-image w-full h-full object-cover" alt="' + p.alt + '" loading="lazy">' +
+                '<img src="' + safeImage(p.img) + '" class="product-image w-full h-full object-cover" alt="' + escapeHtml(p.alt) + '" loading="lazy">' +
                 '<div class="absolute top-2 left-2 px-2 py-1 text-[10px] uppercase" style="background:' + c.bg + ';color:' + c.text + '">' + c.label + '</div>' +
                 '</div>' +
                 '<div class="p-2">' +
-                '<h3 class="font-display text-sm font-bold mb-1 truncate">' + p.name + '</h3>' +
-                '<p class="text-xs text-gray-500 mb-2">' + p.desc + '</p>' +
+                '<h3 class="font-display text-sm font-bold mb-1 truncate">' + escapeHtml(p.name) + '</h3>' +
+                '<p class="text-xs text-gray-500 mb-2">' + escapeHtml(p.desc) + '</p>' +
                 '<div class="flex justify-between items-center">' +
                 '<span class="text-base font-bold">R$ ' + priceFmt + '</span>' +
-                '<a href="produto.html?sku=' + p.sku + '" class="btn-primary text-[10px] py-1 px-2 inline-block text-center no-underline">Ver</a>' +
+                '<a href="produto.html?sku=' + encodeURIComponent(String(p.sku ?? '').replace(/[\uD800-\uDFFF]/g, '')) + '" class="btn-primary text-[10px] py-1 px-2 inline-block text-center no-underline">Ver</a>' +
                 '</div></div></div>';
         }).join('');
 
         const countEl = document.getElementById('productCount');
-        if (countEl) countEl.textContent = 'Mostrando ' + PRODUTOS.length + ' de ' + PRODUTOS.length + ' produtos';
+        if (countEl) countEl.textContent = 'Mostrando ' + safeProducts.length + ' de ' + safeProducts.length + ' produtos';
     }
 
     // Product cards now link to produto.html?sku=XXX
