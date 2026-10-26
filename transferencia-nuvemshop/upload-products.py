@@ -4,42 +4,45 @@ Uso: python upload-products.py --dry-run  (sin red ni credenciales)
 Ejecución real: configurar NUVEMSHOP_ACCESS_TOKEN en el entorno, y --store-id ID
 """
 import csv
+import http.client
 import json
 import time
 import argparse
 import os
 import re
-import urllib.error
-import urllib.request
 from pathlib import Path
 from decimal import Decimal, InvalidOperation
 
-from safe_nuvemshop import open_nuvemshop, safe_api_url
+from safe_nuvemshop import safe_api_path
 
+API_HOST = "api.nuvemshop.com.br"
 USER_AGENT = "ArteQueVeste Upload Script (contato@belentani.com)"
 
 
 def api_request(method, path, data=None, token=None, missing_ok=False):
-    """Realiza una petición a la API de Nuvemshop."""
-    url = safe_api_url(path)
+    """Only a fixed Nuvemshop host and allowlisted path can receive the token."""
+    if method not in {"GET", "POST"}:
+        raise ValueError("Método HTTP no permitido")
+    uri = safe_api_path(path)
     headers = {
         "Authorization": f"Bearer {token}",
         "Content-Type": "application/json; charset=utf-8",
         "User-Agent": USER_AGENT,
     }
-
-    body = json.dumps(data).encode("utf-8") if data else None
-    req = urllib.request.Request(url, data=body, headers=headers, method=method)
-
+    body = json.dumps(data).encode("utf-8") if data is not None else None
+    conn = http.client.HTTPSConnection(API_HOST, timeout=20)
     try:
-        with open_nuvemshop(req) as resp:
-            return json.loads(resp.read().decode("utf-8"))
-    except urllib.error.HTTPError as e:
-        if missing_ok and e.code == 404:
+        conn.request(method, uri, body=body, headers=headers)
+        response = conn.getresponse()
+        payload = response.read().decode("utf-8")
+        if response.status == 404 and missing_ok:
             return None
-        error_body = e.read().decode("utf-8") if e.fp else ""
-        print(f"  ERROR {e.code}: {error_body[:300]}")
-        raise
+        if not 200 <= response.status < 300:
+            print(f"  ERROR {response.status}: {payload[:300]}")
+            raise RuntimeError(f"HTTP {response.status} en recurso Nuvemshop")
+        return json.loads(payload)
+    finally:
+        conn.close()
 
 
 def create_category(token, store_id, name_pt):
