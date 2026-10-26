@@ -53,8 +53,16 @@ def create_category(token, store_id, name_pt):
 def get_or_create_categories(token, store_id):
     """Obtiene o crea las categorías necesarias."""
     # Obtener categorías existentes
-    existing = api_request("GET", f"/{store_id}/categories", token=token)
-    cat_map = {c["name"].get("pt", ""): c["id"] for c in existing}
+    cat_map = {}
+    for page in range(1, 1001):
+        batch = api_request("GET", f"/{store_id}/categories?page={page}&per_page=200", token=token)
+        if not isinstance(batch, list):
+            raise ValueError("Respuesta de categorías inválida")
+        cat_map.update({c["name"].get("pt", ""): c["id"] for c in batch})
+        if len(batch) < 200:
+            break
+    else:
+        raise RuntimeError("Demasiadas páginas de categorías; importación suspendida")
 
     categorias_necesarias = [
         "Feminino", "Masculino", "Infantil", "Acessorios",
