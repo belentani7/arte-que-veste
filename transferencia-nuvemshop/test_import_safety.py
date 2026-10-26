@@ -1,5 +1,7 @@
 """Fail-first tests: import must be idempotent and reject bad CSV before writes."""
 import importlib.util
+import io
+import urllib.error
 import subprocess
 import sys
 import tempfile
@@ -28,6 +30,23 @@ class ImportSafetyTests(unittest.TestCase):
         ):
             with self.subTest(path=path), self.assertRaises(ValueError):
                 safe_api_url(path)
+
+    def test_404_means_absent_only_when_explicitly_allowed(self):
+        target = "https://api.nuvemshop.com.br/v1/123/products/sku/ABC"
+
+        def http_error(code):
+            return urllib.error.HTTPError(target, code, "status", {}, io.BytesIO(b"{}"))
+
+        with patch.object(module, "open_nuvemshop", side_effect=http_error(404)):
+            self.assertIsNone(
+                module.api_request("GET", "/123/products/sku/ABC", token="x", missing_ok=True)
+            )
+        with patch.object(module, "open_nuvemshop", side_effect=http_error(404)):
+            with self.assertRaises(urllib.error.HTTPError):
+                module.api_request("GET", "/123/products/sku/ABC", token="x")
+        with patch.object(module, "open_nuvemshop", side_effect=http_error(401)):
+            with self.assertRaises(urllib.error.HTTPError):
+                module.api_request("GET", "/123/products/sku/ABC", token="x", missing_ok=True)
 
     def test_categories_from_second_page_are_not_duplicated(self):
         batch = [{"name": {"pt": f"Other-{i}"}, "id": i + 1} for i in range(200)]
