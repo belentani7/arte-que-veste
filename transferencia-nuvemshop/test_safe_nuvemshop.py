@@ -52,7 +52,7 @@ class TransportSecurityTests(unittest.TestCase):
 class ImporterCliTests(unittest.TestCase):
     def make_csv(self, directory):
         csv_file = Path(directory) / "test.csv"
-        csv_file.write_text("sku;nome;preco\nABC-1;Produto teste;10.00\n", encoding="utf-8")
+        csv_file.write_text("sku;nome;descricao;preco;categoria;estoque;peso_kg;largura_cm;altura_cm;comprimento_cm\nABC-1;Produto teste;Test;10.00;feminino;1;0.5;10;20;30\n", encoding="utf-8")
         return csv_file
 
     def test_dry_run_never_requires_credentials_or_store_id(self):
