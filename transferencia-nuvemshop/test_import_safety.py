@@ -29,6 +29,19 @@ class ImportSafetyTests(unittest.TestCase):
             with self.subTest(path=path), self.assertRaises(ValueError):
                 safe_api_url(path)
 
+    def test_categories_from_second_page_are_not_duplicated(self):
+        batch = [{"name": {"pt": f"Other-{i}"}, "id": i + 1} for i in range(200)]
+        final = [{"name": {"pt": "Feminino"}, "id": 999}]
+        with patch.object(module, "api_request", side_effect=[batch, final]) as request, \
+             patch.object(module, "create_category", return_value=1000):
+            result = module.get_or_create_categories("token", "123")
+        self.assertEqual(result["Feminino"], 999)
+        self.assertEqual(request.call_count, 2)
+        self.assertEqual(
+            request.call_args_list[1].args[:2],
+            ("GET", "/123/categories?page=2&per_page=200"),
+        )
+
     def test_existing_sku_is_not_created_again(self):
         row = {"sku": "VFJ-001", "nome": "X"}
         with patch.object(module, "api_request", return_value={"id": 99}) as request:
