@@ -103,9 +103,11 @@ const Cart = {
                         <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
                         <polyline points="22 4 12 14.01 9 11.01"/>
                     </svg>
-                    <span>${msg}</span>
+                    <span></span>
                 </div>
             </div>`;
+        // Never interpret product names or customer-visible text as HTML.
+        toast.querySelector('span').textContent = msg;
         document.body.appendChild(toast);
         requestAnimationFrame(() => {
             const d = toast.firstElementChild;
