@@ -1,6 +1,7 @@
 """
 Arte Que Veste — Subir productos a Nuvemshop via API REST
-Uso: python upload-products.py --token TOKEN --store-id STORE_ID
+Uso: python upload-products.py --dry-run  (sin red ni credenciales)
+Ejecución real: configurar NUVEMSHOP_ACCESS_TOKEN en el entorno, y --store-id ID
 """
 import csv
 import json
@@ -8,13 +9,12 @@ import time
 import argparse
 import os
 import re
+import urllib.error
+import urllib.request
 from pathlib import Path
 
-from safe_nuvemshop import safe_api_url, open_nuvemshop
-import urllib.request
-import urllib.error
+from safe_nuvemshop import open_nuvemshop, safe_api_url
 
-API_BASE = "https://api.nuvemshop.com.br/v1"
 USER_AGENT = "ArteQueVeste Upload Script (contato@belentani.com)"
 
 
