@@ -6,6 +6,11 @@ import csv
 import json
 import time
 import argparse
+import os
+import re
+from pathlib import Path
+
+from safe_nuvemshop import safe_api_url, open_nuvemshop
 import urllib.request
 import urllib.error
 
@@ -15,7 +20,7 @@ USER_AGENT = "ArteQueVeste Upload Script (contato@belentani.com)"
 
 def api_request(method, path, data=None, token=None):
     """Realiza una petición a la API de Nuvemshop."""
-    url = f"{API_BASE}{path}"
+    url = safe_api_url(path)
     headers = {
         "Authorization": f"Bearer {token}",
         "Content-Type": "application/json; charset=utf-8",
@@ -26,7 +31,7 @@ def api_request(method, path, data=None, token=None):
     req = urllib.request.Request(url, data=body, headers=headers, method=method)
 
     try:
-        with urllib.request.urlopen(req) as resp:
+        with open_nuvemshop(req) as resp:
             return json.loads(resp.read().decode("utf-8"))
     except urllib.error.HTTPError as e:
         error_body = e.read().decode("utf-8") if e.fp else ""
@@ -121,11 +126,11 @@ def load_products_from_csv(csv_path):
 
 def main():
     parser = argparse.ArgumentParser(description="Subir productos a Nuvemshop")
-    parser.add_argument("--token", required=True, help="Access token de Nuvemshop")
-    parser.add_argument("--store-id", required=True, help="ID de la tienda")
+    parser.add_argument("--token", default=os.getenv("NUVEMSHOP_ACCESS_TOKEN"), help="Token de Nuvemshop (preferir variable NUVEMSHOP_ACCESS_TOKEN)")
+    parser.add_argument("--store-id", default=os.getenv("NUVEMSHOP_STORE_ID"), help="ID numérico de la tienda (o NUVEMSHOP_STORE_ID)")
     parser.add_argument(
         "--csv",
-        default="produtos-arte-que-veste.csv",
+        default=str(Path(__file__).with_name("produtos-arte-que-veste.csv")),
         help="Ruta al CSV de productos",
     )
     parser.add_argument("--dry-run", action="store_true", help="Solo mostrar, no subir")
@@ -145,6 +150,13 @@ def main():
         for p in products:
             print(f"  - {p['nome']} | R${p['preco']} | SKU: {p['sku']}")
         return
+
+    # Ninguna credencial es necesaria para inspeccionar el CSV en dry-run.
+    # En ejecuciones reales validamos antes de emitir cualquier petición.
+    if not args.store_id or not re.fullmatch(r"[1-9][0-9]{0,14}", args.store_id):
+        parser.error("--store-id debe ser un identificador numérico positivo (máximo 15 dígitos)")
+    if not args.token:
+        parser.error("falta --token o la variable NUVEMSHOP_ACCESS_TOKEN")
 
     # Crear/obtener categorías
     print("\n2. Configurando categorías...")
