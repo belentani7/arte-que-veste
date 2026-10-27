@@ -56,7 +56,7 @@ class TransportSecurityTests(unittest.TestCase):
             factory.return_value.close.assert_called_once()
 
     def test_missing_or_malformed_token_is_rejected_before_network(self):
-        for token in (None, "", " ", "abc\\r\\nInjected: header", " abc"):
+        for token in (None, "", " ", "abc\r\nInjected: header", " abc"):
             with self.subTest(token=repr(token)):
                 with patch.object(module.http.client, "HTTPSConnection") as factory:
                     with self.assertRaisesRegex(ValueError, "Token Nuvemshop"):
