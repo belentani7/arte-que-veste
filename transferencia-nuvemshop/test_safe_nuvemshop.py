@@ -41,6 +41,28 @@ class TransportSecurityTests(unittest.TestCase):
         self.assertEqual(factory.return_value.request.call_count, 1)
         factory.return_value.close.assert_called_once()
 
+    def test_upstream_error_body_is_never_logged_or_exposed(self):
+        marker = "CANARY-PRIVATE-ACCESS-TOKEN"
+        with patch.object(module.http.client, "HTTPSConnection") as factory:
+            response = factory.return_value.getresponse.return_value
+            response.status = 401
+            response.read.return_value = ('{"error":"' + marker + '"}').encode()
+            with patch("builtins.print") as printed:
+                with self.assertRaisesRegex(RuntimeError, "HTTP 401") as error:
+                    module.api_request("GET", "/123/categories", token="dummy")
+            self.assertNotIn(marker, str(error.exception))
+            self.assertNotIn(marker, str(printed.call_args_list))
+            response.read.assert_not_called()
+            factory.return_value.close.assert_called_once()
+
+    def test_missing_or_malformed_token_is_rejected_before_network(self):
+        for token in (None, "", " ", "abc\\r\\nInjected: header", " abc"):
+            with self.subTest(token=repr(token)):
+                with patch.object(module.http.client, "HTTPSConnection") as factory:
+                    with self.assertRaisesRegex(ValueError, "Token Nuvemshop"):
+                        module.api_request("GET", "/123/categories", token=token)
+                    factory.assert_not_called()
+
     def test_http_redirect_does_not_trigger_second_request(self):
         with patch.object(module.http.client, "HTTPSConnection") as factory:
             response = factory.return_value.getresponse.return_value

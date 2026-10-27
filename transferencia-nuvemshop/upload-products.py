@@ -24,6 +24,9 @@ def api_request(method, path, data=None, token=None, missing_ok=False):
     if method not in {"GET", "POST"}:
         raise ValueError("Método HTTP no permitido")
     uri = safe_api_path(path)
+    if (not isinstance(token, str) or not token.strip() or token != token.strip()
+            or "\r" in token or "\n" in token):
+        raise ValueError("Token Nuvemshop ausente o inválido")
     headers = {
         "Authorization": f"Bearer {token}",
         "Content-Type": "application/json; charset=utf-8",
@@ -34,12 +37,12 @@ def api_request(method, path, data=None, token=None, missing_ok=False):
     try:
         conn.request(method, uri, body=body, headers=headers)
         response = conn.getresponse()
-        payload = response.read().decode("utf-8")
         if response.status == 404 and missing_ok:
             return None
         if not 200 <= response.status < 300:
-            print(f"  ERROR {response.status}: {payload[:300]}")
+            # Error bodies can echo bearer credentials or customer data; never log them.
             raise RuntimeError(f"HTTP {response.status} en recurso Nuvemshop")
+        payload = response.read().decode("utf-8")
         return json.loads(payload)
     finally:
         conn.close()
