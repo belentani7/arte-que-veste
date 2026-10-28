@@ -71,3 +71,20 @@ Si el dueño tiene dudas técnicas, puede contactar:
 ---
 
 *Arte Que Veste — Transferencia Nuvemshop — Julio/2026*
+
+## Alternativa técnica: importador por API (solo con autorización del titular)
+
+La opción habitual de traspaso sigue siendo **importar el CSV desde el panel**. Si la persona responsable decide usar el script `upload-products.py`, primero debe revisar el catálogo y ejecutar una simulación local:
+
+```bash
+python transferencia-nuvemshop/upload-products.py --dry-run
+```
+
+La simulación lee el CSV sin solicitar credenciales ni conectar con Nuvemshop. Para la importación real, proporcionar el token de acceso mediante la variable de entorno `NUVEMSHOP_ACCESS_TOKEN` y el identificador numérico de la tienda mediante `--store-id` (o `NUVEMSHOP_STORE_ID`). No poner tokens reales en argumentos, archivos versionados o capturas de pantalla.
+
+```bash
+# Solo ejemplo: el token debe estar configurado en el entorno de ejecución.
+python transferencia-nuvemshop/upload-products.py --store-id 123456
+```
+
+**Riesgos que requieren revisión del titular:** la ejecución real crea categorías que falten y productos **publicados** en la tienda. Antes de crear cada artículo consulta `GET /products/sku/{sku}` y **omite** los SKU que ya existan; no actualiza productos. Los 8 productos del CSV se validan antes de hacer peticiones (campos, SKU únicos, precios, dimensiones y stock). Esta prevención de duplicados no sustituye la revisión del titular ni garantiza atomicidad si dos procesos escriben simultáneamente. La lectura de categorías pagina de 200 en 200 hasta completar el catálogo (máximo 1000 páginas); si la respuesta es inválida o excede ese límite, la importación se detiene antes de crear artículos. Se necesitan permisos OAuth para consultar y escribir productos. Las rutas API están restringidas, los IDs se validan y las redirecciones HTTP no se siguen con credenciales. No se ha autorizado ni realizado ninguna transferencia comercial mediante esta documentación.
