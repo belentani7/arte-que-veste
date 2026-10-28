@@ -26,6 +26,7 @@
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <style>
+        @media (prefers-reduced-motion: reduce) { *,*::before,*::after { scroll-behavior:auto !important; animation-duration:.01ms !important; transition-duration:.01ms !important; } }
         :root {
             --turquesa: #40E0D0;
             --rosa: #FF1493;
@@ -329,12 +330,12 @@
     if (window.gsap && !matchMedia('(prefers-reduced-motion: reduce)').matches) gsap.to('.anim-load', { opacity: 1, y: 0, duration: 1, stagger: 0.15, ease: 'power3.out' });
 
     // Anima de imediato tudo que NÃO depende do catálogo (sidebar, toolbar, paginação)
-    gsap.utils.toArray('.anim-scroll').forEach(element => {
-        gsap.to(element, {
-            opacity: 1, y: 0, duration: 0.8, ease: 'power3.out',
-            scrollTrigger: { trigger: element, start: 'top 85%', toggleActions: 'play none none none' }
+    if (window.gsap && window.ScrollTrigger && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        gsap.utils.toArray('.anim-scroll').forEach(element => {
+            gsap.to(element, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out',
+                scrollTrigger: { trigger: element, start: 'top 85%', toggleActions: 'play none none none' } });
         });
-    });
+    }
 
     (async () => {
         try {
@@ -353,7 +354,7 @@
             if (count) count.textContent = 'Catálogo indisponível';
         }
         // Os cards de produto só existem agora — registrar a animação deles aqui
-        gsap.utils.toArray('#productGrid .anim-scroll').forEach(element => {
+        if (window.gsap && window.ScrollTrigger && !matchMedia('(prefers-reduced-motion: reduce)').matches) gsap.utils.toArray('#productGrid .anim-scroll').forEach(element => {
             gsap.to(element, {
                 opacity: 1, y: 0, duration: 0.6, ease: 'power3.out',
                 scrollTrigger: { trigger: element, start: 'top 90%', toggleActions: 'play none none none' }
@@ -371,14 +372,16 @@
             btn.classList.add('active');
 
             const filter = btn.dataset.filter;
+            let visible = 0;
             document.querySelectorAll('.product-card').forEach(card => {
-                if (filter === 'all' || card.dataset.category === filter) {
-                    gsap.to(card, { opacity: 1, scale: 1, duration: 0.4, ease: 'power2.out' });
-                    card.style.display = 'block';
-                } else {
-                    gsap.to(card, { opacity: 0, scale: 0.9, duration: 0.3, ease: 'power2.in', onComplete: () => { card.style.display = 'none'; } });
-                }
+                const show = filter === 'all' || card.dataset.category === filter;
+                card.hidden = !show;
+                card.style.display = show ? '' : 'none';
+                if (show) visible++;
             });
+            const count = document.getElementById('productCount');
+            if (count) count.textContent = 'Mostrando ' + visible + ' produtos';
+
         });
     });
 
