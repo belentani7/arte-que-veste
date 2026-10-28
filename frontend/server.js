@@ -40,7 +40,7 @@ const server = http.createServer((req, res) => {
         res.end('Bad request');
         return;
     }
-    if (pathname === '/') pathname = '/loja.html';
+    if (pathname === '/') pathname = '/index.html';
     const segments = pathname.split('/').filter(Boolean);
     if (segments.some(segment => segment.startsWith('.')) ||
         !Object.hasOwn(MIME, path.extname(pathname).toLowerCase())) {
