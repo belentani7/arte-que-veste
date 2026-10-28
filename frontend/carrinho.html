@@ -153,7 +153,7 @@
             emptyEl.style.display = 'block';
             contentEl.style.display = 'none';
             countEl.textContent = '0 itens no carrinho';
-            lucide.createIcons();
+            window.lucide?.createIcons?.();
             return;
         }
 
@@ -196,7 +196,7 @@
         }).join('');
 
         updateSummary();
-        lucide.createIcons();
+        window.lucide?.createIcons?.();
     }
 
     function updateSummary() {
@@ -276,7 +276,7 @@
 
     window.addEventListener('cart-updated', renderCart);
     document.addEventListener('DOMContentLoaded', renderCart);
-    lucide.createIcons();
+    window.lucide?.createIcons?.();
     </script>
 
 <!-- FRONT-UPGRADE: Lenis smooth scroll (GSAP ya presente, sin duplicar) -->
