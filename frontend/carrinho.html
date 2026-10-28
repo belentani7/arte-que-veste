@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carrinho | Arte Que Veste</title>
     <meta name="description" content="Revise os itens selecionados, ajuste quantidades e finalize sua compra Arte Que Veste.">
-    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
     <meta name="theme-color" content="#40E0D0">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -135,12 +135,12 @@
     const productUrl = (sku) => 'produto.html?sku=' + encodeURIComponent(String(sku ?? ''));
     const safeImageUrl = (value) => {
         const src = String(value ?? '');
-        if (!src || /[\u0000-\u001f]/.test(src)) return 'assets/favicon.png';
+        if (!src || /[\u0000-\u001f]/.test(src)) return 'assets/favicon.svg';
         try {
             const u = new URL(src, location.href);
             return (u.protocol === 'https:' || (u.protocol === 'http:' && u.origin === location.origin))
-                ? u.href : 'assets/favicon.png';
-        } catch { return 'assets/favicon.png'; }
+                ? u.href : 'assets/favicon.svg';
+        } catch { return 'assets/favicon.svg'; }
     };
 
     function renderCart() {
