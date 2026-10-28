@@ -175,11 +175,11 @@
             <div class="lg:w-3/4">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 anim-scroll">
                     <p class="text-sm text-gray-500 mb-4 sm:mb-0" id="productCount"></p>
-                    <select class="border p-2 text-sm bg-white w-full sm:w-auto">
-                        <option>Ordenar por: Mais recentes</option>
-                        <option>Menor preço</option>
-                        <option>Maior preço</option>
-                        <option>Mais vendidos</option>
+                    <select id="productSort" aria-label="Ordenar produtos" class="border p-2 text-sm bg-white w-full sm:w-auto">
+                        <option value="default">Ordem do catálogo</option>
+                        <option value="price-asc">Menor preço</option>
+                        <option value="price-desc">Maior preço</option>
+                        <option value="name">Nome (A–Z)</option>
                     </select>
                 </div>
 
@@ -299,7 +299,12 @@
         const safeProducts = Array.isArray(PRODUTOS)
             ? PRODUTOS.filter(p => p && Number.isFinite(Number(p.price)) && Number(p.price) >= 0)
             : [];
-        grid.innerHTML = safeProducts.map(p => {
+        const sort = document.getElementById("productSort")?.value || "default";
+        const ordered = [...safeProducts];
+        if (sort === "price-asc") ordered.sort((a,b) => Number(a.price) - Number(b.price));
+        if (sort === "price-desc") ordered.sort((a,b) => Number(b.price) - Number(a.price));
+        if (sort === "name") ordered.sort((a,b) => String(a.name ?? "").localeCompare(String(b.name ?? ""), "pt-BR"));
+        grid.innerHTML = ordered.map(p => {
             const c = Object.hasOwn(CATEGORIAS, p.category)
                 ? CATEGORIAS[p.category] : { label: '', bg: 'var(--preto)', text: '#fff' };
             const priceFmt = Number(p.price).toFixed(2).replace('.', ',');
@@ -385,8 +390,10 @@
         });
     });
 
-    document.querySelectorAll('.size-btn').forEach(btn => {
-        btn.addEventListener('click', () => btn.classList.toggle('active'));
+    document.getElementById('productSort')?.addEventListener('change', () => {
+        renderProducts();
+        const active = document.querySelector('.filter-btn.active');
+        if (active) active.click();
     });
 
     if (window.lucide) lucide.createIcons();
