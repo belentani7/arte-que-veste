@@ -322,7 +322,21 @@
     // ==========================================================
     // RENDER + ANIMAÇÕES (GSAP)
     // ==========================================================
-    gsap.registerPlugin(ScrollTrigger);
+    const gsap = window.gsap || {
+        registerPlugin() {},
+        utils: { toArray: selector => Array.from(document.querySelectorAll(selector)) },
+        to(target, options = {}) {
+            const elements = typeof target === 'string' ? document.querySelectorAll(target) : [target];
+            for (const element of elements) {
+                if (element?.style) {
+                    if (options.opacity !== undefined) element.style.opacity = String(options.opacity);
+                    if (options.y !== undefined) element.style.transform = 'none';
+                }
+            }
+            options.onComplete?.();
+        }
+    };
+    if (window.gsap && window.ScrollTrigger) gsap.registerPlugin(window.ScrollTrigger);
     gsap.to('.anim-load', { opacity: 1, y: 0, duration: 1, stagger: 0.15, ease: 'power3.out' });
 
     // Anima de imediato tudo que NÃO depende do catálogo (sidebar, toolbar, paginação)
@@ -343,7 +357,7 @@
                 scrollTrigger: { trigger: element, start: 'top 90%', toggleActions: 'play none none none' }
             });
         });
-        lucide.createIcons();
+        window.lucide?.createIcons?.();
     })();
 
     // ==========================================================
@@ -391,7 +405,7 @@
         });
     });
 
-    lucide.createIcons();
+    window.lucide?.createIcons?.();
 
     console.log('%c╔══════════════════════════════════════════════════════════════╗', 'color: #40E0D0; font-weight: bold;');
     console.log('%c║  ARTE QUE VESTE — Loja                                        ║', 'color: #40E0D0; font-weight: bold;');
