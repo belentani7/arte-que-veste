@@ -235,10 +235,8 @@
     };
 
     // ==========================================================
-    // CATÁLOGO — agora vem da API real (com fallback local)
-    // Configure API_BASE para a URL do seu backend ao publicar.
+    // CATÁLOGO — dados locais verificados; sem API pública configurada.
     // ==========================================================
-    const API_BASE = null; // Sem API pública autenticada e validada: catálogo estático local.
 
     let PRODUTOS = [];
 
@@ -289,7 +287,7 @@
         }).join('');
 
         const countEl = document.getElementById('productCount');
-        if (countEl) countEl.textContent = 'Mostrando ' + safeProducts.length + ' de ' + safeProducts.length + ' produtos';
+        if (countEl) countEl.textContent = 'Mostrando ' + safeProducts.length + ' produtos';
     }
 
     // Product cards now link to produto.html?sku=XXX
