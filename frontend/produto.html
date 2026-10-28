@@ -305,8 +305,15 @@
 
     <script src="js/cart.js"></script>
     <script>
-    const API_BASE = (location.hostname === 'localhost' || location.hostname === '127.0.0.1')
-        ? 'http://localhost:8000' : 'https://SEU-APP.railway.app';
+    const esc = value => String(value ?? '').replace(/[&<>"']/g, ch =>
+        ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+    const safeImage = value => {
+        try {
+            const url = new URL(String(value ?? ''), location.href);
+            return (url.protocol === 'https:' || (url.protocol === 'http:' && url.origin === location.origin))
+                ? url.href : 'assets/img/produtos/placeholder.svg';
+        } catch { return 'assets/img/produtos/placeholder.svg'; }
+    };
 
     const CATEGORIAS = {
         masculino:{label:'Masculino',bg:'var(--turquesa)',text:'#1a1a1a'},
@@ -329,28 +336,28 @@
     const skuParam = params.get('sku');
 
     async function loadProduct() {
-        if (!skuParam) { window.location.href = 'loja.html'; return; }
+        if (!skuParam) { window.location.replace('loja.html'); return; }
         try {
-            const r = await fetch(`${API_BASE}/api/produtos/${skuParam}`);
-            if (!r.ok) throw new Error('Produto não encontrado');
-            currentProduct = await r.json();
-        } catch {
-            try {
-                const r2 = await fetch('./products.json');
-                const all = await r2.json();
-                currentProduct = all.find(p => p.sku === skuParam);
-                if (!currentProduct) { window.location.href = 'loja.html'; return; }
-            } catch { window.location.href = 'loja.html'; return; }
+            const response = await fetch('./products.json');
+            if (!response.ok) throw new Error('Catálogo indisponível');
+            const all = await response.json();
+            if (!Array.isArray(all)) throw new Error('Catálogo inválido');
+            currentProduct = all.find(p => p.sku === skuParam);
+            if (!currentProduct) { window.location.replace('loja.html'); return; }
+            renderProduct();
+            await loadRelated(all);
+        } catch (error) {
+            console.error('Produto indisponível', error);
+            document.getElementById('product-loading').textContent =
+                'Não foi possível carregar o produto. Volte à loja para tentar novamente.';
         }
-        renderProduct();
-        loadRelated();
     }
 
     function renderProduct() {
         const p = currentProduct;
         document.title = `${p.name} | Arte Que Veste`;
         document.getElementById('breadcrumb-name').textContent = p.name;
-        document.getElementById('main-image').src = p.img;
+        document.getElementById('main-image').src = safeImage(p.img);
         document.getElementById('main-image').alt = p.alt || p.name;
         document.getElementById('product-name').textContent = p.name;
         document.getElementById('product-desc-short').textContent = p.desc;
@@ -358,7 +365,7 @@
 
         const priceFmt = p.price.toFixed(2).replace('.', ',');
         document.getElementById('product-price').textContent = `R$ ${priceFmt}`;
-        const installments = Math.min(Math.ceil(p.price / 30), 6);
+        const installments = Math.max(1, Math.min(Math.ceil(p.price / 30), 6));
         const installmentVal = (p.price / installments).toFixed(2).replace('.', ',');
         document.getElementById('product-installment').textContent = `até ${installments}x de R$ ${installmentVal} sem juros`;
         const pixVal = (p.price * 0.95).toFixed(2).replace('.', ',');
@@ -376,7 +383,17 @@
 
         // Thumbnails
         const thumbs = document.getElementById('thumbnails');
-        thumbs.innerHTML = `<img src="${p.img}" class="gallery-thumb active w-16 h-20 object-cover" onclick="changeImage(this.src, this)">`;
+        thumbs.replaceChildren();
+        const thumb = document.createElement('img');
+        thumb.src = safeImage(p.img);
+        thumb.alt = 'Miniatura de ' + p.name;
+        thumb.className = 'gallery-thumb active w-16 h-20 object-cover';
+        thumb.tabIndex = 0;
+        thumb.addEventListener('click', () => changeImage(thumb.src, thumb));
+        thumb.addEventListener('keydown', e => {
+            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); changeImage(thumb.src, thumb); }
+        });
+        thumbs.appendChild(thumb);
 
         // Size options for clothing
         const clothingCategories = ['masculino','feminino','infantil','unissex'];
@@ -390,7 +407,7 @@
 
         // Product details
         document.getElementById('product-details').innerHTML = `
-            <p><strong>SKU:</strong> ${p.sku}</p>
+            <p><strong>SKU:</strong> ${esc(p.sku)}</p>
             <p><strong>Categoria:</strong> ${cat.label}</p>
             <p><strong>Origem:</strong> Aracaju/SE, Brasil</p>
             <p><strong>Arte:</strong> Xilogravura nordestina</p>
@@ -403,32 +420,18 @@
         gsap.from('#product-content', { opacity: 0, y: 30, duration: 0.8, ease: 'power3.out' });
     }
 
-    async function loadRelated() {
-        try {
-            let allProducts = [];
-            try {
-                const r = await fetch(`${API_BASE}/api/produtos`);
-                if (r.ok) allProducts = await r.json();
-            } catch {
-                const r2 = await fetch('./products.json');
-                if (r2.ok) allProducts = await r2.json();
-            }
-            const related = allProducts.filter(p => p.sku !== currentProduct.sku).slice(0, 4);
-            const grid = document.getElementById('related-products');
-            grid.innerHTML = related.map(p => {
-                const c = CATEGORIAS[p.category] || {label:'',bg:'var(--preto)',text:'#fff'};
-                return `<a href="produto.html?sku=${p.sku}" class="product-card block">
-                    <div class="relative overflow-hidden bg-gray-100 aspect-[3/4]">
-                        <img src="${p.img}" class="w-full h-full object-cover" alt="${p.alt}" loading="lazy">
-                        <div class="absolute top-2 left-2 px-2 py-1 text-[10px] uppercase" style="background:${c.bg};color:${c.text}">${c.label}</div>
-                    </div>
-                    <div class="p-2">
-                        <h3 class="font-display text-sm font-bold truncate">${p.name}</h3>
-                        <span class="text-sm font-bold">R$ ${p.price.toFixed(2).replace('.',',')}</span>
-                    </div>
-                </a>`;
-            }).join('');
-        } catch(e) { console.warn('Related products error:', e); }
+    async function loadRelated(allProducts) {
+        const related = allProducts.filter(p => p.sku !== currentProduct.sku).slice(0, 4);
+        const grid = document.getElementById('related-products');
+        grid.innerHTML = related.map(p => {
+            const category = CATEGORIAS[p.category] || {label:'',bg:'var(--preto)',text:'#fff'};
+            return '<a href="produto.html?sku=' + encodeURIComponent(String(p.sku)) + '" class="product-card block">' +
+                '<div class="relative overflow-hidden bg-gray-100 aspect-[3/4]">' +
+                '<img src="' + esc(safeImage(p.img)) + '" class="w-full h-full object-cover" alt="' + esc(p.alt || p.name) + '" loading="lazy">' +
+                '<div class="absolute top-2 left-2 px-2 py-1 text-[10px] uppercase" style="background:' + category.bg + ';color:' + category.text + '">' + esc(category.label) + '</div>' +
+                '</div><div class="p-2"><h3 class="font-display text-sm font-bold truncate">' + esc(p.name) + '</h3>' +
+                '<span class="text-sm font-bold">R$ ' + Number(p.price || 0).toFixed(2).replace('.',',') + '</span></div></a>';
+        }).join('');
     }
 
     function selectSize(size, btn) {
@@ -450,11 +453,12 @@
             return;
         }
         Cart.add(currentProduct, quantity, selectedSize, selectedColor);
+        return true;
     }
 
     function buyWithPix() {
-        addToCart();
-        window.location.href = 'carrinho.html?pix=1';
+        if (!addToCart()) return;
+        window.location.href = 'carrinho.html';
     }
 
     function changeImage(src, thumb) {
