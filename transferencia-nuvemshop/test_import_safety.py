@@ -131,5 +131,56 @@ class ImportSafetyTests(unittest.TestCase):
         self.assertIn("preco", result.stderr + result.stdout)
 
 
+    def test_csv_extra_cell_fails_before_network(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "extra.csv"
+            path.write_text(
+                "sku;nome;descricao;preco;categoria;estoque;peso_kg;largura_cm;altura_cm;comprimento_cm;NCM;CFOP\n"
+                "SKU1;Vestido;desc;10.00;feminino;1;0.5;10;20;30;6104;5102;EXTRA\n",
+                encoding="utf-8",
+            )
+            with patch.object(module, "api_request") as request:
+                with self.assertRaisesRegex(ValueError, "columnas"):
+                    module.load_products_from_csv(path)
+                request.assert_not_called()
+
+    def test_duplicate_price_header_fails_before_network(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "duplicate.csv"
+            path.write_text(
+                "sku;nome;descricao;preco;categoria;estoque;peso_kg;largura_cm;altura_cm;comprimento_cm;preco\n"
+                "SKU1;Vestido;desc;10.00;feminino;1;0.5;10;20;30;0.01\n",
+                encoding="utf-8",
+            )
+            with patch.object(module, "api_request") as request:
+                with self.assertRaisesRegex(ValueError, "duplicadas"):
+                    module.load_products_from_csv(path)
+                request.assert_not_called()
+
+    def test_missing_optional_tax_cell_fails_preflight(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "short.csv"
+            path.write_text(
+                "sku;nome;descricao;preco;categoria;estoque;peso_kg;largura_cm;altura_cm;comprimento_cm;NCM;CFOP\n"
+                "SKU1;Vestido;desc;10.00;feminino;1;0.5;10;20;30;6104\n",
+                encoding="utf-8",
+            )
+            with self.assertRaisesRegex(ValueError, "columnas"):
+                module.load_products_from_csv(path)
+
+    def test_utf8_bom_and_optional_tax_columns_are_supported(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "bom.csv"
+            path.write_text(
+                "\ufeffsku;nome;descricao;preco;categoria;estoque;peso_kg;largura_cm;altura_cm;comprimento_cm;NCM;CFOP\n"
+                "SKU1;Vestido;desc;10.00;feminino;1;0.5;10;20;30;6104;5102\n",
+                encoding="utf-8",
+            )
+            rows = module.load_products_from_csv(path)
+            self.assertEqual(len(rows), 1)
+            self.assertEqual(rows[0]["sku"], "SKU1")
+            self.assertEqual(rows[0]["NCM"], "6104")
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -139,9 +139,19 @@ def create_product(token, store_id, product_data, categories):
 def load_products_from_csv(csv_path):
     """Lee los productos del CSV."""
     products = []
-    with open(csv_path, "r", encoding="utf-8") as f:
+    # The supplied catalog includes optional NCM/CFOP columns. Preserve them,
+    # but never silently discard extra cells or overwrite duplicate headers:
+    # either can change the price/stock associated with a SKU.
+    with open(csv_path, "r", encoding="utf-8-sig", newline="") as f:
         reader = csv.DictReader(f, delimiter=";")
-        for row in reader:
+        headers = reader.fieldnames
+        if not headers or any(not header or not header.strip() for header in headers):
+            raise ValueError("CSV sin cabeceras válidas")
+        if len(headers) != len(set(headers)):
+            raise ValueError("CSV con cabeceras duplicadas")
+        for line, row in enumerate(reader, start=2):
+            if None in row or any(value is None for value in row.values()):
+                raise ValueError(f"Línea {line}: número de columnas inválido")
             products.append(row)
     validate_products(products)
     return products
