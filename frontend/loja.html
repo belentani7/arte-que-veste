@@ -69,8 +69,8 @@
         .nav-link::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background: var(--turquesa); transition: width 0.3s ease; }
         .nav-link:hover::after { width: 100%; }
 
-        .anim-load { opacity: 0; transform: translateY(20px); }
-        .anim-scroll { opacity: 0; transform: translateY(40px); }
+        .anim-load { opacity: 1; transform: none; }
+        .anim-scroll { opacity: 1; transform: none; }
     </style>
 </head>
 <body>
@@ -81,9 +81,9 @@
             <div class="flex justify-between items-center h-20">
                 <a href="index.html" class="font-display text-xl md:text-2xl font-black">ARTE QUE VESTE</a>
                 <div class="hidden lg:flex space-x-6">
-                    <a href="index.html#home" class="nav-link">Início</a>
-                    <a href="index.html#historia" class="nav-link">História</a>
-                    <a href="index.html#xilogravura" class="nav-link">Xilogravura</a>
+                    <a href="index.html#inicio" class="nav-link">Início</a>
+                    <a href="index.html#manifesto" class="nav-link">História</a>
+                    <a href="index.html#manifesto" class="nav-link">Xilogravura</a>
                     <a href="loja.html" class="nav-link border-b-2 border-[var(--turquesa)] pb-1">Loja</a>
                     <a href="sobre.html" class="nav-link">Sobre</a>
                     <a href="contato.html" class="nav-link">Contato</a>
@@ -271,21 +271,16 @@
     // CATÁLOGO — agora vem da API real (com fallback local)
     // Configure API_BASE para a URL do seu backend ao publicar.
     // ==========================================================
-    const API_BASE = (location.hostname === 'localhost' || location.hostname === '127.0.0.1')
-        ? 'http://localhost:8000' : 'https://SEU-APP.railway.app';  // <- troque pela URL real do backend em produção
+    const API_BASE = null; // Sem API pública autenticada e validada: catálogo estático local.
 
     let PRODUTOS = [];
 
     async function carregarProdutos() {
-        try {
-            const r = await fetch(API_BASE + '/api/produtos');
-            if (!r.ok) throw new Error('API indisponível');
-            PRODUTOS = await r.json();
-        } catch (e) {
-            console.warn('Backend indisponível, usando products.json local.', e);
-            const r2 = await fetch('./products.json');
-            PRODUTOS = await r2.json();
-        }
+        const response = await fetch('./products.json', { cache: 'no-store' });
+        if (!response.ok) throw new Error('Catálogo temporariamente indisponível');
+        const catalog = await response.json();
+        if (!Array.isArray(catalog)) throw new Error('Formato do catálogo inválido');
+        PRODUTOS = catalog;
     }
 
     function renderProducts() {
@@ -330,8 +325,8 @@
     // ==========================================================
     // RENDER + ANIMAÇÕES (GSAP)
     // ==========================================================
-    gsap.registerPlugin(ScrollTrigger);
-    gsap.to('.anim-load', { opacity: 1, y: 0, duration: 1, stagger: 0.15, ease: 'power3.out' });
+    if (window.gsap && window.ScrollTrigger && !matchMedia('(prefers-reduced-motion: reduce)').matches) gsap.registerPlugin(ScrollTrigger);
+    if (window.gsap && !matchMedia('(prefers-reduced-motion: reduce)').matches) gsap.to('.anim-load', { opacity: 1, y: 0, duration: 1, stagger: 0.15, ease: 'power3.out' });
 
     // Anima de imediato tudo que NÃO depende do catálogo (sidebar, toolbar, paginação)
     gsap.utils.toArray('.anim-scroll').forEach(element => {
@@ -342,8 +337,21 @@
     });
 
     (async () => {
-        await carregarProdutos();
-        renderProducts();
+        try {
+            await carregarProdutos();
+            renderProducts();
+        } catch (error) {
+            const grid = document.getElementById('productGrid');
+            if (grid) {
+                grid.replaceChildren();
+                const notice = document.createElement('p');
+                notice.setAttribute('role', 'alert');
+                notice.textContent = 'Não foi possível carregar o catálogo. Atualize a página para tentar novamente.';
+                grid.appendChild(notice);
+            }
+            const count = document.getElementById('productCount');
+            if (count) count.textContent = 'Catálogo indisponível';
+        }
         // Os cards de produto só existem agora — registrar a animação deles aqui
         gsap.utils.toArray('#productGrid .anim-scroll').forEach(element => {
             gsap.to(element, {
@@ -351,7 +359,7 @@
                 scrollTrigger: { trigger: element, start: 'top 90%', toggleActions: 'play none none none' }
             });
         });
-        lucide.createIcons();
+        if (window.lucide) lucide.createIcons();
     })();
 
     // ==========================================================
@@ -378,7 +386,7 @@
         btn.addEventListener('click', () => btn.classList.toggle('active'));
     });
 
-    lucide.createIcons();
+    if (window.lucide) lucide.createIcons();
 
     console.log('%c╔══════════════════════════════════════════════════════════════╗', 'color: #40E0D0; font-weight: bold;');
     console.log('%c║  ARTE QUE VESTE — Loja                                        ║', 'color: #40E0D0; font-weight: bold;');
@@ -394,7 +402,7 @@
 <script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
 <script>
 (function(){try{
-if(window.Lenis){var l=new Lenis({duration:1.1});var r=function(t){l.raf(t);requestAnimationFrame(r)};requestAnimationFrame(r);}
+if(!matchMedia("(prefers-reduced-motion: reduce)").matches && window.Lenis){var l=new Lenis({duration:1.1});var r=function(t){l.raf(t);requestAnimationFrame(r)};requestAnimationFrame(r);}
 }}catch(e){}})();
 </script>
 </body>
