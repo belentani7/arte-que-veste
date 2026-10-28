@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resumo de pedido | Arte Que Veste</title>
-    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
     <meta name="theme-color" content="#40E0D0">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/playfair-display@latest/latin-400-normal.css">
@@ -175,8 +175,8 @@
         try {
             const url = new URL(String(value ?? ''), location.href);
             return url.protocol === 'https:' || (url.protocol === 'http:' && url.origin === location.origin)
-                ? url.href : 'assets/favicon.png';
-        } catch { return 'assets/favicon.png'; }
+                ? url.href : 'assets/favicon.svg';
+        } catch { return 'assets/favicon.svg'; }
     };
 
     let currentStep = 1;
