@@ -415,9 +415,9 @@
 
         document.getElementById('product-content').style.display = 'block';
         document.getElementById('product-loading').style.display = 'none';
-        lucide.createIcons();
+        window.lucide?.createIcons?.();
 
-        gsap.from('#product-content', { opacity: 0, y: 30, duration: 0.8, ease: 'power3.out' });
+        if (window.gsap) window.gsap.from('#product-content', { opacity: 0, y: 30, duration: 0.8, ease: 'power3.out' });
     }
 
     async function loadRelated(allProducts) {
