@@ -10,7 +10,22 @@ const AQV_CART_KEY = 'aqv_carrinho';
 const Cart = {
     get() {
         try {
-            return JSON.parse(localStorage.getItem(AQV_CART_KEY)) || [];
+            const data = JSON.parse(localStorage.getItem(AQV_CART_KEY) || '[]');
+            if (!Array.isArray(data)) return [];
+            return data.filter(item => item && typeof item === 'object')
+                .map(item => ({
+                    key: String(item.key ?? '').slice(0, 150),
+                    sku: String(item.sku ?? '').slice(0, 100),
+                    name: String(item.name ?? 'Produto').slice(0, 200),
+                    desc: String(item.desc ?? '').slice(0, 300),
+                    img: String(item.img ?? '').slice(0, 1000),
+                    price: Number.isFinite(Number(item.price)) ? Math.max(0, Number(item.price)) : 0,
+                    category: String(item.category ?? ''),
+                    tamanho: item.tamanho == null ? '' : String(item.tamanho).slice(0, 100),
+                    cor: item.cor == null ? '' : String(item.cor).slice(0, 100),
+                    quantidade: Number.isFinite(Number(item.quantidade))
+                      ? Math.min(100, Math.max(1, Math.floor(Number(item.quantidade)))) : 1
+                }));
         } catch { return []; }
     },
 
@@ -103,9 +118,10 @@ const Cart = {
                         <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
                         <polyline points="22 4 12 14.01 9 11.01"/>
                     </svg>
-                    <span>${msg}</span>
+                    <span class="toast-message"></span>
                 </div>
             </div>`;
+        toast.querySelector(".toast-message").textContent = String(msg);
         document.body.appendChild(toast);
         requestAnimationFrame(() => {
             const d = toast.firstElementChild;
