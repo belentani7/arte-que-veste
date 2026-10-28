@@ -193,7 +193,7 @@
         document.getElementById('checkout-content').style.display = 'block';
         renderCheckoutItems();
         updateTotals();
-        lucide.createIcons();
+        window.lucide?.createIcons?.();
     }
 
     function renderCheckoutItems() {
