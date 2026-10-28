@@ -120,7 +120,7 @@
                             <span id="product-price" class="text-3xl font-bold"></span>
                             <span id="product-installment" class="text-sm text-gray-500"></span>
                         </div>
-                        <p class="text-xs text-gray-400 mt-1">ou <span id="pix-price" class="text-[var(--turquesa)] font-semibold"></span> com Pix (5% OFF)</p>
+                        <p class="text-xs text-gray-400 mt-1">ou <span id="pix-price" class="text-[var(--turquesa)] font-semibold"></span> · pagamento a confirmar</p>
                     </div>
 
                     <!-- SELETOR COR -->
@@ -156,15 +156,15 @@
                     <button onclick="buyWithPix()" class="btn-secondary mb-6">
                         <span class="flex items-center justify-center gap-2">
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 15l3-3 3 3"/></svg>
-                            COMPRAR COM PIX (5% OFF)
+                            SOLICITAR RESUMO DA COMPRA
                         </span>
                     </button>
 
                     <!-- TRUST BADGES -->
                     <div class="grid grid-cols-2 gap-2 mb-8">
-                        <div class="trust-badge"><i data-lucide="truck" class="w-4 h-4 text-[var(--turquesa)]"></i><span>Frete grátis acima de R$ 199</span></div>
-                        <div class="trust-badge"><i data-lucide="refresh-cw" class="w-4 h-4 text-[var(--turquesa)]"></i><span>Troca grátis em 30 dias</span></div>
-                        <div class="trust-badge"><i data-lucide="shield" class="w-4 h-4 text-[var(--turquesa)]"></i><span>Compra 100% segura</span></div>
+                        <div class="trust-badge"><i data-lucide="truck" class="w-4 h-4 text-[var(--turquesa)]"></i><span>Frete a confirmar com a loja</span></div>
+                        <div class="trust-badge"><i data-lucide="refresh-cw" class="w-4 h-4 text-[var(--turquesa)]"></i><span>Consulte a política de trocas</span></div>
+                        <div class="trust-badge"><i data-lucide="shield" class="w-4 h-4 text-[var(--turquesa)]"></i><span>Sem cobrança nesta versão</span></div>
                         <div class="trust-badge"><i data-lucide="clock" class="w-4 h-4 text-[var(--turquesa)]"></i><span>7 dias de arrependimento</span></div>
                     </div>
 
@@ -197,7 +197,7 @@
                                 <div class="text-sm text-gray-600 pb-4 space-y-2">
                                     <p>📦 PAC: 5-8 dias úteis — estimativa R$ 15-25</p>
                                     <p>🚀 SEDEX: 2-3 dias úteis — estimativa R$ 25-40</p>
-                                    <p>🏪 Retirada em Aracaju/SE: grátis</p>
+                                    <p>🏪 Retirada e frete a confirmar</p>
                                     <p class="text-xs text-gray-400 mt-2">* Frete calculado automaticamente no checkout pelo CEP.</p>
                                 </div>
                             </div>
@@ -209,7 +209,7 @@
                             </button>
                             <div class="accordion-content" id="acc-exchange">
                                 <div class="text-sm text-gray-600 pb-4 space-y-2">
-                                    <p>✅ Troca grátis em até 30 dias</p>
+                                    <p>✅ Consulte as condições de troca</p>
                                     <p>✅ Direito de arrependimento em 7 dias (por lei)</p>
                                     <p>✅ Defeito de fabricação: troca ou reembolso</p>
                                     <p>❌ Peça usada, lavada ou sem etiquetas</p>
@@ -290,7 +290,7 @@
                 <div>
                     <h4 class="font-semibold text-sm uppercase tracking-wider mb-4">Contato</h4>
                     <ul class="space-y-2 text-sm text-gray-400">
-                        <li class="flex items-center gap-2"><i data-lucide="message-circle" class="w-4 h-4 text-[var(--turquesa)]"></i> WhatsApp</li>
+                        <li class="flex items-center gap-2"><i data-lucide="message-circle" class="w-4 h-4 text-[var(--turquesa)]"></i> Contato pelo formulário</li>
                         <li class="flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4 text-[var(--turquesa)]"></i> contato@artequeveste.com.br</li>
                         <li class="flex items-center gap-2"><i data-lucide="map-pin" class="w-4 h-4 text-[var(--turquesa)]"></i> Aracaju/SE</li>
                     </ul>
@@ -368,7 +368,7 @@
         const installments = Math.max(1, Math.min(Math.ceil(p.price / 30), 6));
         const installmentVal = (p.price / installments).toFixed(2).replace('.', ',');
         document.getElementById('product-installment').textContent = `até ${installments}x de R$ ${installmentVal} sem juros`;
-        const pixVal = (p.price * 0.95).toFixed(2).replace('.', ',');
+        const pixVal = Number(p.price).toFixed(2).replace('.', ',');
         document.getElementById('pix-price').textContent = `R$ ${pixVal}`;
 
         const cat = CATEGORIAS[p.category] || {label:'',bg:'var(--preto)',text:'#fff'};
