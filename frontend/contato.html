@@ -41,7 +41,7 @@
         <div class="max-w-4xl mx-auto px-4">
             <span class="text-[#40E0D0] uppercase tracking-widest text-xs font-semibold mb-4 block">Fale Conosco</span>
             <h1 class="font-display text-5xl md:text-7xl font-black mb-6">Contato</h1>
-            <p class="text-gray-300 max-w-2xl mx-auto">Estamos prontos para ajudar. Dúvidas, encomendas, parcerias — entre em contato!</p>
+            <p class="text-gray-300 max-w-2xl mx-auto">Consulte a disponibilidade dos canais de atendimento abaixo.</p>
         </div>
     </header>
 
@@ -70,25 +70,12 @@
 
         <!-- FORMULÁRIO -->
         <div class="max-w-2xl mx-auto">
-            <h2 class="font-display text-2xl font-black mb-6 text-center">Envie sua mensagem</h2>
-            <form class="bg-white p-8 shadow-sm space-y-4" aria-describedby="contact-unavailable" onsubmit="event.preventDefault()">
-                <div class="grid grid-cols-2 gap-4">
-                    <div><label class="block text-xs font-semibold uppercase tracking-wider text-gray-500 mb-2">Nome *</label><input type="text" id="c-name" class="form-input" required></div>
-                    <div><label class="block text-xs font-semibold uppercase tracking-wider text-gray-500 mb-2">E-mail *</label><input type="email" id="c-email" class="form-input" required></div>
-                </div>
-                <div><label class="block text-xs font-semibold uppercase tracking-wider text-gray-500 mb-2">Assunto</label>
-                    <select id="c-subject" class="form-input">
-                        <option>Dúvida sobre produto</option>
-                        <option>Sobre minha encomenda</option>
-                        <option>Troca ou devolução</option>
-                        <option>Parceria / Atacado</option>
-                        <option>Outro assunto</option>
-                    </select>
-                </div>
-                <div><label class="block text-xs font-semibold uppercase tracking-wider text-gray-500 mb-2">Mensagem *</label><textarea id="c-message" class="form-input" rows="5" required></textarea></div>
-                <button type="submit" class="btn-primary" disabled aria-disabled="true" style="opacity:.55;cursor:not-allowed">ENVIO TEMPORARIAMENTE INDISPONÍVEL</button>
-                <p id="contact-unavailable" role="status" class="text-sm text-gray-600 text-center">O formulário ainda não possui um serviço de envio verificado. Nenhuma mensagem será enviada nem armazenada. Não informe dados pessoais aqui.</p>
-            </form>
+            <h2 class="font-display text-2xl font-black mb-6 text-center">Informações de atendimento</h2>
+            <section class="bg-white p-8 shadow-sm space-y-4" aria-labelledby="contact-status-heading">
+                <h3 id="contact-status-heading" class="font-display text-lg font-bold">Atendimento em atualização</h3>
+                <p class="text-sm text-gray-600">O formulário está indisponível até que um canal seguro de atendimento seja confirmado.</p>
+                <p class="text-sm text-gray-600">Esta página não solicita nem armazena mensagens ou informações pessoais.</p>
+            </section>
         </div>
     </main>
 
