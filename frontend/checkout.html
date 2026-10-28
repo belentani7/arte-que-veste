@@ -323,7 +323,7 @@
           'Frete e pagamento a confirmar diretamente com a loja.',
           '',
           'Estes dados foram processados apenas no seu navegador.'
-        ].join('\\n');
+        ].join('\n');
         const blob = new Blob([text], {type: 'text/plain;charset=utf-8'});
         const link = document.createElement('a');
         const url = URL.createObjectURL(blob);
