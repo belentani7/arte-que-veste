@@ -1,5 +1,9 @@
 version: 2
 updates:
   - package-ecosystem: "npm"
+    # El package.json y el lockfile viven en frontend/
+    directory: "/frontend"
+    schedule: { interval: "weekly" }
+  - package-ecosystem: "github-actions"
     directory: "/"
     schedule: { interval: "weekly" }

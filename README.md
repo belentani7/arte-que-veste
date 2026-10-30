@@ -14,7 +14,7 @@ frontend/                 tienda + servidor Node mínimo
   loja.html               catálogo
   produto.html            ficha de producto
   carrinho.html           carrito
-  checkout.html           checkout
+  checkout.html           checkout (demo, sin procesamiento de pagos)
   pedido-sucesso.html     confirmación
   pedido-pendente.html    pago pendiente
   pedido-falha.html       pago fallido
@@ -22,6 +22,9 @@ frontend/                 tienda + servidor Node mínimo
   termos-de-uso.html · sobre.html · contato.html · faq.html
   products.json           catálogo de productos
   server.js               servidor estático (node server.js)
+  scripts/verify.mjs      validador de HTML y enlaces locales
+  scripts/export.mjs      export de datos del catálogo (npm run export)
+  test/basic.test.mjs     tests (node --test): servidor, carrito y datos
   assets/img/produtos/    imágenes de producto
 backend/seed.json         datos seed del catálogo — sin servicio activo: la tienda sirve frontend/products.json
 magic/                    piezas experimentales (shader, sfx, lore, plugin)
@@ -33,9 +36,22 @@ ecosistema.html           índice del ecosistema
 
 ```bash
 cd frontend
-npm start        # node server.js
-npm run check    # node --check server.js
+npm ci            # instala según package-lock.json
+npm start         # node server.js  (http://127.0.0.1:5500)
+npm run check     # node --check de todos los JS
+npm test          # validador de HTML + tests (node --test)
+npm run export    # imprime el catálogo consolidado en JSON
 ```
+
+## Utilidad
+
+- **Utilidad social:** da vitrina y venta directa al trabajo artesanal nordestino
+  (xilogravura en textil y piezas de autor), con catálogo, carrito y fichas de producto
+  propios, sin depender de marketplaces intermediarios.
+- **Utilidad comercial:** funciona como tienda de demostración del flujo completo de
+  compra (sin procesamiento de pagos) y como base lista para migrar a venta real:
+  `transferencia-nuvemshop/` incluye el CSV de productos y los scripts de API para
+  poblar una tienda Nuvemshop. El código es MIT.
 
 ## Documentos de traspaso
 

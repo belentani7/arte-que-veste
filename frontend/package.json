@@ -4,7 +4,8 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "check": "node --check server.js && node --check scripts/verify.mjs",
-    "test": "node scripts/verify.mjs"
+    "check": "node --check server.js && node --check scripts/verify.mjs && node --check scripts/export.mjs && node --check test/basic.test.mjs",
+    "test": "node scripts/verify.mjs && node --test",
+    "export": "node scripts/export.mjs"
   }
 }
