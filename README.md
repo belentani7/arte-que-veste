@@ -62,3 +62,16 @@ cambios.
 ## Licencia
 
 MIT — ver `LICENSE`.
+---
+
+## Ficha del proyecto
+
+| Campo | Valor |
+|---|---|
+| Autor | Belentani / NOIACORE |
+| Época de desarrollo | 2026 |
+| Contacto | [belentani7studio@proton.me](mailto:belentani7studio@proton.me) |
+| Código | https://github.com/belentani7/arte-que-veste |
+| Demo desplegada | https://belentani7.github.io/arte-que-veste/ |
+
+Quality baseline: CI + Dependabot + CodeQL + reglas de agentes por [premium-factory](https://github.com/belentani7/premium-factory-api).
