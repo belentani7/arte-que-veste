@@ -4,6 +4,7 @@ Ejecutar: python setup-nuvemshop.py
 """
 import asyncio
 import os
+
 from browser_use import Agent, Browser
 from langchain_anthropic import ChatAnthropic
 
