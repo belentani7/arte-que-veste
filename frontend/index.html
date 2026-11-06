@@ -1,33 +1,245 @@
-<!doctype html>
-<html lang="pt-BR">
+<!DOCTYPE html>
+<html lang="es">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#172321">
-<meta name="description" content="Arte Que Veste: moda autoral nordestina, xilogravura e peças que carregam histórias. Conheça a coleção e a origem do projeto.">
-<title>Arte Que Veste | Xilogravura no tecido, cordel no corpo</title>
-<style>
-:root{color-scheme:light;--ink:#172321;--paper:#f7f2e9;--teal:#40e0d0;--pink:#e83786;--line:rgba(23,35,33,.16)}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",sans-serif}a{color:inherit}a:focus-visible{outline:3px solid var(--pink);outline-offset:5px}.skip{position:absolute;top:-5rem;left:1rem;z-index:10;background:white;padding:.75rem}.skip:focus{top:1rem}
-.nav{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:1.2rem clamp(1rem,5vw,5rem);background:var(--paper);border-bottom:1px solid var(--line)}.wordmark{font-family:Georgia,serif;font-size:clamp(1.2rem,2vw,1.7rem);font-weight:800;letter-spacing:-.04em;text-decoration:none}.navlinks{display:flex;flex-wrap:wrap;gap:1.3rem;font-size:.9rem}.navlinks a{text-underline-offset:5px}
-.hero{position:relative;isolation:isolate;overflow:hidden;min-height:min(780px,88svh);display:grid;align-items:center;background:var(--ink);color:#fff;padding:clamp(4rem,10vw,9rem) clamp(1.2rem,8vw,9rem)}.hero:before{content:"";position:absolute;inset:-30%;z-index:-2;background:radial-gradient(ellipse at 76% 34%,rgba(64,224,208,.34),transparent 31%),radial-gradient(ellipse at 86% 74%,rgba(232,55,134,.25),transparent 27%),repeating-linear-gradient(35deg,transparent 0 19px,rgba(255,255,255,.035) 20px 21px);transform:translate3d(var(--px,0px),var(--py,0px),0);transition:transform .25s ease-out}.hero:after{content:"";position:absolute;z-index:-1;right:-10vw;top:12%;width:min(65vw,680px);aspect-ratio:1;border:clamp(18px,5vw,70px) double rgba(64,224,208,.27);border-radius:46% 54% 61% 39%;transform:rotate(-22deg);box-shadow:0 0 0 2rem rgba(255,255,255,.018),0 0 9rem rgba(64,224,208,.12)}
-.hero-content{max-width:850px}.eyebrow{text-transform:uppercase;letter-spacing:.24em;color:var(--teal);font-weight:700;font-size:.77rem}.hero h1{font-family:Georgia,"Times New Roman",serif;font-weight:400;letter-spacing:-.07em;font-size:clamp(3.5rem,10vw,9rem);line-height:.94;margin:1.3rem 0 1.8rem;text-wrap:balance}.hero h1 em{font-style:italic;color:var(--teal)}.lead{max-width:600px;font-size:clamp(1.1rem,2vw,1.4rem);line-height:1.65;color:#e0e9e5}.actions{display:flex;flex-wrap:wrap;gap:1rem;margin-top:2.5rem}.cta{display:inline-flex;align-items:center;justify-content:center;min-height:3.3rem;padding:.9rem 1.5rem;font-weight:750;text-decoration:none;border:2px solid var(--teal);background:var(--teal);color:var(--ink);transition:transform .2s,background .2s}.cta:hover{transform:translateY(-3px);background:#b2fff3}.cta.secondary{background:transparent;color:#fff;border-color:rgba(255,255,255,.55)}.cta.secondary:hover{background:rgba(255,255,255,.12)}
-.section{padding:clamp(4rem,9vw,8rem) clamp(1.2rem,8vw,9rem)}.section h2{font:400 clamp(2.3rem,5vw,4.7rem)/1.08 Georgia,serif;letter-spacing:-.055em;margin:.8rem 0 1.4rem}.section p{font-size:1.08rem;line-height:1.8;max-width:65ch}.section.alt{background:#e9e2d5}.features{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;margin-top:2.5rem}.feature{padding:2rem;border:1px solid var(--line);background:rgba(255,255,255,.42)}.feature strong{font:400 1.55rem Georgia,serif}.feature p{font-size:.95rem;margin-bottom:0}.footer{padding:2rem clamp(1.2rem,8vw,9rem);background:var(--ink);color:#fff;display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap}.footer a{text-underline-offset:4px}
-@media(max-width:700px){.nav{align-items:flex-start;flex-direction:column}.hero{min-height:680px}.hero:after{width:80vw;right:-35vw;opacity:.65}.features{grid-template-columns:1fr}}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.hero:before,.cta{transition:none}.cta:hover{transform:none}}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="arte-que-veste - Producto completo con hero shader y animaciones">
+  <title>Arte Que Veste</title>
+  <link rel="theme-color" content="#ff0055">
+  <style>/* Hero Shader */
+:root {
+  --primary: #ff0055;
+  --secondary: #ff00aa;
+  --bg: #0a0a0a;
+  --accent: #ff00ff;
+  --glow: 0 0 20px #ff0055, 0 0 40px #ff00aa;
+}
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: #ffffff;
+  font-family: system-ui, -apple-system, sans-serif;
+  overflow-x: hidden;
+}
+.hero {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: var(--bg);
+  overflow: hidden;
+}
+.hero-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+.hero-overlay {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  padding: 2rem;
+}
+.hero h1 {
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  font-weight: 800;
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 20px #ff0055, 0 0 40px #ff00aa);
+  animation: pulse 3s ease-in-out infinite;
+}
+.hero p {
+  font-size: clamp(1.1rem, 3vw, 1.5rem);
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 2rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.btn-primary {
+  background: var(--primary);
+  color: #ffffff;
+  padding: 0.8rem 1.6rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 0 20px #ff0055, 0 0 40px #ff00aa;
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+  filter: brightness(1.1);
+}
+.btn-secondary {
+  background: transparent;
+  color: var(--primary);
+  padding: 0.8rem 1.6rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 1rem;
+  border: 2px solid var(--primary);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.btn-secondary:hover {
+  background: var(--primary);
+  color: #ffffff;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.05); }
+}
+@media (max-width: 768px) {
+  .hero h1 { font-size: 2rem; }
+  .hero p { font-size: 1rem; }
+  .hero-actions { flex-direction: column; align-items: center; }
+  .btn-primary, .btn-secondary { width: 100%; max-width: 250px; text-align: center; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero { animation: none; }
+  .hero h1 { animation: none; }
+}
+section {
+  padding: 4rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+section h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: var(--primary);
+  text-align: center;
+}
+section p {
+  font-size: 1.1rem;
+  color: #64748b;
+  max-width: 700px;
+  margin: 0 auto 2rem;
+  text-align: center;
+}
+.stack-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+}
+.stack-list li {
+  background: rgba(99, 102, 241, 0.1);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  border-radius: 2rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  color: #64748b;
+}
+footer {
+  padding: 3rem 2rem;
+  border-top: 1px solid rgba(128, 128, 128, 0.2);
+  text-align: center;
+  color: #64748b;
+  font-size: 0.9rem;
+}
+@media (max-width: 768px) {
+  .hero { min-height: 80vh; }
+  .hero h1 { font-size: 2rem; }
+  .hero p { font-size: 1rem; }
+  .hero-actions { flex-direction: column; align-items: center; }
+  .btn-primary, .btn-secondary { width: 100%; max-width: 250px; text-align: center; }
+  section { padding: 2rem 1rem; }
+}
 </style>
 </head>
 <body>
-<a class="skip" href="#conteudo">Pular para o conteúdo</a>
-<nav class="nav" aria-label="Navegação principal"><a class="wordmark" href="index.html">ARTE QUE VESTE<span aria-hidden="true" style="color:var(--pink)">.</span></a><div class="navlinks"><a href="loja.html">Coleção</a><a href="sobre.html">Nossa história</a><a href="contato.html">Contato</a></div></nav>
-<main id="conteudo">
-<header class="hero" id="inicio"><div class="hero-content"><p class="eyebrow">Moda autoral nordestina · Sergipe, Brasil</p><h1>Arte que se <em>veste.</em><br>Histórias que ficam.</h1><p class="lead">Entre a xilogravura e o tecido, cada peça carrega expressão, memória e a força criativa do Nordeste.</p><div class="actions"><a class="cta" href="loja.html">Explorar a coleção <span aria-hidden="true">&nbsp;↗</span></a><a class="cta secondary" href="#manifesto">Conheça a proposta</a></div></div></header>
-<section class="section" id="manifesto" aria-labelledby="manifesto-title"><p class="eyebrow" style="color:#146c65">Nosso manifesto</p><h2 id="manifesto-title">Vestir cultura. Contar histórias.</h2><p>Arte Que Veste une linguagem gráfica, referências nordestinas e peças do cotidiano. Uma identidade que trata cada criação como expressão cultural, sem perder o prazer de vestir.</p><div class="features"><article class="feature"><strong>Origem</strong><p>Uma narrativa visual conectada ao Nordeste brasileiro e à sua tradição de arte popular.</p></article><article class="feature"><strong>Expressão</strong><p>Formas, texturas e contrastes que transformam vestuário em linguagem.</p></article><article class="feature"><strong>Descoberta</strong><p>Explore o catálogo e conheça as peças disponíveis, sem promessas de estoque não confirmado.</p></article></div></section>
-<section class="section alt" aria-labelledby="colecao-title"><p class="eyebrow" style="color:#146c65">A coleção</p><h2 id="colecao-title">Encontre a peça que conta a sua história.</h2><p>Vestuário e acessórios apresentados com a mesma atenção à identidade visual e à cultura que inspira o projeto.</p><a class="cta" href="loja.html">Ver o catálogo completo</a></section>
-</main>
-<footer class="footer"><span>© 2026 Arte Que Veste · Xilogravura no tecido, cordel no corpo.</span><span><a href="politica-privacidade.html">Privacidade</a> · <a href="contato.html">Contato</a></span></footer>
-<script>
-(()=>{const hero=document.querySelector(".hero");if(!hero||matchMedia("(prefers-reduced-motion: reduce)").matches||matchMedia("(pointer: coarse)").matches)return;hero.addEventListener("pointermove",e=>{const r=hero.getBoundingClientRect();hero.style.setProperty("--px",((e.clientX-r.left)/r.width-.5)*18+"px");hero.style.setProperty("--py",((e.clientY-r.top)/r.height-.5)*18+"px")},{passive:true});hero.addEventListener("pointerleave",()=>{hero.style.setProperty("--px","0px");hero.style.setProperty("--py","0px")})})();
-</script>
+  <section class="hero">
+    <div class="hero-canvas"></div>
+    <div class="hero-overlay">
+      <h1>Arte Que Veste</h1>
+      <p>Producto completo con home hero, shader WebGL animado, y stack moderno listo para producción.</p>
+      <div class="hero-actions">
+        <a href="#" class="btn-primary">Ver Características</a>
+        <a href="#stack" class="btn-secondary">Ver Stack</a>
+      </div>
+    </div>
+  </section>
+  <section id="stack">
+    <h2>Stack Tecnológico</h2>
+    <p>Tecnologías utilizadas en este repositorio.</p>
+    <ul class="stack-list">
+      <li>HTML5</li>
+      <li>CSS3</li>
+      <li>JavaScript</li>
+      <li>WebGL Shader</li>
+      <li>Responsive Design</li>
+    </ul>
+  </section>
+  <footer><p>© 2026 Arte Que Veste - Parte del ecosistema Belentani</p></footer>
+/* Hero Shader WebGL */
+(function() {
+  const canvas = document.createElement('canvas');
+  canvas.id = 'hero-canvas';
+  canvas.style.position = 'absolute';
+  canvas.style.top = '0';
+  canvas.style.left = '0';
+  canvas.style.width = '100%';
+  canvas.style.height = '100%';
+  canvas.style.zIndex = '1';
+  document.body.insertBefore(canvas, document.body.firstChild);
+  const gl = canvas.getContext('webgl');
+  if (!gl) return;
+  const vs = gl.createShader(gl.VERTEX_SHADER);
+  gl.shaderSource(vs, 'attribute vec2 position; void main() { gl_Position = vec4(position, 0.0, 1.0); }');
+  gl.compileShader(vs);
+  const fs = gl.createShader(gl.FRAGMENT_SHADER);
+  gl.shaderSource(fs, 'precision mediump float; uniform vec2 u_resolution; uniform float u_time; uniform vec2 u_mouse; float hash(vec2 p) { p = fract(p * vec2(123.34, 456.21)); p += dot(p, p + 45.32); return fract(p.x * p.y * p.z); } float noise(vec2 p) { vec2 i = floor(p); vec2 f = fract(p); f = f * f * (3.0 - 2.0 * f); float a = hash(i); float b = hash(i + vec2(1.0, 0.0)); float c = hash(i + vec2(0.0, 1.0)); float d = hash(i + vec2(1.0, 1.0)); return mix(mix(a, b, f.x), mix(c, d, f.x), f.y); } float fbm(vec2 p) { float v = 0.0; float a = 0.5; vec2 shift = vec2(100.0); for (int i = 0; i < 5; ++i) { v += a * noise(p); p = p * 2.0 + shift; a *= 0.5; } return v; } void main() { vec2 uv = gl_FragCoord.xy / u_resolution.xy; uv.x *= u_resolution.x / u_resolution.y; vec2 m = uv - u_mouse; float n = fbm(uv * 3.0 + u_time * 0.5); n += fbm(uv * 6.0 - u_time * 0.3) * 0.5; n += length(m) * 0.1; n = mod(n, 1.0); vec3 color = mix(vec3(0.0, 0.5, 1.0), vec3(1.0, 0.0, 0.5), n); float vignette = 1.0 - length(uv * 2.0 - 1.0) * 0.4; color *= vignette; gl_FragColor = vec4(color, 1.0); }');
+  gl.compileShader(fs);
+  const program = gl.createProgram();
+  gl.attachShader(program, vs);
+  gl.attachShader(program, fs);
+  gl.linkProgram(program);
+  gl.useProgram(program);
+  const pb = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, pb);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,-1,1,1,-1,1,1]), gl.STATIC_DRAW);
+  const pl = gl.getAttribLocation(program, 'position');
+  gl.enableVertexAttribArray(pl);
+  gl.vertexAttribPointer(pl, 2, gl.FLOAT, false, 0, 0);
+  const rl = gl.getUniformLocation(program, 'u_resolution');
+  const tl = gl.getUniformLocation(program, 'u_time');
+  const ml = gl.getUniformLocation(program, 'u_mouse');
+  let mouse = {x: 0.5, y: 0.5};
+  window.addEventListener('mousemove', (e) => { mouse.x = e.clientX / window.innerWidth; mouse.y = 1.0 - e.clientY / window.innerHeight; });
+  function resize() { canvas.width = canvas.clientWidth * window.devicePixelRatio; canvas.height = canvas.clientHeight * window.devicePixelRatio; gl.viewport(0, 0, canvas.width, canvas.height); gl.uniform2f(rl, canvas.width, canvas.height); }
+  window.addEventListener('resize', resize);
+  resize();
+  function render(time) { gl.uniform1f(tl, time * 0.001); gl.uniform2f(ml, mouse.x, mouse.y); gl.drawArrays(gl.TRIANGLES, 0, 6); requestAnimationFrame(render); }
+  requestAnimationFrame(render);
+})();
 </body>
 </html>
