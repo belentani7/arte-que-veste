@@ -49,6 +49,8 @@ test('server.js responde / e /index.html con 200 text/html', { timeout: 20000 },
     const body = await res.text();
     assert.ok(body.includes('<!doctype html>') || body.includes('<html'),
       'GET ' + path + ' debe devolver la portada');
+    assert.ok(body.includes('Nossa Coleção'),
+      'GET ' + path + ' debe abrir el catálogo de la tienda');
   }
 
   const resJson = await fetch(base + '/products.json');
@@ -118,6 +120,12 @@ test('scripts/verify.mjs valida los HTML del frontend y termina en 0', { timeout
   const r = spawnSync(process.execPath, ['scripts/verify.mjs'], { cwd: root, encoding: 'utf8' });
   assert.equal(r.status, 0, 'verify.mjs falló:\n' + (r.stderr || r.stdout));
   assert.match(r.stdout, /PASS:/);
+});
+
+test('carrinho.html não oferece validação de cupom sem API configurada', () => {
+  const cartPage = readFileSync(join(root, 'carrinho.html'), 'utf8');
+  assert.doesNotMatch(cartPage, /applyCoupon|\/api\/cupom/);
+  assert.match(cartPage, /Cupons e descontos não estão configurados/);
 });
 
 /* ------------------------------------------------------------------ */

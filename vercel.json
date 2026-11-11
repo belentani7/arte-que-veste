@@ -1,18 +1,14 @@
 {
-  "version": 2,
-  "builds": [
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "redirects": [
     {
-      "src": "package.json",
-      "use": "@vercel/static-build"
-    }
-  ],
-  "routes": [
+      "source": "/",
+      "destination": "/frontend/loja.html"
+    },
     {
-      "src": "/(.*)",
-      "dest": "/site/$1"
+      "source": "/index.html",
+      "destination": "/frontend/loja.html",
+      "permanent": false
     }
-  ],
-  "env": {
-    "NODE_ENV": "production"
-  }
+  ]
 }
