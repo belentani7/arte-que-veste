@@ -1,0 +1,32 @@
+{
+  "repo": "arte-que-veste",
+  "moneda": "EUR",
+  "estado": "propuesta",
+  "modelo": "contenido",
+  "quien_paga": "quien factura con ello (venta de prendas y uso comercial del catálogo)",
+  "que_se_bloquea": "uso comercial",
+  "regla_dura": "si no hay servicio, no hay muro; el catálogo de consulta permanece accesible",
+  "planes": [
+    {
+      "nombre": "Catálogo de consulta",
+      "precio": 0,
+      "descripcion": "Navegación por el catálogo de prendas de autor, fichas y políticas (acceso libre)."
+    },
+    {
+      "nombre": "Compra de prenda",
+      "precio": 0,
+      "descripcion": "Precio por prenda definido en productos.json y transferencia-nuvemshop (variable por pieza)."
+    },
+    {
+      "nombre": "Piezas digitales (magic)",
+      "precio": 9,
+      "descripcion": "Shaders, SFX, lore y plugins experimentales de la colección magic/."
+    },
+    {
+      "nombre": "Consultoría de tienda online",
+      "precio": 89,
+      "periodo": "hora",
+      "descripcion": "Migración a Nuvemshop, identidad visual y configuración de checkout real."
+    }
+  ]
+}

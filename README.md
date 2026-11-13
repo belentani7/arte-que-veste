@@ -1,5 +1,9 @@
 # Arte Que Veste — moda autoral nordestina
 
+<p><img src="https://github.com/belentani7/arte-que-veste/actions/workflows/ci.yml/badge.svg" alt="CI" style="vertical-align:middle">
+  <img src="https://img.shields.io/badge/dependabot-enabled-025e8c?logo=dependabot&style=flat-square" alt="Dependabot">
+  <img src="https://img.shields.io/website?url=https%3A%2F%2Fbelentani7.github.io%2Farte-que-veste%2F&label=demo&style=flat-square&color=2bb673" alt="demo live"></p>
+
 Catálogo y tienda de prendas de autor. Cada pieza se presenta como obra; la tienda tiene
 catálogo, ficha de producto, carrito y checkout propios.
 
@@ -75,3 +79,7 @@ MIT — ver `LICENSE`.
 | Demo desplegada | https://belentani7.github.io/arte-que-veste/ |
 
 Quality baseline: CI + Dependabot + CodeQL + reglas de agentes por [premium-factory](https://github.com/belentani7/premium-factory-api).
+
+
+## Producto
+Véase `plataforma/OFERTA.md`, `plataforma/precios.json`, `plataforma/ONEPAGER.md`.
