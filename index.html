@@ -25,7 +25,7 @@
     <div class="hero-canvas-wrapper">
       <canvas id="hero-canvas"></canvas>
     </div>
-    <div class="hero-overlay">
+    <div class="hero-overlay" id="react-hero">
       <h1>arte-que-veste</h1>
       <p>Repositorio arte-que-veste — parte del ecosistema Belentani</p>
       <div class="hero-actions">
@@ -80,5 +80,18 @@
       window.initHeroShader('hero-canvas', '#0ea5e9', '#7c3aed');
     });
   </script>
+<script type="application/json" id="hero-data">
+{
+  "eyebrow": "",
+  "title": "arte-que-veste",
+  "subtitle": "Repositorio arte-que-veste — parte del ecosistema Belentani",
+  "install": "",
+  "docsHref": "docs.html",
+  "repoHref": "https://github.com/belentani7/arte-que-veste",
+  "demoHref": "",
+  "chips": []
+}
+</script>
+<script src="site-hero.js" defer></script>
 </body>
 </html>
