@@ -83,3 +83,9 @@ Quality baseline: CI + Dependabot + CodeQL + reglas de agentes por [premium-fact
 
 ## Producto
 Véase `plataforma/OFERTA.md`, `plataforma/precios.json`, `plataforma/ONEPAGER.md`.
+
+## Verificacion
+
+```bash
+python -m pytest -q
+```
