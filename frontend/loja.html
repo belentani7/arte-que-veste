@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html dir="ltr" lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,16 +14,16 @@
     <meta name="theme-color" content="#40E0D0">
 
     <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com" defer></script>
 
     <!-- GSAP y ScrollTrigger -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 
     <!-- Fuentes y Iconos -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/playfair-display@latest/latin-400-normal.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/inter@latest/latin-400-normal.css">
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/lucide@latest" defer></script>
 
     <style>
         :root {
@@ -76,11 +76,16 @@
 <meta property="og:description" content="Catálogo completo Arte Que Veste: vestuário, acessórios, bijuteria, calçados e souvenirs com xilogravura nordestina.">
 <meta name="robots" content="index,follow">
 <meta name="twitter:card" content="summary_large_image">
+<meta property="og:locale" content="es_ES">
+<meta name="twitter:title" content="Loja | Arte Que Veste - Moda Autoral Nordestina">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="format-detection" content="telephone=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
 </head>
 <body>
 
     <!-- NAVBAR -->
-    <nav class="fixed top-0 left-0 right-0 bg-white z-50 shadow-sm">
+    <nav class="fixed top-0 left-0 right-0 bg-white z-50 shadow-sm" aria-label="Principal">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
                 <a href="index.html" class="font-display text-xl md:text-2xl font-black">ARTE QUE VESTE</a>
@@ -123,15 +128,15 @@
                 <div>
                     <h3 class="font-display text-lg font-bold mb-4 border-b-2 border-[var(--preto)] pb-2">Categorias</h3>
                     <div class="space-y-2">
-                        <button class="filter-btn active" data-filter="all">Todos os Produtos</button>
-                        <button class="filter-btn" data-filter="masculino">Roupas Masculinas</button>
-                        <button class="filter-btn" data-filter="feminino">Roupas Femininas</button>
-                        <button class="filter-btn" data-filter="infantil">Roupas Infantis</button>
-                        <button class="filter-btn" data-filter="unissex">Unissex</button>
-                        <button class="filter-btn" data-filter="acessorios">Acessórios</button>
-                        <button class="filter-btn" data-filter="bijuteria">Bijuteria</button>
-                        <button class="filter-btn" data-filter="calcados">Calçados & Sandálias</button>
-                        <button class="filter-btn" data-filter="souvenirs">Souvenirs</button>
+                        <button class="filter-btn active" data-filter="all" type="button">Todos os Produtos</button>
+                        <button class="filter-btn" data-filter="masculino" type="button">Roupas Masculinas</button>
+                        <button class="filter-btn" data-filter="feminino" type="button">Roupas Femininas</button>
+                        <button class="filter-btn" data-filter="infantil" type="button">Roupas Infantis</button>
+                        <button class="filter-btn" data-filter="unissex" type="button">Unissex</button>
+                        <button class="filter-btn" data-filter="acessorios" type="button">Acessórios</button>
+                        <button class="filter-btn" data-filter="bijuteria" type="button">Bijuteria</button>
+                        <button class="filter-btn" data-filter="calcados" type="button">Calçados & Sandálias</button>
+                        <button class="filter-btn" data-filter="souvenirs" type="button">Souvenirs</button>
                     </div>
                 </div>
 
@@ -140,22 +145,22 @@
 
                     <p class="text-xs uppercase text-gray-500 mt-4 mb-2 font-semibold">Vestuário Adulto</p>
                     <div class="grid grid-cols-3 gap-2">
-                        <button class="size-btn">PP</button><button class="size-btn">P</button><button class="size-btn">M</button>
-                        <button class="size-btn">G</button><button class="size-btn">GG</button><button class="size-btn">XGG</button>
-                        <button class="size-btn col-span-3">Tamanho Único</button>
+                        <button class="size-btn" type="button">PP</button><button class="size-btn" type="button">P</button><button class="size-btn" type="button">M</button>
+                        <button class="size-btn" type="button">G</button><button class="size-btn" type="button">GG</button><button class="size-btn" type="button">XGG</button>
+                        <button class="size-btn col-span-3" type="button">Tamanho Único</button>
                     </div>
 
                     <p class="text-xs uppercase text-gray-500 mt-4 mb-2 font-semibold">Infantil (anos)</p>
                     <div class="grid grid-cols-4 gap-2">
-                        <button class="size-btn">2</button><button class="size-btn">4</button><button class="size-btn">6</button><button class="size-btn">8</button>
-                        <button class="size-btn">10</button><button class="size-btn">12</button><button class="size-btn">14</button><button class="size-btn">16</button>
+                        <button class="size-btn" type="button">2</button><button class="size-btn" type="button">4</button><button class="size-btn" type="button">6</button><button class="size-btn" type="button">8</button>
+                        <button class="size-btn" type="button">10</button><button class="size-btn" type="button">12</button><button class="size-btn" type="button">14</button><button class="size-btn" type="button">16</button>
                     </div>
 
                     <p class="text-xs uppercase text-gray-500 mt-4 mb-2 font-semibold">Calçados</p>
                     <div class="grid grid-cols-4 gap-2">
-                        <button class="size-btn">33</button><button class="size-btn">34</button><button class="size-btn">35</button><button class="size-btn">36</button>
-                        <button class="size-btn">37</button><button class="size-btn">38</button><button class="size-btn">39</button><button class="size-btn">40</button>
-                        <button class="size-btn">41</button><button class="size-btn">42</button><button class="size-btn">43</button><button class="size-btn">44</button>
+                        <button class="size-btn" type="button">33</button><button class="size-btn" type="button">34</button><button class="size-btn" type="button">35</button><button class="size-btn" type="button">36</button>
+                        <button class="size-btn" type="button">37</button><button class="size-btn" type="button">38</button><button class="size-btn" type="button">39</button><button class="size-btn" type="button">40</button>
+                        <button class="size-btn" type="button">41</button><button class="size-btn" type="button">42</button><button class="size-btn" type="button">43</button><button class="size-btn" type="button">44</button>
                     </div>
                 </div>
 
@@ -240,7 +245,7 @@
         Pedro Marcos Santos Belentani | @Belentani_ | 21-06-2026 06:03h | Criador do Conceito Original, Identidade Visual e Código | Barcelona
     </div>
 
-    <script src="js/cart.js"></script>
+    <script src="js/cart.js" defer></script>
     <script>
     /*
      * ═══════════════════════════════════════════════════════════
@@ -305,7 +310,7 @@
             const priceFmt = Number(p.price || 0).toFixed(2).replace('.', ',');
             return '<div class="product-card anim-scroll" data-category="' + esc(p.category) + '">' +
                 '<div class="relative overflow-hidden mb-3 bg-gray-100 aspect-[3/4]">' +
-                '<img src="' + esc(safeImage(p.img)) + '" class="product-image w-full h-full object-cover" alt="' + esc(p.alt || p.name) + '" loading="lazy">' +
+                '<img src="' + esc(safeImage(p.img)) + '" class="product-image w-full h-full object-cover" alt="' + esc(p.alt || p.name) + '" loading="lazy" decoding="async">' +
                 '<div class="absolute top-2 left-2 px-2 py-1 text-[10px] uppercase" style="background:' + c.bg + ';color:' + c.text + '">' + c.label + '</div>' +
                 '</div>' +
                 '<div class="p-2">' +
@@ -422,7 +427,7 @@
     </script>
 
 <!-- FRONT-UPGRADE: Lenis smooth scroll (GSAP ya presente, sin duplicar) -->
-<script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js" defer></script>
 <script>
 (function(){try{
 if(window.Lenis){var l=new Lenis({duration:1.1});var r=function(t){l.raf(t);requestAnimationFrame(r)};requestAnimationFrame(r);}

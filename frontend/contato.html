@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html dir="ltr" lang="pt-BR">
 <head>
     <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contato | Arte Que Veste</title>
     <meta name="description" content="Entre em contato com a Arte Que Veste. Prepare uma mensagem para enviar pelo canal oficial.">
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com" defer></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/playfair-display@latest/latin-400-normal.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/inter@latest/latin-400-normal.css">
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/lucide@latest" defer></script>
     <style>
         body{font-family:'Inter',sans-serif;background:#faf9f6;color:#1a1a1a}.font-display{font-family:'Playfair Display',serif}
         .nav-link{position:relative;transition:color .3s;font-size:12px;text-transform:uppercase}
@@ -28,9 +28,14 @@
 <meta name="robots" content="index,follow">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
+<meta property="og:locale" content="es_ES">
+<meta name="twitter:title" content="Contato | Arte Que Veste">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="format-detection" content="telephone=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
 </head>
 <body>
-    <nav class="fixed top-0 left-0 right-0 bg-white z-50 shadow-sm">
+    <nav class="fixed top-0 left-0 right-0 bg-white z-50 shadow-sm" aria-label="Principal">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
                 <a href="index.html" class="font-display text-xl md:text-2xl font-black">ARTE QUE VESTE</a>
@@ -67,7 +72,7 @@
                 <p class="text-sm text-gray-500">contato@artequeveste.com.br</p>
                 <p class="text-xs text-gray-400 mt-2">Resposta em até 24h</p>
             </a>
-            <a href="https://instagram.com/artequeveste" target="_blank" class="contact-card bg-white p-6 shadow-sm text-center">
+            <a href="https://instagram.com/artequeveste" target="_blank" class="contact-card bg-white p-6 shadow-sm text-center" rel="noopener noreferrer">
                 <div class="w-12 h-12 bg-pink-100 rounded-full flex items-center justify-center mx-auto mb-4"><i data-lucide="instagram" class="w-6 h-6 text-pink-600"></i></div>
                 <h3 class="font-display text-lg font-bold mb-1">Instagram</h3>
                 <p class="text-sm text-gray-500">@artequeveste</p>
@@ -125,9 +130,9 @@
     </script>
 
 <!-- FRONT-UPGRADE: Lenis + GSAP -->
-<script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js" defer></script>
 <script>
 (function(){try{
 if(window.Lenis){var l=new Lenis({duration:1.1});var r=function(t){l.raf(t);requestAnimationFrame(r)};requestAnimationFrame(r);}

@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html dir="ltr" lang="pt-BR">
 <head>
     <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FAQ — Perguntas Frequentes | Arte Que Veste</title>
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdn.tailwindcss.com" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/playfair-display@latest/latin-400-normal.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/inter@latest/latin-400-normal.css">
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/lucide@latest" defer></script>
     <style>
         body{font-family:'Inter',sans-serif;background:#faf9f6;color:#1a1a1a}.font-display{font-family:'Playfair Display',serif}
         .faq-item{border-bottom:1px solid #eee}
@@ -29,9 +29,14 @@
 <meta name="robots" content="index,follow">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
+<meta property="og:locale" content="es_ES">
+<meta name="twitter:title" content="FAQ — Perguntas Frequentes | Arte Que Veste">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="format-detection" content="telephone=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
 </head>
 <body>
-    <nav class="fixed top-0 left-0 right-0 bg-white z-50 shadow-sm">
+    <nav class="fixed top-0 left-0 right-0 bg-white z-50 shadow-sm" aria-label="Principal">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
                 <a href="index.html" class="font-display text-xl md:text-2xl font-black">ARTE QUE VESTE</a>
@@ -58,25 +63,25 @@
 
     <main class="max-w-3xl mx-auto px-4 py-16">
         <div class="bg-white shadow-sm p-6 md:p-8">
-            <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)"><span>Como faço uma compra?</span><i data-lucide="chevron-down" class="w-5 h-5 flex-shrink-0"></i></button><div class="faq-answer"><p>Escolha seus produtos na loja, adicione ao carrinho, preencha seus dados de entrega e escolha a forma de pagamento (Pix, cartão ou boleto). Após a confirmação, você receberá um e-mail e WhatsApp com os detalhes do pedido.</p></div></div>
+            <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)" type="button"><span>Como faço uma compra?</span><i data-lucide="chevron-down" class="w-5 h-5 flex-shrink-0"></i></button><div class="faq-answer"><p>Escolha seus produtos na loja, adicione ao carrinho, preencha seus dados de entrega e escolha a forma de pagamento (Pix, cartão ou boleto). Após a confirmação, você receberá um e-mail e WhatsApp com os detalhes do pedido.</p></div></div>
 
-            <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)"><span>Quais formas de pagamento são aceitas?</span><i data-lucide="chevron-down" class="w-5 h-5 flex-shrink-0"></i></button><div class="faq-answer"><p>Aceitamos <strong>Pix</strong> (com 5% de desconto), <strong>cartão de crédito</strong> (até 6x sem juros), <strong>boleto bancário</strong> e <strong>pagamento manual via WhatsApp</strong>. O processamento de pagamentos é feito com segurança pelo Mercado Pago.</p></div></div>
+            <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)" type="button"><span>Quais formas de pagamento são aceitas?</span><i data-lucide="chevron-down" class="w-5 h-5 flex-shrink-0"></i></button><div class="faq-answer"><p>Aceitamos <strong>Pix</strong> (com 5% de desconto), <strong>cartão de crédito</strong> (até 6x sem juros), <strong>boleto bancário</strong> e <strong>pagamento manual via WhatsApp</strong>. O processamento de pagamentos é feito com segurança pelo Mercado Pago.</p></div></div>
 
-            <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)"><span>Qual o prazo de entrega?</span><i data-lucide="chevron-down" class="w-5 h-5 flex-shrink-0"></i></button><div class="faq-answer"><p>O prazo depende da modalidade escolhida: <strong>PAC</strong> (5-8 dias úteis), <strong>SEDEX</strong> (2-3 dias úteis) ou <strong>retirada em Aracaju/SE</strong> (imediato). O frete é calculado pelo CEP no checkout. Enviamos de Aracaju/SE.</p></div></div>
+            <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)" type="button"><span>Qual o prazo de entrega?</span><i data-lucide="chevron-down" class="w-5 h-5 flex-shrink-0"></i></button><div class="faq-answer"><p>O prazo depende da modalidade escolhida: <strong>PAC</strong> (5-8 dias úteis), <strong>SEDEX</strong> (2-3 dias úteis) ou <strong>retirada em Aracaju/SE</strong> (imediato). O frete é calculado pelo CEP no checkout. Enviamos de Aracaju/SE.</p></div></div>
 
-            <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)"><span>Posso trocar ou devolver uma peça?</span><i data-lucide="chevron-down" class="w-5 h-5 flex-shrink-0"></i></button><div class="faq-answer"><p>Sim! Oferecemos <strong>troca grátis em até 30 dias</strong>. Basta entrar em contato pelo WhatsApp com o número do pedido e motivo. Enviamos uma etiqueta de postagem gratuita. Consulte nossa <a href="politica-trocas.html" class="text-[#40E0D0] underline">política completa</a>.</p></div></div>
+            <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)" type="button"><span>Posso trocar ou devolver uma peça?</span><i data-lucide="chevron-down" class="w-5 h-5 flex-shrink-0"></i></button><div class="faq-answer"><p>Sim! Oferecemos <strong>troca grátis em até 30 dias</strong>. Basta entrar em contato pelo WhatsApp com o número do pedido e motivo. Enviamos uma etiqueta de postagem gratuita. Consulte nossa <a href="politica-trocas.html" class="text-[#40E0D0] underline">política completa</a>.</p></div></div>
 
-            <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)"><span>Como sei qual tamanho escolher?</span><i data-lucide="chevron-down" class="w-5 h-5 flex-shrink-0"></i></button><div class="faq-answer"><p>Na página de cada produto de vestuário, clique em "Guia de Tamanhos" para ver as medidas em centímetros. Se estiver em dúvida entre dois tamanhos, escolha o maior. Também pode tirar dúvidas conosco no WhatsApp!</p></div></div>
+            <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)" type="button"><span>Como sei qual tamanho escolher?</span><i data-lucide="chevron-down" class="w-5 h-5 flex-shrink-0"></i></button><div class="faq-answer"><p>Na página de cada produto de vestuário, clique em "Guia de Tamanhos" para ver as medidas em centímetros. Se estiver em dúvida entre dois tamanhos, escolha o maior. Também pode tirar dúvidas conosco no WhatsApp!</p></div></div>
 
-            <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)"><span>O Pix tem desconto?</span><i data-lucide="chevron-down" class="w-5 h-5 flex-shrink-0"></i></button><div class="faq-answer"><p>Sim! Ao pagar com <strong>Pix você ganha 5% de desconto</strong> em qualquer pedido. O QR Code é gerado automaticamente após a confirmação do pedido.</p></div></div>
+            <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)" type="button"><span>O Pix tem desconto?</span><i data-lucide="chevron-down" class="w-5 h-5 flex-shrink-0"></i></button><div class="faq-answer"><p>Sim! Ao pagar com <strong>Pix você ganha 5% de desconto</strong> em qualquer pedido. O QR Code é gerado automaticamente após a confirmação do pedido.</p></div></div>
 
-            <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)"><span>Tem frete grátis?</span><i data-lucide="chevron-down" class="w-5 h-5 flex-shrink-0"></i></button><div class="faq-answer"><p>Sim! Para compras acima de <strong>R$ 199,00</strong>, o frete é por nossa conta (via PAC). Acima de R$ 500,00, oferecemos frete grátis via SEDEX.</p></div></div>
+            <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)" type="button"><span>Tem frete grátis?</span><i data-lucide="chevron-down" class="w-5 h-5 flex-shrink-0"></i></button><div class="faq-answer"><p>Sim! Para compras acima de <strong>R$ 199,00</strong>, o frete é por nossa conta (via PAC). Acima de R$ 500,00, oferecemos frete grátis via SEDEX.</p></div></div>
 
-            <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)"><span>Posso comprar pelo WhatsApp?</span><i data-lucide="chevron-down" class="w-5 h-5 flex-shrink-0"></i></button><div class="faq-answer"><p>Clique no botão "Comprar" de qualquer produto e você será redirecionado para nosso WhatsApp com a mensagem pronta. Lá podemos ajudar com dúvidas, tamanhos, personalizações e pagamentos manuais.</p></div></div>
+            <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)" type="button"><span>Posso comprar pelo WhatsApp?</span><i data-lucide="chevron-down" class="w-5 h-5 flex-shrink-0"></i></button><div class="faq-answer"><p>Clique no botão "Comprar" de qualquer produto e você será redirecionado para nosso WhatsApp com a mensagem pronta. Lá podemos ajudar com dúvidas, tamanhos, personalizações e pagamentos manuais.</p></div></div>
 
-            <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)"><span>As peças são artesanais?</span><i data-lucide="chevron-down" class="w-5 h-5 flex-shrink-0"></i></button><div class="faq-answer"><p>Todas as peças da Arte Que Veste são <strong>autorais</strong>, produzidas em Aracaju/SE com xilogravuras nordestinas. Peças artesanais podem ter variações naturais de cor e textura — isso é parte da beleza da arte manual!</p></div></div>
+            <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)" type="button"><span>As peças são artesanais?</span><i data-lucide="chevron-down" class="w-5 h-5 flex-shrink-0"></i></button><div class="faq-answer"><p>Todas as peças da Arte Que Veste são <strong>autorais</strong>, produzidas em Aracaju/SE com xilogravuras nordestinas. Peças artesanais podem ter variações naturais de cor e textura — isso é parte da beleza da arte manual!</p></div></div>
 
-            <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)"><span>Como entro em contato?</span><i data-lucide="chevron-down" class="w-5 h-5 flex-shrink-0"></i></button><div class="faq-answer"><p>Você pode nos encontrar pelo <strong>Contato</strong> (79) 99999-9999, pelo <strong>e-mail</strong> contato@artequeveste.com.br ou pelo <strong>Instagram</strong> @artequeveste. Respondemos em até 24 horas!</p></div></div>
+            <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)" type="button"><span>Como entro em contato?</span><i data-lucide="chevron-down" class="w-5 h-5 flex-shrink-0"></i></button><div class="faq-answer"><p>Você pode nos encontrar pelo <strong>Contato</strong> (79) 99999-9999, pelo <strong>e-mail</strong> contato@artequeveste.com.br ou pelo <strong>Instagram</strong> @artequeveste. Respondemos em até 24 horas!</p></div></div>
         </div>
 
         <div class="text-center mt-12">
@@ -102,7 +107,7 @@
     </script>
 
 <!-- FRONT-UPGRADE: Lenis smooth scroll (GSAP ya presente, sin duplicar) -->
-<script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js" defer></script>
 <script>
 (function(){try{
 if(window.Lenis){var l=new Lenis({duration:1.1});var r=function(t){l.raf(t);requestAnimationFrame(r)};requestAnimationFrame(r);}

@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html dir="ltr" lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resumo de pedido | Arte Que Veste</title>
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
     <meta name="theme-color" content="#40E0D0">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com" defer></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/playfair-display@latest/latin-400-normal.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/inter@latest/latin-400-normal.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/inter@latest/latin-500-normal.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/inter@latest/latin-600-normal.css">
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/lucide@latest" defer></script>
     <style>
         :root{--turquesa:#40E0D0;--preto:#1a1a1a;--off-white:#faf9f6}
         *{margin:0;padding:0;box-sizing:border-box}
@@ -50,9 +50,14 @@
 <meta name="robots" content="index,follow">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
+<meta property="og:locale" content="es_ES">
+<meta name="twitter:title" content="Resumo de pedido | Arte Que Veste">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="format-detection" content="telephone=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
 </head>
 <body>
-    <nav class="fixed top-0 left-0 right-0 bg-white z-50 shadow-sm">
+    <nav class="fixed top-0 left-0 right-0 bg-white z-50 shadow-sm" aria-label="Principal">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
                 <a href="index.html" class="font-display text-xl md:text-2xl font-black">ARTE QUE VESTE</a>
@@ -99,7 +104,7 @@
                             <div></div>
                         </div>
                         <div class="flex justify-end mt-6">
-                            <button onclick="goToStep(2)" class="btn-primary max-w-xs" id="btn-step1">PRÓXIMO: ENDEREÇO</button>
+                            <button onclick="goToStep(2)" class="btn-primary max-w-xs" id="btn-step1" type="button">PRÓXIMO: ENDEREÇO</button>
                         </div>
                     </div>
 
@@ -123,8 +128,8 @@
                         </div>
 
                         <div class="flex justify-between mt-6">
-                            <button onclick="goToStep(1)" class="text-sm text-gray-500 hover:text-[var(--turquesa)] transition-colors">← Voltar</button>
-                            <button onclick="goToStep(3)" class="btn-primary max-w-xs" id="btn-step2">PRÓXIMO: RESUMO</button>
+                            <button onclick="goToStep(1)" class="text-sm text-gray-500 hover:text-[var(--turquesa)] transition-colors" type="button">← Voltar</button>
+                            <button onclick="goToStep(3)" class="btn-primary max-w-xs" id="btn-step2" type="button">PRÓXIMO: RESUMO</button>
                         </div>
                     </div>
 
@@ -143,8 +148,8 @@
                         </div>
 
                         <div class="flex justify-between mt-6">
-                            <button onclick="goToStep(2)" class="text-sm text-gray-500 hover:text-[var(--turquesa)] transition-colors">← Voltar</button>
-                            <button onclick="submitOrder()" class="btn-primary max-w-xs" id="btn-submit">
+                            <button onclick="goToStep(2)" class="text-sm text-gray-500 hover:text-[var(--turquesa)] transition-colors" type="button">← Voltar</button>
+                            <button onclick="submitOrder()" class="btn-primary max-w-xs" id="btn-submit" type="button">
                                 <span id="btn-submit-text">BAIXAR RESUMO (SEM PAGAMENTO)</span>
                             </button>
                         </div>
@@ -174,7 +179,7 @@
         </div>
     </footer>
 
-    <script src="js/cart.js"></script>
+    <script src="js/cart.js" defer></script>
     <script>
     const escapeHTML = (value) => String(value ?? '').replace(/[&<>"']/g, ch =>
         ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
@@ -207,7 +212,7 @@
         const items = Cart.get();
         document.getElementById('checkout-items').innerHTML = items.map(i =>
             `<div class="flex gap-3 items-center">
-                <img src="${escapeHTML(safeImageUrl(i.img))}" class="w-12 h-14 object-cover bg-gray-100" alt="${escapeHTML(i.name)}">
+                <img src="${escapeHTML(safeImageUrl(i.img))}" class="w-12 h-14 object-cover bg-gray-100" alt="${escapeHTML(i.name)}" loading="lazy" decoding="async">
                 <div class="flex-1 min-w-0">
                     <p class="text-xs font-semibold truncate">${escapeHTML(i.name)}${i.tamanho ? ` (${escapeHTML(i.tamanho)})` : ''}</p>
                     <p class="text-[10px] text-gray-400">Qtd: ${i.quantidade}</p>
@@ -347,9 +352,9 @@
     </script>
 
 <!-- FRONT-UPGRADE: Lenis + GSAP -->
-<script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js" defer></script>
 <script>
 (function(){try{
 if(window.Lenis){var l=new Lenis({duration:1.1});var r=function(t){l.raf(t);requestAnimationFrame(r)};requestAnimationFrame(r);}

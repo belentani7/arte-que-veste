@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html dir="ltr" lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,14 +8,14 @@
     <meta name="description" content="Detalhes do produto Arte Que Veste - Moda autoral nordestina com xilogravura.">
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
     <meta name="theme-color" content="#40E0D0">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdn.tailwindcss.com" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/playfair-display@latest/latin-400-normal.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/playfair-display@latest/latin-700-normal.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/inter@latest/latin-400-normal.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/inter@latest/latin-500-normal.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/inter@latest/latin-600-normal.css">
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/lucide@latest" defer></script>
     <style>
         :root { --turquesa:#40E0D0; --rosa:#FF1493; --laranja:#FF6347; --preto:#1a1a1a; --off-white:#faf9f6; }
         *{margin:0;padding:0;box-sizing:border-box}
@@ -52,6 +52,11 @@
 <meta name="robots" content="index,follow">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
+<meta property="og:locale" content="es_ES">
+<meta name="twitter:title" content="Produto | Arte Que Veste - Moda Autoral Nordestina">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="format-detection" content="telephone=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
 </head>
 <body>
     <!-- NAVBAR -->
@@ -105,9 +110,9 @@
                 <!-- GALERIA -->
                 <div class="lg:w-1/2">
                     <div class="relative overflow-hidden bg-gray-100 aspect-[3/4] mb-4 cursor-zoom-in" id="main-image-container">
-                        <img id="main-image" src="" alt="" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
+                        <img id="main-image" src="" alt="" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" loading="lazy" decoding="async">
                         <div id="product-badge" class="absolute top-4 left-4 px-3 py-1 text-xs uppercase font-semibold"></div>
-                        <button onclick="openZoom()" class="absolute bottom-4 right-4 bg-white/90 backdrop-blur p-2 rounded-full shadow-lg hover:bg-white transition-colors">
+                        <button onclick="openZoom()" class="absolute bottom-4 right-4 bg-white/90 backdrop-blur p-2 rounded-full shadow-lg hover:bg-white transition-colors" type="button">
                             <i data-lucide="maximize-2" class="w-5 h-5"></i>
                         </button>
                     </div>
@@ -139,7 +144,7 @@
                     <div id="size-section" class="mb-6" style="display:none">
                         <div class="flex items-center justify-between mb-3">
                             <p class="text-xs uppercase font-semibold tracking-wider text-gray-500">Tamanho</p>
-                            <button onclick="openSizeGuide()" class="text-xs text-[var(--turquesa)] underline hover:no-underline">📏 Guia de Tamanhos</button>
+                            <button onclick="openSizeGuide()" class="text-xs text-[var(--turquesa)] underline hover:no-underline" type="button">📏 Guia de Tamanhos</button>
                         </div>
                         <div class="flex flex-wrap gap-2" id="size-options"></div>
                     </div>
@@ -147,11 +152,11 @@
                     <!-- QUANTIDADE + COMPRAR -->
                     <div class="flex gap-3 mb-6">
                         <div class="flex items-center border">
-                            <button onclick="changeQty(-1)" class="px-4 py-3 hover:bg-gray-100 transition-colors text-lg font-semibold">−</button>
+                            <button onclick="changeQty(-1)" class="px-4 py-3 hover:bg-gray-100 transition-colors text-lg font-semibold" type="button">−</button>
                             <span id="qty-display" class="px-4 py-3 font-semibold min-w-[48px] text-center">1</span>
-                            <button onclick="changeQty(1)" class="px-4 py-3 hover:bg-gray-100 transition-colors text-lg font-semibold">+</button>
+                            <button onclick="changeQty(1)" class="px-4 py-3 hover:bg-gray-100 transition-colors text-lg font-semibold" type="button">+</button>
                         </div>
-                        <button id="btn-add-cart" onclick="addToCart()" class="btn-primary flex-1">
+                        <button id="btn-add-cart" onclick="addToCart()" class="btn-primary flex-1" type="button">
                             <span class="flex items-center justify-center gap-2">
                                 <i data-lucide="shopping-bag" class="w-4 h-4"></i> ADICIONAR AO CARRINHO
                             </span>
@@ -159,7 +164,7 @@
                     </div>
 
                     <!-- COMPRA RÁPIDA PIX -->
-                    <button onclick="buyWithPix()" class="btn-secondary mb-6">
+                    <button onclick="buyWithPix()" class="btn-secondary mb-6" type="button">
                         <span class="flex items-center justify-center gap-2">
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 15l3-3 3 3"/></svg>
                             SOLICITAR RESUMO DA COMPRA
@@ -177,7 +182,7 @@
                     <!-- ACCORDIONS -->
                     <div class="border-t">
                         <div class="border-b">
-                            <button onclick="toggleAccordion('desc')" class="w-full flex justify-between items-center py-4 text-sm font-semibold">
+                            <button onclick="toggleAccordion('desc')" class="w-full flex justify-between items-center py-4 text-sm font-semibold" type="button">
                                 <span>Descrição</span>
                                 <i data-lucide="chevron-down" class="w-4 h-4 transition-transform" id="icon-desc"></i>
                             </button>
@@ -186,7 +191,7 @@
                             </div>
                         </div>
                         <div class="border-b">
-                            <button onclick="toggleAccordion('details')" class="w-full flex justify-between items-center py-4 text-sm font-semibold">
+                            <button onclick="toggleAccordion('details')" class="w-full flex justify-between items-center py-4 text-sm font-semibold" type="button">
                                 <span>Detalhes & Composição</span>
                                 <i data-lucide="chevron-down" class="w-4 h-4 transition-transform" id="icon-details"></i>
                             </button>
@@ -195,7 +200,7 @@
                             </div>
                         </div>
                         <div class="border-b">
-                            <button onclick="toggleAccordion('shipping')" class="w-full flex justify-between items-center py-4 text-sm font-semibold">
+                            <button onclick="toggleAccordion('shipping')" class="w-full flex justify-between items-center py-4 text-sm font-semibold" type="button">
                                 <span>Envio & Entrega</span>
                                 <i data-lucide="chevron-down" class="w-4 h-4 transition-transform" id="icon-shipping"></i>
                             </button>
@@ -209,7 +214,7 @@
                             </div>
                         </div>
                         <div class="border-b">
-                            <button onclick="toggleAccordion('exchange')" class="w-full flex justify-between items-center py-4 text-sm font-semibold">
+                            <button onclick="toggleAccordion('exchange')" class="w-full flex justify-between items-center py-4 text-sm font-semibold" type="button">
                                 <span>Trocas & Devoluções</span>
                                 <i data-lucide="chevron-down" class="w-4 h-4 transition-transform" id="icon-exchange"></i>
                             </button>
@@ -238,7 +243,7 @@
     <!-- GUÍA DE TAMANHOS MODAL -->
     <div id="size-guide-modal" class="fixed inset-0 bg-black/50 z-50 hidden items-center justify-center p-4" onclick="closeSizeGuide(event)">
         <div class="bg-white max-w-lg w-full max-h-[80vh] overflow-y-auto p-6 relative" onclick="event.stopPropagation()">
-            <button onclick="closeSizeGuide()" class="absolute top-4 right-4"><i data-lucide="x" class="w-5 h-5"></i></button>
+            <button onclick="closeSizeGuide()" class="absolute top-4 right-4" type="button"><i data-lucide="x" class="w-5 h-5"></i></button>
             <h3 class="font-display text-xl font-bold mb-4">📏 Guia de Tamanhos</h3>
             <p class="text-sm text-gray-500 mb-4">Medidas em centímetros. Para dúvida entre 2 tamanhos, escolha o MAIOR.</p>
             <div class="overflow-x-auto">
@@ -263,8 +268,8 @@
 
     <!-- ZOOM MODAL -->
     <div id="zoom-modal" class="zoom-overlay" onclick="closeZoom()">
-        <img id="zoom-image" src="" alt="">
-        <button class="absolute top-6 right-6 text-white"><i data-lucide="x" class="w-8 h-8"></i></button>
+        <img id="zoom-image" src="" alt="" loading="lazy" decoding="async">
+        <button class="absolute top-6 right-6 text-white" type="button"><i data-lucide="x" class="w-8 h-8"></i></button>
     </div>
 
     <!-- FOOTER -->
@@ -309,7 +314,7 @@
         </div>
     </footer>
 
-    <script src="js/cart.js"></script>
+    <script src="js/cart.js" defer></script>
     <script>
     const esc = value => String(value ?? '').replace(/[&<>"']/g, ch =>
         ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
@@ -407,7 +412,7 @@
             document.getElementById('size-section').style.display = 'block';
             const sizes = p.category === 'infantil' ? ['2','4','6','8','10','12','14','16'] : ['PP','P','M','G','GG','XG'];
             document.getElementById('size-options').innerHTML = sizes.map(s =>
-                `<button class="size-btn" onclick="selectSize('${s}', this)">${s}</button>`
+                `<button class="size-btn" onclick="selectSize('${s}', this)" type="button">${s}</button>`
             ).join('');
         }
 
@@ -433,7 +438,7 @@
             const category = CATEGORIAS[p.category] || {label:'',bg:'var(--preto)',text:'#fff'};
             return '<a href="produto.html?sku=' + encodeURIComponent(String(p.sku)) + '" class="product-card block">' +
                 '<div class="relative overflow-hidden bg-gray-100 aspect-[3/4]">' +
-                '<img src="' + esc(safeImage(p.img)) + '" class="w-full h-full object-cover" alt="' + esc(p.alt || p.name) + '" loading="lazy">' +
+                '<img src="' + esc(safeImage(p.img)) + '" class="w-full h-full object-cover" alt="' + esc(p.alt || p.name) + '" loading="lazy" decoding="async">' +
                 '<div class="absolute top-2 left-2 px-2 py-1 text-[10px] uppercase" style="background:' + category.bg + ';color:' + category.text + '">' + esc(category.label) + '</div>' +
                 '</div><div class="p-2"><h3 class="font-display text-sm font-bold truncate">' + esc(p.name) + '</h3>' +
                 '<span class="text-sm font-bold">R$ ' + Number(p.price || 0).toFixed(2).replace('.',',') + '</span></div></a>';
@@ -512,7 +517,7 @@
     </script>
 
 <!-- FRONT-UPGRADE: Lenis smooth scroll (GSAP ya presente, sin duplicar) -->
-<script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js" defer></script>
 <script>
 (function(){try{
 if(window.Lenis){var l=new Lenis({duration:1.1});var r=function(t){l.raf(t);requestAnimationFrame(r)};requestAnimationFrame(r);}
