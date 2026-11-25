@@ -1,8 +1,16 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" role="img" aria-labelledby="t d">
-  <title id="t">Imagem de produto pendente</title>
-  <desc id="d">Marcador neutro para substituir pela fotografia real do produto.</desc>
-  <rect width="800" height="1000" fill="#ece7dc"/>
-  <path d="M110 740 300 420l100 170 90-140 200 290Z" fill="#20201f" opacity=".82"/>
-  <circle cx="560" cy="300" r="70" fill="#c45f3c"/>
-  <text x="400" y="875" text-anchor="middle" font-family="Georgia,serif" font-size="34" fill="#20201f">FOTO DO PRODUTO</text>
+  <title id="t">Arte Que Veste — Fotografia de produto em preparação</title>
+  <desc id="d">Ilustração inspirada em xilogravura nordestina indicando fotografia oficial em preparação.</desc>
+  <rect width="800" height="1000" fill="#f3eee3"/>
+  <rect x="34" y="34" width="732" height="932" fill="none" stroke="#1a1a1a" stroke-width="4"/>
+  <rect x="48" y="48" width="704" height="904" fill="none" stroke="#0f6f5b" stroke-width="1.5" stroke-dasharray="8 6"/>
+  <g fill="#1a1a1a" opacity="0.9">
+    <circle cx="560" cy="260" r="68" fill="#c45f3c"/>
+    <path d="M560 155v24M560 341v24M455 260h24M641 260h24M486 186l17 17M617 317l17 17M634 186l-17 17M503 317l-17 17" stroke="#c45f3c" stroke-width="6" stroke-linecap="round"/>
+    <path d="M96 710 265 445l110 155 105-135 224 245Z"/>
+    <path d="M96 742h608" stroke="#1a1a1a" stroke-width="6"/>
+    <path d="M136 764h528" stroke="#0f6f5b" stroke-width="3"/>
+  </g>
+  <text x="400" y="835" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="30" font-weight="700" letter-spacing="4" fill="#1a1a1a">ARTE QUE VESTE</text>
+  <text x="400" y="878" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="18" letter-spacing="2" fill="#52524e">FOTOGRAFIA OFICIAL EM PREPARAÇÃO</text>
 </svg>

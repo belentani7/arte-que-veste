@@ -1,117 +1,182 @@
 <!DOCTYPE html>
 <html dir="ltr" lang="pt-BR">
 <head>
-    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FAQ — Perguntas Frequentes | Arte Que Veste</title>
-    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-    <script src="https://cdn.tailwindcss.com" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/playfair-display@latest/latin-400-normal.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/inter@latest/latin-400-normal.css">
-    <script src="https://unpkg.com/lucide@latest" defer></script>
-    <style>
-        body{font-family:'Inter',sans-serif;background:#faf9f6;color:#1a1a1a}.font-display{font-family:'Playfair Display',serif}
-        .faq-item{border-bottom:1px solid #eee}
-        .faq-question{width:100%;text-align:left;padding:16px 0;font-weight:600;font-size:14px;display:flex;justify-content:space-between;align-items:center;background:none;border:none;cursor:pointer;transition:color .2s}
-        .faq-question:hover{color:#40E0D0}
-        .faq-answer{max-height:0;overflow:hidden;transition:max-height .4s ease}
-        .faq-answer.open{max-height:500px}
-        .faq-answer p{padding-bottom:16px;font-size:14px;color:#6b7280;line-height:1.7}
-        .nav-link{position:relative;transition:color .3s;font-size:12px;text-transform:uppercase}
-        .nav-link::after{content:'';position:absolute;bottom:-5px;left:0;width:0;height:2px;background:#40E0D0;transition:width .3s}
-        .nav-link:hover::after{width:100%}
-    </style>
-<meta name="theme-color" content="#0b0b0f">
-  <meta name="description" content="FAQ — Perguntas Frequentes | Arte Que Veste">
-<meta name="color-scheme" content="light dark">
-<meta property="og:title" content="FAQ — Perguntas Frequentes | Arte Que Veste">
-<meta property="og:description" content="FAQ — Perguntas Frequentes | Arte Que Veste">
-<meta name="robots" content="index,follow">
-<meta property="og:type" content="website">
-<meta name="twitter:card" content="summary_large_image">
-<meta property="og:locale" content="es_ES">
-<meta name="twitter:title" content="FAQ — Perguntas Frequentes | Arte Que Veste">
-<meta name="referrer" content="strict-origin-when-cross-origin">
-<meta name="format-detection" content="telephone=no">
-<meta name="apple-mobile-web-app-capable" content="yes">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FAQ — Perguntas Frequentes | Arte Que Veste</title>
+  <meta name="description" content="Perguntas frequentes sobre a vitrine Arte Que Veste, tamanhos, peças autorais, trocas e orçamento.">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="stylesheet" href="css/store.css">
+  <meta name="theme-color" content="#1a1a1a">
+  <meta name="color-scheme" content="light">
+  <meta property="og:title" content="FAQ — Perguntas Frequentes | Arte Que Veste">
+  <meta property="og:description" content="Perguntas frequentes sobre a vitrine Arte Que Veste, tamanhos, peças autorais, trocas e orçamento.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="pt_BR">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="FAQ — Perguntas Frequentes | Arte Que Veste">
+  <meta name="robots" content="index,follow">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
 </head>
 <body>
-    <nav class="fixed top-0 left-0 right-0 bg-white z-50 shadow-sm" aria-label="Principal">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-20">
-                <a href="index.html" class="font-display text-xl md:text-2xl font-black">ARTE QUE VESTE</a>
-                <div class="hidden lg:flex space-x-6">
-                    <a href="index.html" class="nav-link">Início</a>
-                    <a href="loja.html" class="nav-link">Loja</a>
-                    <a href="sobre.html" class="nav-link">Sobre</a>
-                    <a href="contato.html" class="nav-link">Contato</a>
-                </div>
-                <a href="contato.html#formulario" class="hidden sm:flex items-center text-xs uppercase tracking-wider border border-[#1a1a1a] px-4 py-2 hover:bg-[#1a1a1a] hover:text-white transition-colors">
-                    <i data-lucide="message-circle" class="w-4 h-4 mr-2"></i> Fale Conosco
-                </a>
+  <a class="skip-link" href="#conteudo">Pular para as perguntas frequentes</a>
+
+  <nav class="site-nav" aria-label="Principal">
+    <div class="container site-nav-inner">
+      <a href="index.html" class="brand-logo">ARTE QUE VESTE</a>
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link">Início</a></li>
+        <li><a href="loja.html" class="nav-link">Loja</a></li>
+        <li><a href="sobre.html" class="nav-link">História</a></li>
+        <li><a href="faq.html" class="nav-link" aria-current="page">FAQ</a></li>
+        <li><a href="contato.html" class="nav-link">Contato</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="carrinho.html" class="icon-btn" aria-label="Abrir carrinho de compras">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+          <span class="cart-badge">0</span>
+        </a>
+        <a href="contato.html#formulario" class="nav-cta">Fale Conosco</a>
+        <button type="button" class="icon-btn menu-toggle" data-menu-toggle aria-controls="mobile-menu" aria-expanded="false" aria-label="Abrir menu de navegação">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+    <div id="mobile-menu" class="mobile-menu">
+      <ul>
+        <li><a href="index.html">Início</a></li>
+        <li><a href="loja.html">Loja</a></li>
+        <li><a href="sobre.html">História</a></li>
+        <li><a href="faq.html" aria-current="page">FAQ</a></li>
+        <li><a href="contato.html">Contato</a></li>
+        <li><a href="carrinho.html">Carrinho</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <header class="page-hero">
+    <div class="hero-canvas-layer" aria-hidden="true"></div>
+    <div class="hero-scrim" aria-hidden="true"></div>
+    <div class="hero-content">
+      <span class="eyebrow">Ajuda</span>
+      <h1 class="hero-title">Perguntas Frequentes</h1>
+      <p class="hero-subtitle" style="margin-bottom:0;">Tire suas dúvidas sobre o catálogo, tamanhos, entregas e como funciona esta demonstração.</p>
+    </div>
+  </header>
+
+  <main id="conteudo" class="section">
+    <div class="container-sm">
+      <div class="surface-card">
+        <div class="accordion">
+          <div class="accordion-item">
+            <button type="button" class="accordion-trigger" aria-expanded="false" aria-controls="faq-1">
+              <span>Como funciona o pedido nesta versão?</span>
+              <svg class="accordion-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="accordion-panel" id="faq-1" hidden>
+              <p>Escolha suas peças na loja, adicione ao carrinho e avance até o resumo do pedido. Nesta versão de demonstração não há cobrança online: você baixa um resumo local (.txt) para confirmar disponibilidade, frete e pagamento diretamente com a loja.</p>
             </div>
+          </div>
+
+          <div class="accordion-item">
+            <button type="button" class="accordion-trigger" aria-expanded="false" aria-controls="faq-2">
+              <span>Quais formas de pagamento estarão disponíveis na loja oficial?</span>
+              <svg class="accordion-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="accordion-panel" id="faq-2" hidden>
+              <p>Os meios de pagamento (como Pix, cartão ou boleto) e eventuais condições comerciais são confirmados diretamente no momento da ativação comercial da loja. Esta demonstração não coleta dados bancários nem de cartão.</p>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <button type="button" class="accordion-trigger" aria-expanded="false" aria-controls="faq-3">
+              <span>Qual o prazo e a origem da entrega?</span>
+              <svg class="accordion-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="accordion-panel" id="faq-3" hidden>
+              <p>A origem de referência é Aracaju/SE. Prazo e frete exatos (PAC, SEDEX ou retirada local) são confirmados conforme o CEP no atendimento final. Consulte nossa <a href="politica-envio.html" class="accent-link">política de envio</a>.</p>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <button type="button" class="accordion-trigger" aria-expanded="false" aria-controls="faq-4">
+              <span>Posso trocar ou devolver uma peça?</span>
+              <svg class="accordion-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="accordion-panel" id="faq-4" hidden>
+              <p>Sim, respeitamos integralmente o direito de arrependimento em 7 dias (CDC) e as condições descritas em nossa <a href="politica-trocas.html" class="accent-link">política de trocas e devoluções</a>.</p>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <button type="button" class="accordion-trigger" aria-expanded="false" aria-controls="faq-5">
+              <span>Como sei qual tamanho escolher?</span>
+              <svg class="accordion-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="accordion-panel" id="faq-5" hidden>
+              <p>Na página de cada peça de vestuário, clique em "Guia de Tamanhos" para consultar as medidas em centímetros. Em caso de dúvida entre dois tamanhos, recomendamos escolher o maior.</p>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <button type="button" class="accordion-trigger" aria-expanded="false" aria-controls="faq-6">
+              <span>As peças são artesanais?</span>
+              <svg class="accordion-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="accordion-panel" id="faq-6" hidden>
+              <p>Todas as peças da Arte Que Veste são autorais, inspiradas na xilogravura nordestina de Sergipe. Variações sutis de cor e textura fazem parte da autenticidade do trabalho manual.</p>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <button type="button" class="accordion-trigger" aria-expanded="false" aria-controls="faq-7">
+              <span>Como entro em contato?</span>
+              <svg class="accordion-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="accordion-panel" id="faq-7" hidden>
+              <p>Pelo <a href="contato.html#formulario" class="accent-link">formulário de contato</a>, pelo e-mail <strong>contato@artequeveste.com.br</strong> ou pelo Instagram <strong>@artequeveste</strong>.</p>
+            </div>
+          </div>
         </div>
-    </nav>
+      </div>
 
-    <header class="pt-40 pb-16 bg-[#1a1a1a] text-white text-center">
-        <div class="max-w-4xl mx-auto px-4">
-            <span class="text-[#40E0D0] uppercase tracking-widest text-xs font-semibold mb-4 block">Ajuda</span>
-            <h1 class="font-display text-5xl md:text-7xl font-black mb-6">Perguntas Frequentes</h1>
-            <p class="text-gray-300 max-w-2xl mx-auto">Tire suas dúvidas sobre compras, entregas, trocas e pagamentos.</p>
-        </div>
-    </header>
+      <div style="text-align:center;margin-top:2.25rem;">
+        <p class="muted" style="font-size:0.9rem;margin-bottom:0.85rem;">Não encontrou sua resposta?</p>
+        <a href="contato.html#formulario" class="btn btn-primary">Ir para Contato</a>
+      </div>
+    </div>
+  </main>
 
-    <main class="max-w-3xl mx-auto px-4 py-16">
-        <div class="bg-white shadow-sm p-6 md:p-8">
-            <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)" type="button"><span>Como faço uma compra?</span><i data-lucide="chevron-down" class="w-5 h-5 flex-shrink-0"></i></button><div class="faq-answer"><p>Escolha seus produtos na loja, adicione ao carrinho, preencha seus dados de entrega e escolha a forma de pagamento (Pix, cartão ou boleto). Após a confirmação, você receberá um e-mail e WhatsApp com os detalhes do pedido.</p></div></div>
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom" style="border-top:none;padding-top:0;">
+        <p>© 2026 Arte Que Veste. Todos os direitos reservados.</p>
+        <p class="footer-motto">"Xilogravura no tecido, cordel no corpo."</p>
+      </div>
+    </div>
+  </footer>
 
-            <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)" type="button"><span>Quais formas de pagamento são aceitas?</span><i data-lucide="chevron-down" class="w-5 h-5 flex-shrink-0"></i></button><div class="faq-answer"><p>Aceitamos <strong>Pix</strong> (com 5% de desconto), <strong>cartão de crédito</strong> (até 6x sem juros), <strong>boleto bancário</strong> e <strong>pagamento manual via WhatsApp</strong>. O processamento de pagamentos é feito com segurança pelo Mercado Pago.</p></div></div>
-
-            <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)" type="button"><span>Qual o prazo de entrega?</span><i data-lucide="chevron-down" class="w-5 h-5 flex-shrink-0"></i></button><div class="faq-answer"><p>O prazo depende da modalidade escolhida: <strong>PAC</strong> (5-8 dias úteis), <strong>SEDEX</strong> (2-3 dias úteis) ou <strong>retirada em Aracaju/SE</strong> (imediato). O frete é calculado pelo CEP no checkout. Enviamos de Aracaju/SE.</p></div></div>
-
-            <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)" type="button"><span>Posso trocar ou devolver uma peça?</span><i data-lucide="chevron-down" class="w-5 h-5 flex-shrink-0"></i></button><div class="faq-answer"><p>Sim! Oferecemos <strong>troca grátis em até 30 dias</strong>. Basta entrar em contato pelo WhatsApp com o número do pedido e motivo. Enviamos uma etiqueta de postagem gratuita. Consulte nossa <a href="politica-trocas.html" class="text-[#40E0D0] underline">política completa</a>.</p></div></div>
-
-            <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)" type="button"><span>Como sei qual tamanho escolher?</span><i data-lucide="chevron-down" class="w-5 h-5 flex-shrink-0"></i></button><div class="faq-answer"><p>Na página de cada produto de vestuário, clique em "Guia de Tamanhos" para ver as medidas em centímetros. Se estiver em dúvida entre dois tamanhos, escolha o maior. Também pode tirar dúvidas conosco no WhatsApp!</p></div></div>
-
-            <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)" type="button"><span>O Pix tem desconto?</span><i data-lucide="chevron-down" class="w-5 h-5 flex-shrink-0"></i></button><div class="faq-answer"><p>Sim! Ao pagar com <strong>Pix você ganha 5% de desconto</strong> em qualquer pedido. O QR Code é gerado automaticamente após a confirmação do pedido.</p></div></div>
-
-            <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)" type="button"><span>Tem frete grátis?</span><i data-lucide="chevron-down" class="w-5 h-5 flex-shrink-0"></i></button><div class="faq-answer"><p>Sim! Para compras acima de <strong>R$ 199,00</strong>, o frete é por nossa conta (via PAC). Acima de R$ 500,00, oferecemos frete grátis via SEDEX.</p></div></div>
-
-            <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)" type="button"><span>Posso comprar pelo WhatsApp?</span><i data-lucide="chevron-down" class="w-5 h-5 flex-shrink-0"></i></button><div class="faq-answer"><p>Clique no botão "Comprar" de qualquer produto e você será redirecionado para nosso WhatsApp com a mensagem pronta. Lá podemos ajudar com dúvidas, tamanhos, personalizações e pagamentos manuais.</p></div></div>
-
-            <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)" type="button"><span>As peças são artesanais?</span><i data-lucide="chevron-down" class="w-5 h-5 flex-shrink-0"></i></button><div class="faq-answer"><p>Todas as peças da Arte Que Veste são <strong>autorais</strong>, produzidas em Aracaju/SE com xilogravuras nordestinas. Peças artesanais podem ter variações naturais de cor e textura — isso é parte da beleza da arte manual!</p></div></div>
-
-            <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)" type="button"><span>Como entro em contato?</span><i data-lucide="chevron-down" class="w-5 h-5 flex-shrink-0"></i></button><div class="faq-answer"><p>Você pode nos encontrar pelo <strong>Contato</strong> (79) 99999-9999, pelo <strong>e-mail</strong> contato@artequeveste.com.br ou pelo <strong>Instagram</strong> @artequeveste. Respondemos em até 24 horas!</p></div></div>
-        </div>
-
-        <div class="text-center mt-12">
-            <p class="text-gray-500 text-sm mb-4">Não encontrou sua resposta?</p>
-            <a href="contato.html#formulario" class="inline-flex items-center gap-2 bg-[#40E0D0] text-[#1a1a1a] px-6 py-3 font-semibold text-sm uppercase tracking-wider hover:bg-transparent hover:text-[#40E0D0] border-2 border-[#40E0D0] transition-all">
-                <i data-lucide="message-circle" class="w-4 h-4"></i> Fale Conosco no WhatsApp
-            </a>
-        </div>
-    </main>
-
-    <footer class="bg-[#1a1a1a] text-white py-8 mt-12"><div class="max-w-7xl mx-auto px-4 text-center"><p class="text-gray-400 text-sm">© 2026 Arte Que Veste. Todos os direitos reservados.</p><p class="text-gray-700 text-xs italic mt-2">"Xilogravura no tecido, cordel no corpo."</p></div></footer>
-
-    <script>
-    function toggleFaq(btn) {
-        const answer = btn.nextElementSibling;
-        const icon = btn.querySelector('i');
-        const wasOpen = answer.classList.contains('open');
-        document.querySelectorAll('.faq-answer').forEach(a => a.classList.remove('open'));
-        if (!wasOpen) answer.classList.add('open');
-    }
-    lucide.createIcons();
-    gsap.from('.faq-item', { opacity: 0, y: 20, duration: 0.5, stagger: 0.05, ease: 'power3.out' });
-    </script>
-
-<!-- FRONT-UPGRADE: Lenis smooth scroll (GSAP ya presente, sin duplicar) -->
-<script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js" defer></script>
-<script>
-(function(){try{
-if(window.Lenis){var l=new Lenis({duration:1.1});var r=function(t){l.raf(t);requestAnimationFrame(r)};requestAnimationFrame(r);}
-}catch(e){console.warn('Animação opcional indisponível', e);}})();
-</script>
+  <script src="js/store-ui.js" defer></script>
+  <script src="js/cart.js" defer></script>
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const triggers = document.querySelectorAll('.accordion-trigger');
+    triggers.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        const isOpen = btn.getAttribute('aria-expanded') === 'true';
+        triggers.forEach(function (other) {
+          other.setAttribute('aria-expanded', 'false');
+          const panel = document.getElementById(other.getAttribute('aria-controls'));
+          if (panel) panel.hidden = true;
+        });
+        if (!isOpen) {
+          btn.setAttribute('aria-expanded', 'true');
+          const panel = document.getElementById(btn.getAttribute('aria-controls'));
+          if (panel) panel.hidden = false;
+        }
+      });
+    });
+  });
+  </script>
 </body>
 </html>

@@ -1,18 +1,25 @@
+#!/usr/bin/env node
 /**
  * ═══════════════════════════════════════════════════════════════
  * ARTE QUE VESTE — Export de datos principales del proyecto
  * ═══════════════════════════════════════════════════════════════
- * Genera un JSON único con el catálogo de la tienda (frontend/products.json)
- * consolidado con el seed del backend (backend/seed.json): precio, stock,
- * peso y categoría por producto, más un resumen del catálogo.
- *
- * Uso:
- *   npm run export                    → imprime el JSON en stdout
- *   node scripts/export.mjs --out f.json  → además lo escribe en un archivo
+ * Genera un JSON o CSV consolidado con frontend/products.json y
+ * backend/seed.json: precio, stock, peso y categoría por producto.
  */
 import { readFileSync, writeFileSync } from 'node:fs';
 import { join, resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+
+if (process.argv.includes('--help') || process.argv.includes('-h')) {
+  console.log(`Uso: node scripts/export.mjs [opciones]
+
+Opciones:
+  --format <json|csv>  Formato de salida (por defecto: json)
+  --out <archivo>      Escribe el resultado en disco en lugar de stdout
+  -h, --help           Muestra esta ayuda
+`);
+  process.exit(0);
+}
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const repoRoot = resolve(root, '..');
@@ -63,11 +70,25 @@ function exportCatalog() {
   };
 }
 
+function toCsv(catalog) {
+  const esc = (v) => `"${String(v ?? '').replace(/"/g, '""')}"`;
+  const header = ['sku', 'name', 'desc', 'price', 'category', 'stock', 'img', 'weight_kg'].join(';');
+  const rows = catalog.products.map((p) =>
+    [p.sku, p.name, p.desc, p.price.toFixed(2), p.category, p.stock ?? '', p.img, p.weight_kg ?? ''].map(esc).join(';')
+  );
+  return [header, ...rows].join('\n') + '\n';
+}
+
+const fmtIdx = process.argv.indexOf('--format');
+const format = fmtIdx !== -1 && process.argv[fmtIdx + 1] ? process.argv[fmtIdx + 1].toLowerCase() : 'json';
+const data = exportCatalog();
+const output = format === 'csv' ? toCsv(data) : JSON.stringify(data, null, 2) + '\n';
+
 const outFlag = process.argv.indexOf('--out');
 if (outFlag !== -1 && process.argv[outFlag + 1]) {
   const outPath = resolve(process.argv[outFlag + 1]);
-  writeFileSync(outPath, JSON.stringify(exportCatalog(), null, 2) + '\n', 'utf8');
-  console.log('Export escrito en ' + outPath);
+  writeFileSync(outPath, output, 'utf8');
+  console.log('Export (' + format + ') escrito en ' + outPath);
 } else {
-  process.stdout.write(JSON.stringify(exportCatalog(), null, 2) + '\n');
+  process.stdout.write(output);
 }

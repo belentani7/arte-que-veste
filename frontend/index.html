@@ -1,257 +1,198 @@
 <!DOCTYPE html>
-<html dir="ltr" lang="es">
+<html dir="ltr" lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="arte-que-veste - Producto completo con hero shader y animaciones">
-  <title>Arte Que Veste</title>
-  <link rel="theme-color" content="#ff0055">
-  <style>/* Hero Shader */
-:root {
-  --primary: #ff0055;
-  --secondary: #ff00aa;
-  --bg: #0a0a0a;
-  --accent: #ff00ff;
-  --glow: 0 0 20px #ff0055, 0 0 40px #ff00aa;
-}
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-body {
-  margin: 0;
-  padding: 0;
-  background: var(--bg);
-  color: #ffffff;
-  font-family: system-ui, -apple-system, sans-serif;
-  overflow-x: hidden;
-}
-.hero {
-  position: relative;
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background: var(--bg);
-  overflow: hidden;
-}
-.hero-canvas {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-}
-.hero-overlay {
-  position: relative;
-  z-index: 10;
-  text-align: center;
-  padding: 2rem;
-}
-.hero h1 {
-  font-size: clamp(2.5rem, 8vw, 5rem);
-  font-weight: 800;
-  margin-bottom: 1rem;
-  letter-spacing: -0.02em;
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  filter: drop-shadow(0 0 20px #ff0055, 0 0 40px #ff00aa);
-  animation: pulse 3s ease-in-out infinite;
-}
-.hero p {
-  font-size: clamp(1.1rem, 3vw, 1.5rem);
-  color: rgba(255,255,255,0.7);
-  margin-bottom: 2rem;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-}
-.hero-actions {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-.btn-primary {
-  background: var(--primary);
-  color: #ffffff;
-  padding: 0.8rem 1.6rem;
-  border-radius: 0.5rem;
-  font-weight: 600;
-  text-decoration: none;
-  font-size: 1rem;
-  border: none;
-  cursor: pointer;
-  box-shadow: 0 0 20px #ff0055, 0 0 40px #ff00aa;
-}
-.btn-primary:hover {
-  transform: translateY(-2px);
-  opacity: 0.9;
-  filter: brightness(1.1);
-}
-.btn-secondary {
-  background: transparent;
-  color: var(--primary);
-  padding: 0.8rem 1.6rem;
-  border-radius: 0.5rem;
-  font-weight: 600;
-  text-decoration: none;
-  font-size: 1rem;
-  border: 2px solid var(--primary);
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-.btn-secondary:hover {
-  background: var(--primary);
-  color: #ffffff;
-}
-@keyframes pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.8; transform: scale(1.05); }
-}
-@media (max-width: 768px) {
-  .hero h1 { font-size: 2rem; }
-  .hero p { font-size: 1rem; }
-  .hero-actions { flex-direction: column; align-items: center; }
-  .btn-primary, .btn-secondary { width: 100%; max-width: 250px; text-align: center; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .hero { animation: none; }
-  .hero h1 { animation: none; }
-}
-section {
-  padding: 4rem 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-section h2 {
-  font-size: 2rem;
-  margin-bottom: 1rem;
-  color: var(--primary);
-  text-align: center;
-}
-section p {
-  font-size: 1.1rem;
-  color: #64748b;
-  max-width: 700px;
-  margin: 0 auto 2rem;
-  text-align: center;
-}
-.stack-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  justify-content: center;
-  list-style: none;
-  padding: 0;
-}
-.stack-list li {
-  background: rgba(99, 102, 241, 0.1);
-  border: 1px solid rgba(99, 102, 241, 0.2);
-  border-radius: 2rem;
-  padding: 0.5rem 1rem;
-  font-size: 0.85rem;
-  color: #64748b;
-}
-footer {
-  padding: 3rem 2rem;
-  border-top: 1px solid rgba(128, 128, 128, 0.2);
-  text-align: center;
-  color: #64748b;
-  font-size: 0.9rem;
-}
-@media (max-width: 768px) {
-  .hero { min-height: 80vh; }
-  .hero h1 { font-size: 2rem; }
-  .hero p { font-size: 1rem; }
-  .hero-actions { flex-direction: column; align-items: center; }
-  .btn-primary, .btn-secondary { width: 100%; max-width: 250px; text-align: center; }
-  section { padding: 2rem 1rem; }
-}
-</style>
-<meta name="theme-color" content="#0b0b0f">
-<meta name="color-scheme" content="light dark">
-<meta property="og:title" content="Arte Que Veste">
-<meta property="og:description" content="arte-que-veste - Producto completo con hero shader y animaciones">
-<meta name="robots" content="index,follow">
-<meta property="og:type" content="website">
-<meta name="twitter:card" content="summary_large_image">
-<meta property="og:locale" content="es_ES">
-<meta name="twitter:title" content="Arte Que Veste">
-<meta name="referrer" content="strict-origin-when-cross-origin">
-<meta name="format-detection" content="telephone=no">
-<meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="author" content="Pedro Marcos Santos Belentani">
+  <title>Arte Que Veste — Moda Autoral Nordestina</title>
+  <meta name="description" content="Moda autoral nordestina com xilogravura em tecido. Conheça o catálogo, a história e as peças exclusivas da Arte Que Veste.">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="stylesheet" href="css/store.css">
+  <meta name="theme-color" content="#1a1a1a">
+  <meta name="color-scheme" content="light">
+  <meta property="og:title" content="Arte Que Veste — Moda Autoral Nordestina">
+  <meta property="og:description" content="Moda autoral nordestina com xilogravura em tecido. Catálogo autoral de São Cristóvão e Aracaju/SE para o mundo.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="pt_BR">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Arte Que Veste — Moda Autoral Nordestina">
+  <meta name="robots" content="index,follow">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
 </head>
 <body>
-  <section class="hero">
-    <div class="hero-canvas"></div>
-    <div class="hero-overlay">
-      <h1>Arte Que Veste</h1>
-      <p>Producto completo con home hero, shader WebGL animado, y stack moderno listo para producción.</p>
-      <div class="hero-actions">
-        <a href="#" class="btn-primary">Ver Características</a>
-        <a href="#stack" class="btn-secondary">Ver Stack</a>
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo principal</a>
+
+  <nav class="site-nav" aria-label="Principal">
+    <div class="container site-nav-inner">
+      <a href="index.html" class="brand-logo">ARTE QUE VESTE</a>
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link" aria-current="page">Início</a></li>
+        <li><a href="loja.html" class="nav-link">Loja</a></li>
+        <li><a href="sobre.html" class="nav-link">História</a></li>
+        <li><a href="faq.html" class="nav-link">FAQ</a></li>
+        <li><a href="contato.html" class="nav-link">Contato</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="carrinho.html" class="icon-btn" aria-label="Abrir carrinho de compras">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+          <span class="cart-badge">0</span>
+        </a>
+        <a href="contato.html#formulario" class="nav-cta">Fale Conosco</a>
+        <button type="button" class="icon-btn menu-toggle" data-menu-toggle aria-controls="mobile-menu" aria-expanded="false" aria-label="Abrir menu de navegação">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
       </div>
     </div>
-  </section>
-  <section id="stack">
-    <h2>Stack Tecnológico</h2>
-    <p>Tecnologías utilizadas en este repositorio.</p>
-    <ul class="stack-list">
-      <li>HTML5</li>
-      <li>CSS3</li>
-      <li>JavaScript</li>
-      <li>WebGL Shader</li>
-      <li>Responsive Design</li>
-    </ul>
-  </section>
-  <footer><p>© 2026 Arte Que Veste - Parte del ecosistema Belentani</p></footer>
-/* Hero Shader WebGL */
-(function() {
-  const canvas = document.createElement('canvas');
-  canvas.id = 'hero-canvas';
-  canvas.style.position = 'absolute';
-  canvas.style.top = '0';
-  canvas.style.left = '0';
-  canvas.style.width = '100%';
-  canvas.style.height = '100%';
-  canvas.style.zIndex = '1';
-  document.body.insertBefore(canvas, document.body.firstChild);
-  const gl = canvas.getContext('webgl');
-  if (!gl) return;
-  const vs = gl.createShader(gl.VERTEX_SHADER);
-  gl.shaderSource(vs, 'attribute vec2 position; void main() { gl_Position = vec4(position, 0.0, 1.0); }');
-  gl.compileShader(vs);
-  const fs = gl.createShader(gl.FRAGMENT_SHADER);
-  gl.shaderSource(fs, 'precision mediump float; uniform vec2 u_resolution; uniform float u_time; uniform vec2 u_mouse; float hash(vec2 p) { p = fract(p * vec2(123.34, 456.21)); p += dot(p, p + 45.32); return fract(p.x * p.y * p.z); } float noise(vec2 p) { vec2 i = floor(p); vec2 f = fract(p); f = f * f * (3.0 - 2.0 * f); float a = hash(i); float b = hash(i + vec2(1.0, 0.0)); float c = hash(i + vec2(0.0, 1.0)); float d = hash(i + vec2(1.0, 1.0)); return mix(mix(a, b, f.x), mix(c, d, f.x), f.y); } float fbm(vec2 p) { float v = 0.0; float a = 0.5; vec2 shift = vec2(100.0); for (int i = 0; i < 5; ++i) { v += a * noise(p); p = p * 2.0 + shift; a *= 0.5; } return v; } void main() { vec2 uv = gl_FragCoord.xy / u_resolution.xy; uv.x *= u_resolution.x / u_resolution.y; vec2 m = uv - u_mouse; float n = fbm(uv * 3.0 + u_time * 0.5); n += fbm(uv * 6.0 - u_time * 0.3) * 0.5; n += length(m) * 0.1; n = mod(n, 1.0); vec3 color = mix(vec3(0.0, 0.5, 1.0), vec3(1.0, 0.0, 0.5), n); float vignette = 1.0 - length(uv * 2.0 - 1.0) * 0.4; color *= vignette; gl_FragColor = vec4(color, 1.0); }');
-  gl.compileShader(fs);
-  const program = gl.createProgram();
-  gl.attachShader(program, vs);
-  gl.attachShader(program, fs);
-  gl.linkProgram(program);
-  gl.useProgram(program);
-  const pb = gl.createBuffer();
-  gl.bindBuffer(gl.ARRAY_BUFFER, pb);
-  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,-1,1,1,-1,1,1]), gl.STATIC_DRAW);
-  const pl = gl.getAttribLocation(program, 'position');
-  gl.enableVertexAttribArray(pl);
-  gl.vertexAttribPointer(pl, 2, gl.FLOAT, false, 0, 0);
-  const rl = gl.getUniformLocation(program, 'u_resolution');
-  const tl = gl.getUniformLocation(program, 'u_time');
-  const ml = gl.getUniformLocation(program, 'u_mouse');
-  let mouse = {x: 0.5, y: 0.5};
-  window.addEventListener('mousemove', (e) => { mouse.x = e.clientX / window.innerWidth; mouse.y = 1.0 - e.clientY / window.innerHeight; });
-  function resize() { canvas.width = canvas.clientWidth * window.devicePixelRatio; canvas.height = canvas.clientHeight * window.devicePixelRatio; gl.viewport(0, 0, canvas.width, canvas.height); gl.uniform2f(rl, canvas.width, canvas.height); }
-  window.addEventListener('resize', resize);
-  resize();
-  function render(time) { gl.uniform1f(tl, time * 0.001); gl.uniform2f(ml, mouse.x, mouse.y); gl.drawArrays(gl.TRIANGLES, 0, 6); requestAnimationFrame(render); }
-  requestAnimationFrame(render);
-})();
+    <div id="mobile-menu" class="mobile-menu">
+      <ul>
+        <li><a href="index.html" aria-current="page">Início</a></li>
+        <li><a href="loja.html">Loja</a></li>
+        <li><a href="sobre.html">História</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="contato.html">Contato</a></li>
+        <li><a href="carrinho.html">Carrinho</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <header class="page-hero page-hero-landing">
+    <div class="hero-canvas-layer">
+      <canvas id="xilo-canvas" aria-hidden="true"></canvas>
+    </div>
+    <div class="hero-scrim" aria-hidden="true"></div>
+    <div class="hero-content">
+      <span class="eyebrow">Moda Autoral Nordestina · Sergipe</span>
+      <h1 class="hero-title">Xilogravura no tecido, cordel no corpo.</h1>
+      <p class="hero-subtitle">Cada peça é concebida como obra vestível: estampas autorais inspiradas na xilogravura de Mestre Nivaldo Oliveira, unindo artesanato sergipano e design contemporâneo.</p>
+      <div class="hero-actions">
+        <a href="loja.html" class="btn btn-primary">Explorar a Loja</a>
+        <a href="sobre.html" class="btn btn-outline-light">Conheça a História</a>
+      </div>
+    </div>
+    <button type="button" id="shader-toggle" class="shader-toggle" aria-pressed="false">Pausar fundo</button>
+  </header>
+
+  <div class="demo-banner" role="status">
+    Demonstração oficial da vitrine Arte Que Veste: catálogo, carrinho e resumo local sem cobrança online.
+  </div>
+
+  <main id="conteudo">
+    <section class="section">
+      <div class="container">
+        <div class="section-header" data-reveal>
+          <div>
+            <span class="eyebrow" style="color:var(--turquesa-escuro);margin-bottom:0.35rem;">Curadoria</span>
+            <h2 class="section-title">Peças em Destaque</h2>
+          </div>
+          <a href="loja.html" class="accent-link">Ver catálogo completo →</a>
+        </div>
+        <div id="featured-grid" class="product-grid" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section class="section" style="background:var(--areia);border-block:1px solid var(--borda);">
+      <div class="container">
+        <div class="section-header" data-reveal>
+          <div>
+            <span class="eyebrow" style="color:var(--turquesa-escuro);margin-bottom:0.35rem;">Manifesto</span>
+            <h2 class="section-title">De São Cristóvão para o mundo</h2>
+          </div>
+        </div>
+        <div class="grid-3">
+          <article class="surface-card" data-reveal>
+            <h3 class="font-display" style="font-size:1.2rem;margin-bottom:0.5rem;">Arte Autoral</h3>
+            <p class="muted" style="font-size:0.9rem;">Estampas inspiradas no corte manual da madeira e na estética vibrante do cordel nordestino.</p>
+          </article>
+          <article class="surface-card" data-reveal>
+            <h3 class="font-display" style="font-size:1.2rem;margin-bottom:0.5rem;">Produção Local</h3>
+            <p class="muted" style="font-size:0.9rem;">Desenvolvido em Aracaju e São Cristóvão/SE, valorizando o trabalho manual e a cadeia criativa regional.</p>
+          </article>
+          <article class="surface-card" data-reveal>
+            <h3 class="font-display" style="font-size:1.2rem;margin-bottom:0.5rem;">Transparência</h3>
+            <p class="muted" style="font-size:0.9rem;">Nesta demonstração você monta seu carrinho e baixa o resumo de orçamento localmente, sem coleta de cartão.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <h2 class="font-display" style="font-size:1.25rem;margin-bottom:0.65rem;">Arte Que Veste</h2>
+          <p style="font-size:0.86rem;color:#d4d1c9;">Moda autoral nordestina com xilogravura de Mestre Nivaldo Oliveira. De São Cristóvão, Sergipe para o mundo.</p>
+        </div>
+        <div>
+          <h3 class="footer-heading">Navegação</h3>
+          <ul class="footer-links">
+            <li><a href="loja.html">Loja</a></li>
+            <li><a href="sobre.html">Sobre Nós</a></li>
+            <li><a href="contato.html">Contato</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="footer-heading">Políticas</h3>
+          <ul class="footer-links">
+            <li><a href="politica-privacidade.html">Privacidade (LGPD)</a></li>
+            <li><a href="politica-trocas.html">Trocas &amp; Devoluções</a></li>
+            <li><a href="politica-envio.html">Envio</a></li>
+            <li><a href="termos-de-uso.html">Termos de Uso</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="footer-heading">Contato</h3>
+          <ul class="footer-links">
+            <li><a href="contato.html#formulario">Formulário de contato</a></li>
+            <li>contato@artequeveste.com.br</li>
+            <li>Aracaju/SE, Brasil</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 Arte Que Veste. Todos os direitos reservados.</p>
+        <p class="footer-motto">"Xilogravura no tecido, cordel no corpo."</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/store-ui.js" defer></script>
+  <script src="js/cart.js" defer></script>
+  <script src="js/xilogravura-shader.js" defer></script>
+  <script>
+  document.addEventListener('DOMContentLoaded', async function () {
+    if (window.initXilogravuraShader) {
+      window.initXilogravuraShader('xilo-canvas', { toggleButton: '#shader-toggle' });
+    }
+    const grid = document.getElementById('featured-grid');
+    if (!grid) return;
+    try {
+      const res = await fetch('./products.json');
+      if (!res.ok) throw new Error('Falha ao carregar catálogo');
+      const items = await res.json();
+      const featured = Array.isArray(items) ? items.slice(0, 4) : [];
+      grid.innerHTML = featured.map(function (p) {
+        const name = window.AQV.escapeHTML(p.name);
+        const desc = window.AQV.escapeHTML(p.desc);
+        const img = window.AQV.escapeHTML(window.AQV.safeImageUrl(p.img));
+        const href = 'produto.html?sku=' + encodeURIComponent(String(p.sku));
+        return '<div class="product-card-wrap"><article class="product-card">' +
+          '<a href="' + href + '" class="product-media">' +
+          '<img src="' + img + '" alt="' + window.AQV.escapeHTML(p.alt || p.name) + '" class="product-image" loading="lazy" decoding="async" width="400" height="533">' +
+          '</a>' +
+          '<div class="product-body">' +
+          '<h3 class="product-name">' + name + '</h3>' +
+          '<p class="product-desc">' + desc + '</p>' +
+          '<div class="product-footer">' +
+          '<span class="product-price">' + window.AQV.formatBRL(p.price) + '</span>' +
+          '<a href="' + href + '" class="btn btn-primary btn-sm">Ver peça</a>' +
+          '</div></div></article></div>';
+      }).join('');
+    } catch {
+      grid.innerHTML = '<p class="muted">Catálogo temporariamente indisponível. Acesse a <a class="accent-link" href="loja.html">loja</a>.</p>';
+    }
+  });
+  </script>
 </body>
 </html>
