@@ -4,8 +4,10 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "check": "node --check server.js && node --check scripts/verify.mjs && node --check scripts/export.mjs && node --check test/basic.test.mjs",
+    "check": "node --check server.js && node --check js/cart.js && node --check js/store-ui.js && node --check js/xilogravura-shader.js && node --check scripts/verify.mjs && node --check scripts/export.mjs && node --check scripts/audit.mjs && node --check scripts/optimize-images.mjs && node --check test/basic.test.mjs && node --check test/e2e.test.mjs",
     "test": "node scripts/verify.mjs && node --test",
-    "export": "node scripts/export.mjs"
+    "audit": "node scripts/audit.mjs",
+    "export": "node scripts/export.mjs",
+    "optimize:images": "node scripts/optimize-images.mjs --check"
   }
 }

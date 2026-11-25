@@ -30,44 +30,54 @@ const Cart = {
     },
 
     save(items) {
-        localStorage.setItem(AQV_CART_KEY, JSON.stringify(items));
+        try {
+            localStorage.setItem(AQV_CART_KEY, JSON.stringify(items));
+        } catch (err) {
+            console.warn('Não foi possível salvar o carrinho localmente.', err);
+        }
         this.updateBadge();
         window.dispatchEvent(new CustomEvent('cart-updated', { detail: { items } }));
     },
 
     add(product, qty = 1, size = null, color = null) {
+        if (!product || !product.sku) return;
+        const safeQty = Number.isFinite(Number(qty))
+            ? Math.min(100, Math.max(1, Math.floor(Number(qty))))
+            : 1;
+        const safePrice = Number.isFinite(Number(product.price)) ? Math.max(0, Number(product.price)) : 0;
         const items = this.get();
         const key = `${product.sku}-${size || ''}-${color || ''}`;
         const existing = items.find(i => i.key === key);
         if (existing) {
-            existing.quantidade = Math.min(existing.quantidade + qty, 100);
+            existing.quantidade = Math.min(existing.quantidade + safeQty, 100);
         } else {
             items.push({
                 key,
-                sku: product.sku,
-                name: product.name,
-                desc: product.desc || '',
-                price: product.price,
-                img: product.img || '',
-                category: product.category || '',
-                tamanho: size,
-                cor: color,
-                quantidade: qty
+                sku: String(product.sku),
+                name: String(product.name || 'Produto'),
+                desc: String(product.desc || ''),
+                price: safePrice,
+                img: String(product.img || ''),
+                category: String(product.category || ''),
+                tamanho: size || '',
+                cor: color || '',
+                quantidade: safeQty
             });
         }
         this.save(items);
-        this.showToast(`${product.name} adicionado ao carrinho!`);
+        this.showToast(`${product.name || 'Produto'} adicionado ao carrinho!`);
     },
 
     update(key, qty) {
         const items = this.get();
         const item = items.find(i => i.key === key);
         if (!item) return;
-        if (qty <= 0) {
+        const nextQty = Number.isFinite(Number(qty)) ? Math.floor(Number(qty)) : 0;
+        if (nextQty <= 0) {
             this.remove(key);
             return;
         }
-        item.quantidade = Math.min(qty, 100);
+        item.quantidade = Math.min(nextQty, 100);
         this.save(items);
     },
 
@@ -77,7 +87,9 @@ const Cart = {
     },
 
     clear() {
-        localStorage.removeItem(AQV_CART_KEY);
+        try {
+            localStorage.removeItem(AQV_CART_KEY);
+        } catch {}
         this.updateBadge();
         window.dispatchEvent(new CustomEvent('cart-updated', { detail: { items: [] } }));
     },
@@ -96,7 +108,6 @@ const Cart = {
             el.textContent = count;
             el.style.display = count > 0 ? 'flex' : 'none';
         });
-        // Also update any cart count text
         document.querySelectorAll('.cart-count-text').forEach(el => {
             el.textContent = `${count} ${count === 1 ? 'item' : 'itens'}`;
         });
@@ -108,25 +119,30 @@ const Cart = {
 
         const toast = document.createElement('div');
         toast.id = 'aqv-toast';
+        toast.setAttribute?.('role', 'status');
+        toast.setAttribute?.('aria-live', 'polite');
         toast.innerHTML = `
             <div style="position:fixed;bottom:24px;right:24px;z-index:9999;background:#1a1a1a;color:#fff;
-                padding:16px 24px;border-left:4px solid #40E0D0;font-family:'Inter',sans-serif;font-size:14px;
-                box-shadow:0 8px 32px rgba(0,0,0,0.2);transform:translateY(20px);opacity:0;
-                transition:all 0.4s cubic-bezier(0.16,1,0.3,1);max-width:360px;">
+                padding:14px 20px;border-left:4px solid #40E0D0;font-family:system-ui,-apple-system,sans-serif;font-size:14px;
+                box-shadow:0 8px 32px rgba(0,0,0,0.22);transform:translateY(20px);opacity:0;
+                transition:transform 0.35s cubic-bezier(0.16,1,0.3,1),opacity 0.35s cubic-bezier(0.16,1,0.3,1);max-width:360px;">
                 <div style="display:flex;align-items:center;gap:10px;">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#40E0D0" stroke-width="2">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#40E0D0" stroke-width="2" aria-hidden="true">
                         <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
                         <polyline points="22 4 12 14.01 9 11.01"/>
                     </svg>
                     <span class="toast-message"></span>
                 </div>
             </div>`;
-        toast.querySelector(".toast-message").textContent = String(msg);
+        const msgNode = toast.querySelector('.toast-message');
+        if (msgNode) msgNode.textContent = String(msg);
         document.body.appendChild(toast);
         requestAnimationFrame(() => {
             const d = toast.firstElementChild;
-            d.style.transform = 'translateY(0)';
-            d.style.opacity = '1';
+            if (d) {
+                d.style.transform = 'translateY(0)';
+                d.style.opacity = '1';
+            }
         });
         setTimeout(() => {
             const d = toast.firstElementChild;
@@ -136,5 +152,4 @@ const Cart = {
     }
 };
 
-// Initialize badge on load
 document.addEventListener('DOMContentLoaded', () => Cart.updateBadge());

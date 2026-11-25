@@ -1,368 +1,368 @@
 <!DOCTYPE html>
 <html dir="ltr" lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resumo de pedido | Arte Que Veste</title>
-    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-    <meta name="theme-color" content="#40E0D0">
-    <script src="https://cdn.tailwindcss.com" defer></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/playfair-display@latest/latin-400-normal.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/inter@latest/latin-400-normal.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/inter@latest/latin-500-normal.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/inter@latest/latin-600-normal.css">
-    <script src="https://unpkg.com/lucide@latest" defer></script>
-    <style>
-        :root{--turquesa:#40E0D0;--preto:#1a1a1a;--off-white:#faf9f6}
-        *{margin:0;padding:0;box-sizing:border-box}
-        body{font-family:'Inter',sans-serif;background:var(--off-white);color:var(--preto)}
-        .font-display{font-family:'Playfair Display',serif}
-        .step{display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:2px solid #eee;cursor:pointer;transition:all .3s}
-        .step.active{border-bottom-color:var(--turquesa);background:rgba(64,224,208,0.05)}
-        .step.done{border-bottom-color:#22c55e}
-        .step-num{width:28px;height:28px;border-radius:50%;border:2px solid #ddd;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;transition:all .3s}
-        .step.active .step-num{background:var(--turquesa);border-color:var(--turquesa);color:var(--preto)}
-        .step.done .step-num{background:#22c55e;border-color:#22c55e;color:#fff}
-        .form-input{width:100%;border:1.5px solid #ddd;padding:12px 16px;font-size:14px;transition:border-color .2s;background:white}
-        .form-input:focus{outline:none;border-color:var(--turquesa)}
-        .form-input.error{border-color:#ef4444}
-        .form-label{display:block;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:#6b7280;margin-bottom:6px}
-        .payment-option{border:2px solid #eee;padding:16px;cursor:pointer;transition:all .3s;display:flex;align-items:center;gap:12px}
-        .payment-option:hover{border-color:#ccc}
-        .payment-option.selected{border-color:var(--turquesa);background:rgba(64,224,208,0.05)}
-        .payment-option input[type="radio"]{accent-color:var(--turquesa);width:18px;height:18px}
-        .btn-primary{background:var(--turquesa);color:var(--preto);padding:16px 32px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;transition:all .3s;border:2px solid var(--turquesa);cursor:pointer;font-size:13px;width:100%}
-        .btn-primary:hover{background:transparent;color:var(--turquesa)}
-        .btn-primary:disabled{opacity:0.5;cursor:not-allowed}
-        .shipping-option{border:1.5px solid #eee;padding:12px 16px;cursor:pointer;transition:all .2s;display:flex;justify-content:space-between;align-items:center}
-        .shipping-option:hover{border-color:#ccc}
-        .shipping-option.selected{border-color:var(--turquesa);background:rgba(64,224,208,0.05)}
-        .nav-link{position:relative;transition:color .3s;font-size:12px;text-transform:uppercase}
-        .nav-link::after{content:'';position:absolute;bottom:-5px;left:0;width:0;height:2px;background:var(--turquesa);transition:width .3s}
-        .nav-link:hover::after{width:100%}
-        .spinner{display:inline-block;width:18px;height:18px;border:2px solid var(--preto);border-top-color:transparent;border-radius:50%;animation:spin .6s linear infinite}
-        @keyframes spin{to{transform:rotate(360deg)}}
-    </style>
-<meta name="description" content="Resumo de pedido | Arte Que Veste">
-<meta name="color-scheme" content="light dark">
-<meta property="og:title" content="Resumo de pedido | Arte Que Veste">
-<meta property="og:description" content="Resumo de pedido | Arte Que Veste">
-<meta name="robots" content="index,follow">
-<meta property="og:type" content="website">
-<meta name="twitter:card" content="summary_large_image">
-<meta property="og:locale" content="es_ES">
-<meta name="twitter:title" content="Resumo de pedido | Arte Que Veste">
-<meta name="referrer" content="strict-origin-when-cross-origin">
-<meta name="format-detection" content="telephone=no">
-<meta name="apple-mobile-web-app-capable" content="yes">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resumo de Pedido | Arte Que Veste</title>
+  <meta name="description" content="Prepare o resumo local do seu pedido Arte Que Veste para solicitar orçamento, sem cobrança online.">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="stylesheet" href="css/store.css">
+  <meta name="theme-color" content="#1a1a1a">
+  <meta name="color-scheme" content="light">
+  <meta property="og:title" content="Resumo de Pedido | Arte Que Veste">
+  <meta property="og:description" content="Prepare o resumo local do seu pedido Arte Que Veste para solicitar orçamento, sem cobrança online.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="pt_BR">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Resumo de Pedido | Arte Que Veste">
+  <meta name="robots" content="index,follow">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
 </head>
 <body>
-    <nav class="fixed top-0 left-0 right-0 bg-white z-50 shadow-sm" aria-label="Principal">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-20">
-                <a href="index.html" class="font-display text-xl md:text-2xl font-black">ARTE QUE VESTE</a>
-                <div class="hidden lg:flex space-x-6">
-                    <a href="loja.html" class="nav-link">Loja</a>
-                    <a href="carrinho.html" class="nav-link">Carrinho</a>
+  <a class="skip-link" href="#conteudo">Pular para o resumo do pedido</a>
+
+  <nav class="site-nav" aria-label="Principal">
+    <div class="container site-nav-inner">
+      <a href="index.html" class="brand-logo">ARTE QUE VESTE</a>
+      <ul class="nav-links">
+        <li><a href="loja.html" class="nav-link">Loja</a></li>
+        <li><a href="carrinho.html" class="nav-link">Carrinho</a></li>
+      </ul>
+      <div style="font-size:0.8rem;font-weight:700;color:var(--turquesa-escuro);">
+        Resumo local · sem cobrança
+      </div>
+    </div>
+  </nav>
+
+  <main id="conteudo" class="section">
+    <div class="container-md">
+      <h1 class="section-title" style="margin-bottom:1.25rem;">Resumo do Pedido</h1>
+
+      <div id="checkout-empty" class="surface-card" style="display:none;text-align:center;padding-block:3.5rem;">
+        <h2 class="font-display" style="font-size:1.5rem;margin-bottom:0.5rem;">Seu carrinho está vazio</h2>
+        <p class="muted" style="margin-bottom:1.5rem;">Adicione produtos antes de preparar o resumo de orçamento.</p>
+        <a href="loja.html" class="btn btn-primary">Ver a Loja</a>
+      </div>
+
+      <div id="checkout-content" style="display:none;">
+        <div class="steps-bar" role="tablist" aria-label="Etapas do resumo">
+          <button type="button" class="step active" data-step="1" aria-current="step">
+            <span class="step-num">1</span>
+            <span><strong style="display:block;font-size:0.8rem;">Identificação</strong><span class="muted" style="font-size:0.72rem;">Seus dados</span></span>
+          </button>
+          <button type="button" class="step" data-step="2">
+            <span class="step-num">2</span>
+            <span><strong style="display:block;font-size:0.8rem;">Endereço</strong><span class="muted" style="font-size:0.72rem;">Entrega</span></span>
+          </button>
+          <button type="button" class="step" data-step="3">
+            <span class="step-num">3</span>
+            <span><strong style="display:block;font-size:0.8rem;">Resumo</strong><span class="muted" style="font-size:0.72rem;">Baixar</span></span>
+          </button>
+        </div>
+
+        <div id="checkout-feedback" class="alert-box alert-error" role="alert" style="display:none;margin-bottom:1.25rem;"></div>
+
+        <div class="two-col">
+          <div>
+            <!-- STEP 1 -->
+            <section id="step-1" class="surface-card">
+              <h2 class="font-display" style="font-size:1.35rem;margin-bottom:1.25rem;">Seus Dados</h2>
+              <div class="form-grid form-grid-2">
+                <div class="span-2">
+                  <label class="form-label" for="f-name">Nome completo *</label>
+                  <input type="text" id="f-name" class="form-input" placeholder="Maria da Silva" autocomplete="name" required>
                 </div>
-                <div class="flex items-center gap-2 text-sm font-semibold">
-                    <i data-lucide="lock" class="w-4 h-4 text-[var(--turquesa)]"></i> Resumo local · sem cobrança
+                <div>
+                  <label class="form-label" for="f-email">E-mail *</label>
+                  <input type="email" id="f-email" class="form-input" placeholder="email@exemplo.com" autocomplete="email" required>
                 </div>
+                <div>
+                  <label class="form-label" for="f-whatsapp">WhatsApp / Telefone *</label>
+                  <input type="tel" id="f-whatsapp" class="form-input" placeholder="(79) 99999-9999" autocomplete="tel" required>
+                </div>
+              </div>
+              <div style="display:flex;justify-content:flex-end;margin-top:1.5rem;">
+                <button type="button" class="btn btn-primary" id="btn-step1">Próximo: Endereço</button>
+              </div>
+            </section>
+
+            <!-- STEP 2 -->
+            <section id="step-2" class="surface-card" style="display:none;">
+              <h2 class="font-display" style="font-size:1.35rem;margin-bottom:1.25rem;">Endereço de Entrega</h2>
+              <div class="form-grid form-grid-3">
+                <div>
+                  <label class="form-label" for="f-cep">CEP *</label>
+                  <input type="text" id="f-cep" class="form-input" placeholder="49000-000" maxlength="9" inputmode="numeric" autocomplete="postal-code" required>
+                </div>
+                <div class="span-2">
+                  <label class="form-label" for="f-rua">Rua *</label>
+                  <input type="text" id="f-rua" class="form-input" placeholder="Rua, Avenida..." autocomplete="street-address" required>
+                </div>
+                <div>
+                  <label class="form-label" for="f-numero">Número *</label>
+                  <input type="text" id="f-numero" class="form-input" placeholder="123" required>
+                </div>
+                <div>
+                  <label class="form-label" for="f-complemento">Complemento</label>
+                  <input type="text" id="f-complemento" class="form-input" placeholder="Apto, Bloco...">
+                </div>
+                <div>
+                  <label class="form-label" for="f-bairro">Bairro</label>
+                  <input type="text" id="f-bairro" class="form-input">
+                </div>
+                <div class="span-2">
+                  <label class="form-label" for="f-cidade">Cidade</label>
+                  <input type="text" id="f-cidade" class="form-input" autocomplete="address-level2">
+                </div>
+                <div>
+                  <label class="form-label" for="f-estado">UF</label>
+                  <input type="text" id="f-estado" class="form-input" maxlength="2" placeholder="SE" autocomplete="address-level1">
+                </div>
+              </div>
+
+              <div id="shipping-options" class="alert-box" style="display:none;margin-top:1.25rem;" role="status">
+                <p id="shipping-list"></p>
+              </div>
+
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-top:1.5rem;gap:1rem;">
+                <button type="button" id="btn-back-1" class="btn btn-secondary btn-sm">← Voltar</button>
+                <button type="button" class="btn btn-primary" id="btn-step2">Próximo: Resumo</button>
+              </div>
+            </section>
+
+            <!-- STEP 3 -->
+            <section id="step-3" class="surface-card" style="display:none;">
+              <h2 class="font-display" style="font-size:1.35rem;margin-bottom:1.25rem;">Resumo para solicitar orçamento</h2>
+              <div class="alert-box alert-warn" role="status" style="margin-bottom:1.25rem;">
+                <strong>Pagamento não disponível nesta demonstração.</strong>
+                <p style="margin-top:0.35rem;">Esta versão não solicita cartão nem envia pedidos a terceiros. O botão abaixo baixa um arquivo local (.txt) com o resumo dos itens para você encaminhar pelo canal oficial da loja.</p>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;">
+                <button type="button" id="btn-back-2" class="btn btn-secondary btn-sm">← Voltar</button>
+                <button type="button" class="btn btn-primary" id="btn-submit">
+                  <span id="btn-submit-text">Baixar resumo (sem pagamento)</span>
+                </button>
+              </div>
+              <p id="download-status" role="status" aria-live="polite" class="muted" style="font-size:0.82rem;margin-top:0.85rem;"></p>
+            </section>
+          </div>
+
+          <aside class="surface-card sticky-summary" aria-label="Itens do pedido">
+            <h2 class="font-display" style="font-size:1.2rem;padding-bottom:0.75rem;margin-bottom:1rem;border-bottom:1px solid var(--borda);">Seu Pedido</h2>
+            <div id="checkout-items" style="display:flex;flex-direction:column;gap:0.75rem;margin-bottom:1rem;max-height:260px;overflow-y:auto;"></div>
+            <div style="border-top:1px solid var(--borda);padding-top:0.85rem;">
+              <div class="summary-row">
+                <span class="muted">Subtotal</span>
+                <span id="co-subtotal" style="font-weight:700;"></span>
+              </div>
+              <div class="summary-row">
+                <span class="muted">Frete</span>
+                <span id="co-shipping" class="muted" style="font-size:0.8rem;">A confirmar</span>
+              </div>
+              <div class="summary-row summary-total">
+                <span>Total indicativo</span>
+                <span id="co-total"></span>
+              </div>
             </div>
+          </aside>
         </div>
-    </nav>
+      </div>
+    </div>
+  </main>
 
-    <main class="pt-28 pb-16 max-w-5xl mx-auto px-4">
-        <!-- CHECKOUT VAZIO -->
-        <div id="checkout-empty" class="text-center py-20" style="display:none">
-            <i data-lucide="shopping-cart" class="w-16 h-16 mx-auto text-gray-300 mb-4"></i>
-            <h2 class="font-display text-2xl font-bold mb-2">Seu carrinho está vazio</h2>
-            <p class="text-gray-500 mb-6">Adicione produtos antes de finalizar a compra.</p>
-            <a href="loja.html" class="btn-primary inline-block max-w-xs">VER A LOJA</a>
-        </div>
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom" style="border-top:none;padding-top:0;">
+        <p>© 2026 Arte Que Veste. Demonstração sem processamento de pagamentos.</p>
+      </div>
+    </div>
+  </footer>
 
-        <div id="checkout-content" style="display:none">
-            <!-- STEPS HEADER -->
-            <div class="bg-white shadow-sm mb-8">
-                <div class="flex">
-                    <div class="step active" data-step="1"><div class="step-num">1</div><div><p class="text-xs font-semibold">Identificação</p><p class="text-[10px] text-gray-400">Seus dados</p></div></div>
-                    <div class="step" data-step="2"><div class="step-num">2</div><div><p class="text-xs font-semibold">Endereço</p><p class="text-[10px] text-gray-400">Entrega</p></div></div>
-                    <div class="step" data-step="3"><div class="step-num">3</div><div><p class="text-xs font-semibold">Resumo</p><p class="text-[10px] text-gray-400">Baixar</p></div></div>
-                </div>
-            </div>
+  <script src="js/store-ui.js" defer></script>
+  <script src="js/cart.js" defer></script>
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const feedbackEl = document.getElementById('checkout-feedback');
 
-            <div class="flex flex-col lg:flex-row gap-8">
-                <div class="lg:w-2/3">
-                    <!-- STEP 1: IDENTIFICAÇÃO -->
-                    <div id="step-1" class="bg-white p-6 shadow-sm">
-                        <h2 class="font-display text-xl font-bold mb-6">Seus Dados</h2>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div class="md:col-span-2"><label class="form-label">Nome completo *</label><input type="text" id="f-name" class="form-input" placeholder="Maria da Silva" required></div>
-                            <div><label class="form-label">E-mail *</label><input type="email" id="f-email" class="form-input" placeholder="email@exemplo.com" required></div>
-                            <div><label class="form-label">WhatsApp *</label><input type="tel" id="f-whatsapp" class="form-input" placeholder="(79) 99999-9999" required></div>
-                            <div><label class="form-label">CPF</label><input type="text" id="f-cpf" class="form-input" placeholder="000.000.000-00"></div>
-                            <div></div>
-                        </div>
-                        <div class="flex justify-end mt-6">
-                            <button onclick="goToStep(2)" class="btn-primary max-w-xs" id="btn-step1" type="button">PRÓXIMO: ENDEREÇO</button>
-                        </div>
-                    </div>
+    function showError(msg) {
+      feedbackEl.textContent = msg;
+      feedbackEl.style.display = 'block';
+    }
 
-                    <!-- STEP 2: ENDEREÇO -->
-                    <div id="step-2" class="bg-white p-6 shadow-sm mt-4" style="display:none">
-                        <h2 class="font-display text-xl font-bold mb-6">Endereço de Entrega</h2>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <div><label class="form-label">CEP *</label><input type="text" id="f-cep" class="form-input" placeholder="00000-000" maxlength="9" onblur="lookupCEP()"></div>
-                            <div class="md:col-span-2"><label class="form-label">Rua *</label><input type="text" id="f-rua" class="form-input" placeholder="Rua, Avenida..."></div>
-                            <div><label class="form-label">Número *</label><input type="text" id="f-numero" class="form-input" placeholder="123"></div>
-                            <div><label class="form-label">Complemento</label><input type="text" id="f-complemento" class="form-input" placeholder="Apto, Bloco..."></div>
-                            <div><label class="form-label">Bairro *</label><input type="text" id="f-bairro" class="form-input"></div>
-                            <div><label class="form-label">Cidade *</label><input type="text" id="f-cidade" class="form-input" readonly></div>
-                            <div><label class="form-label">Estado *</label><input type="text" id="f-estado" class="form-input" readonly maxlength="2"></div>
-                        </div>
-
-                        <!-- FRETE -->
-                        <div id="shipping-options" class="mt-6" style="display:none">
-                            <h3 class="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-3">Forma de Entrega</h3>
-                            <div class="space-y-2" id="shipping-list"></div>
-                        </div>
-
-                        <div class="flex justify-between mt-6">
-                            <button onclick="goToStep(1)" class="text-sm text-gray-500 hover:text-[var(--turquesa)] transition-colors" type="button">← Voltar</button>
-                            <button onclick="goToStep(3)" class="btn-primary max-w-xs" id="btn-step2" type="button">PRÓXIMO: RESUMO</button>
-                        </div>
-                    </div>
-
-                    <!-- STEP 3: PAGAMENTO -->
-                    <div id="step-3" class="bg-white p-6 shadow-sm mt-4" style="display:none">
-                        <h2 class="font-display text-xl font-bold mb-6">Resumo para solicitar orçamento</h2>
-
-                        <div class="space-y-3">
-                            <div class="payment-option selected" role="status">
-                                <input type="radio" name="payment" value="platform" checked disabled>
-                                <div class="flex-1">
-                                    <p class="font-semibold text-sm">Pagamento não disponível nesta demonstração</p>
-                                    <p class="text-xs text-gray-500">Esta versão não processa nem envia pedidos. O botão abaixo baixa um resumo local para solicitar um orçamento; nenhum pagamento é realizado.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="flex justify-between mt-6">
-                            <button onclick="goToStep(2)" class="text-sm text-gray-500 hover:text-[var(--turquesa)] transition-colors" type="button">← Voltar</button>
-                            <button onclick="submitOrder()" class="btn-primary max-w-xs" id="btn-submit" type="button">
-                                <span id="btn-submit-text">BAIXAR RESUMO (SEM PAGAMENTO)</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- SIDEBAR RESUMO -->
-                <div class="lg:w-1/3">
-                    <div class="bg-white p-6 shadow-sm sticky top-28">
-                        <h3 class="font-display text-lg font-bold mb-4 pb-3 border-b">Seu Pedido</h3>
-                        <div id="checkout-items" class="space-y-3 mb-4 max-h-60 overflow-y-auto"></div>
-                        <div class="border-t pt-3 space-y-2 text-sm">
-                            <div class="flex justify-between"><span class="text-gray-500">Subtotal</span><span id="co-subtotal" class="font-semibold"></span></div>
-                            <div id="co-discount-row" class="flex justify-between text-green-600" style="display:none"><span>Desconto</span><span id="co-discount"></span></div>
-                            <div class="flex justify-between"><span class="text-gray-500">Frete</span><span id="co-shipping" class="text-gray-400 text-xs">Selecione o CEP</span></div>
-                            <div class="flex justify-between text-lg font-bold pt-2 border-t"><span>Total</span><span id="co-total"></span></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <footer class="bg-[var(--preto)] text-white py-8 mt-12">
-        <div class="max-w-7xl mx-auto px-4 text-center">
-            <p class="text-gray-400 text-sm">© 2026 Arte Que Veste. Demonstração sem processamento de pagamentos.</p>
-        </div>
-    </footer>
-
-    <script src="js/cart.js" defer></script>
-    <script>
-    const escapeHTML = (value) => String(value ?? '').replace(/[&<>"']/g, ch =>
-        ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
-    const safeImageUrl = value => {
-        try {
-            const url = new URL(String(value ?? ''), location.href);
-            return url.protocol === 'https:' || (url.protocol === 'http:' && url.origin === location.origin)
-                ? url.href : 'assets/favicon.svg';
-        } catch { return 'assets/favicon.svg'; }
-    };
-
-    let currentStep = 1;
-    let selectedPayment = 'pix';
-    let shippingCost = 0;
-    let shippingType = '';
-
-    function init() {
-        const items = Cart.get();
-        if (items.length === 0) {
-            document.getElementById('checkout-empty').style.display = 'block';
-            return;
-        }
-        document.getElementById('checkout-content').style.display = 'block';
-        renderCheckoutItems();
-        updateTotals();
-        window.lucide?.createIcons?.();
+    function clearError() {
+      feedbackEl.textContent = '';
+      feedbackEl.style.display = 'none';
+      document.querySelectorAll('.form-input[aria-invalid="true"]').forEach(function (el) {
+        el.removeAttribute('aria-invalid');
+      });
     }
 
     function renderCheckoutItems() {
-        const items = Cart.get();
-        document.getElementById('checkout-items').innerHTML = items.map(i =>
-            `<div class="flex gap-3 items-center">
-                <img src="${escapeHTML(safeImageUrl(i.img))}" class="w-12 h-14 object-cover bg-gray-100" alt="${escapeHTML(i.name)}" loading="lazy" decoding="async">
-                <div class="flex-1 min-w-0">
-                    <p class="text-xs font-semibold truncate">${escapeHTML(i.name)}${i.tamanho ? ` (${escapeHTML(i.tamanho)})` : ''}</p>
-                    <p class="text-[10px] text-gray-400">Qtd: ${i.quantidade}</p>
-                </div>
-                <span class="text-xs font-bold">R$ ${(i.price * i.quantidade).toFixed(2).replace('.',',')}</span>
-            </div>`
-        ).join('');
+      const items = Cart.get();
+      document.getElementById('checkout-items').innerHTML = items.map(function (i) {
+        const name = window.AQV.escapeHTML(i.name);
+        const img = window.AQV.escapeHTML(window.AQV.safeImageUrl(i.img, 'assets/favicon.svg'));
+        const sizeLabel = i.tamanho ? ' (' + window.AQV.escapeHTML(i.tamanho) + ')' : '';
+        return '<div style="display:flex;gap:0.75rem;align-items:center;">' +
+          '<img src="' + img + '" style="width:48px;height:60px;object-fit:cover;background:var(--areia);" alt="' + name + '" loading="lazy" decoding="async">' +
+          '<div style="flex:1;min-width:0;">' +
+          '<p style="font-size:0.82rem;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + name + sizeLabel + '</p>' +
+          '<p class="muted" style="font-size:0.75rem;">Qtd: ' + i.quantidade + '</p>' +
+          '</div>' +
+          '<span style="font-size:0.82rem;font-weight:700;">' + window.AQV.formatBRL(i.price * i.quantidade) + '</span>' +
+          '</div>';
+      }).join('');
     }
 
     function updateTotals() {
-        const subtotal = Cart.getSubtotal();
-        const pixTotal = subtotal; // No conditional discount without a verified payment provider
-        document.getElementById('co-subtotal').textContent = `R$ ${subtotal.toFixed(2).replace('.',',')}`;
-        document.getElementById('co-total').textContent = `R$ ${subtotal.toFixed(2).replace('.',',')}`;
-        document.getElementById('pix-total').textContent = `R$ ${pixTotal.toFixed(2).replace('.',',')}`;
-
-        if (shippingCost > 0) {
-            document.getElementById('co-shipping').textContent = `R$ ${shippingCost.toFixed(2).replace('.',',')}`;
-            document.getElementById('co-total').textContent = `R$ ${(subtotal + shippingCost).toFixed(2).replace('.',',')}`;
-        }
-    }
-
-    function goToStep(step) {
-        if (step === 2 && !validateStep1()) return;
-        if (step === 3 && !validateStep2()) return;
-
-        for (let i = 1; i <= 3; i++) {
-            document.getElementById(`step-${i}`).style.display = i === step ? 'block' : 'none';
-            const stepEl = document.querySelector(`.step[data-step="${i}"]`);
-            stepEl.classList.remove('active', 'done');
-            if (i < step) stepEl.classList.add('done');
-            else if (i === step) stepEl.classList.add('active');
-        }
-        currentStep = step;
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+      const subtotal = Cart.getSubtotal();
+      const formatted = window.AQV.formatBRL(subtotal);
+      document.getElementById('co-subtotal').textContent = formatted;
+      document.getElementById('co-total').textContent = formatted;
     }
 
     function validateStep1() {
-        const name = document.getElementById('f-name').value.trim();
-        const email = document.getElementById('f-email').value.trim();
-        const whatsapp = document.getElementById('f-whatsapp').value.trim();
-        if (!name || !email || !whatsapp) {
-            alert('Por favor, preencha nome, e-mail e WhatsApp.');
-            return false;
-        }
-        return true;
+      clearError();
+      const nameEl = document.getElementById('f-name');
+      const emailEl = document.getElementById('f-email');
+      const whatsEl = document.getElementById('f-whatsapp');
+      const name = nameEl.value.trim();
+      const email = emailEl.value.trim();
+      const whatsapp = whatsEl.value.trim();
+      if (!name || !email || !whatsapp) {
+        if (!name) nameEl.setAttribute('aria-invalid', 'true');
+        if (!email) emailEl.setAttribute('aria-invalid', 'true');
+        if (!whatsapp) whatsEl.setAttribute('aria-invalid', 'true');
+        showError('Por favor, preencha nome completo, e-mail e WhatsApp/telefone.');
+        return false;
+      }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        emailEl.setAttribute('aria-invalid', 'true');
+        showError('Informe um endereço de e-mail válido.');
+        return false;
+      }
+      return true;
     }
 
     function validateStep2() {
-        const cep = document.getElementById('f-cep').value.trim();
-        const rua = document.getElementById('f-rua').value.trim();
-        const numero = document.getElementById('f-numero').value.trim();
-        if (!cep || !rua || !numero) {
-            alert('Por favor, preencha CEP, rua e número.');
-            return false;
-        }
-        return true;
+      clearError();
+      const cepEl = document.getElementById('f-cep');
+      const ruaEl = document.getElementById('f-rua');
+      const numEl = document.getElementById('f-numero');
+      const cepDigits = cepEl.value.replace(/\D/g, '');
+      const rua = ruaEl.value.trim();
+      const numero = numEl.value.trim();
+      if (cepDigits.length !== 8 || !rua || !numero) {
+        if (cepDigits.length !== 8) cepEl.setAttribute('aria-invalid', 'true');
+        if (!rua) ruaEl.setAttribute('aria-invalid', 'true');
+        if (!numero) numEl.setAttribute('aria-invalid', 'true');
+        showError('Por favor, informe um CEP com 8 dígitos, rua e número.');
+        return false;
+      }
+      return true;
     }
 
-    function selectPayment(method, el) {
-        selectedPayment = method;
-        document.querySelectorAll('.payment-option').forEach(o => o.classList.remove('selected'));
-        el.classList.add('selected');
-        el.querySelector('input').checked = true;
+    function goToStep(step) {
+      if (step >= 2 && !validateStep1()) return;
+      if (step >= 3 && !validateStep2()) return;
+      clearError();
+      for (let i = 1; i <= 3; i += 1) {
+        document.getElementById('step-' + i).style.display = i === step ? 'block' : 'none';
+        const stepEl = document.querySelector('.step[data-step="' + i + '"]');
+        stepEl.classList.remove('active', 'done');
+        stepEl.removeAttribute('aria-current');
+        if (i < step) stepEl.classList.add('done');
+        else if (i === step) {
+          stepEl.classList.add('active');
+          stepEl.setAttribute('aria-current', 'step');
+        }
+      }
     }
 
     async function lookupCEP() {
-        const cep = document.getElementById('f-cep').value.replace(/\D/g, '');
-        if (cep.length !== 8) return;
-        try {
-            const r = await fetch(`https://brasilapi.com.br/api/cep/v2/${cep}`);
-            const data = await r.json();
-            if (!data.erro) {
-                document.getElementById('f-rua').value = data.logradouro || '';
-                document.getElementById('f-bairro').value = data.bairro || '';
-                document.getElementById('f-cidade').value = data.localidade || '';
-                document.getElementById('f-estado').value = data.estado || '';
-            }
-        } catch {}
-        // Calculate shipping
-        if (cep.length === 8) calculateShipping(cep);
-    }
-
-    function calculateShipping(cep) {
-        // No shipping backend is configured. Never display invented rates or issue a broken API request.
-        const list = document.getElementById('shipping-list');
-        list.textContent = 'Frete a confirmar com a loja. Nenhum valor foi calculado.';
-        document.getElementById('shipping-options').style.display = 'block';
-        shippingCost = 0;
-        shippingType = '';
-        document.getElementById('co-shipping').textContent = 'A confirmar';
-        updateTotals();
-    }
-
-    function selectShipping(cost, type, el) {
-        shippingCost = cost;
-        shippingType = type;
-        document.querySelectorAll('.shipping-option').forEach(o => o.classList.remove('selected'));
-        if (el) el.classList.add('selected');
-        updateTotals();
+      const cep = document.getElementById('f-cep').value.replace(/\D/g, '');
+      if (cep.length !== 8) return;
+      try {
+        const r = await fetch('https://brasilapi.com.br/api/cep/v2/' + cep);
+        if (r.ok) {
+          const data = await r.json();
+          const street = data.street || data.logradouro || '';
+          const neighborhood = data.neighborhood || data.bairro || '';
+          const city = data.city || data.localidade || '';
+          const state = data.state || data.uf || '';
+          if (street) document.getElementById('f-rua').value = street;
+          if (neighborhood) document.getElementById('f-bairro').value = neighborhood;
+          if (city) document.getElementById('f-cidade').value = city;
+          if (state) document.getElementById('f-estado').value = state;
+        }
+      } catch {
+        // Offline ou API indisponível: usuário pode preencher manualmente.
+      }
+      const list = document.getElementById('shipping-list');
+      list.textContent = 'Frete a confirmar com a loja após o envio do resumo. Nenhum valor de envio foi calculado automaticamente.';
+      document.getElementById('shipping-options').style.display = 'block';
+      document.getElementById('co-shipping').textContent = 'A confirmar';
+      updateTotals();
     }
 
     function submitOrder() {
-        // Honest, offline-only request summary. No API, charge, account creation or fake order ID.
-        if (!Cart.get().length || !validateStep1() || !validateStep2()) return;
-        const value = id => document.getElementById(id).value.trim();
-        const items = Cart.get();
-        const text = [
-          'ARTE QUE VESTE — RESUMO PARA SOLICITAR ORÇAMENTO',
-          'NÃO É UM PEDIDO CONFIRMADO. NENHUM PAGAMENTO FOI EFETUADO.',
-          '',
-          'Nome: ' + value('f-name'),
-          'Contato: ' + value('f-email') + ' / ' + value('f-whatsapp'),
-          'CEP: ' + value('f-cep'),
-          'Endereço: ' + [value('f-rua'),value('f-numero'),value('f-complemento'),value('f-bairro'),value('f-cidade'),value('f-estado')].filter(Boolean).join(', '),
-          '',
-          'PRODUTOS',
-          ...items.map(i => i.name + ' | SKU ' + i.sku + ' | ' + i.quantidade + ' un. | R$ ' + (i.price * i.quantidade).toFixed(2)),
-          'Subtotal indicativo: R$ ' + Cart.getSubtotal().toFixed(2),
-          'Frete e pagamento a confirmar diretamente com a loja.',
-          '',
-          'Estes dados foram processados apenas no seu navegador.'
-        ].join('\n');
-        const blob = new Blob([text], {type: 'text/plain;charset=utf-8'});
-        const link = document.createElement('a');
-        const url = URL.createObjectURL(blob);
-        link.href = url;
-        link.download = 'arte-que-veste-resumo.txt';
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-        setTimeout(() => URL.revokeObjectURL(url), 1000);
-        document.getElementById('btn-submit-text').textContent = 'BAIXAR NOVAMENTE';
+      if (!Cart.get().length || !validateStep1() || !validateStep2()) return;
+      const value = id => document.getElementById(id).value.trim();
+      const items = Cart.get();
+      const text = [
+        'ARTE QUE VESTE — RESUMO PARA SOLICITAR ORÇAMENTO',
+        'NÃO É UM PEDIDO CONFIRMADO. NENHUM PAGAMENTO FOI EFETUADO.',
+        '',
+        'Nome: ' + value('f-name'),
+        'Contato: ' + value('f-email') + ' / ' + value('f-whatsapp'),
+        'CEP: ' + value('f-cep'),
+        'Endereço: ' + [value('f-rua'), value('f-numero'), value('f-complemento'), value('f-bairro'), value('f-cidade'), value('f-estado')].filter(Boolean).join(', '),
+        '',
+        'PRODUTOS',
+        ...items.map(i => i.name + (i.tamanho ? ' (' + i.tamanho + ')' : '') + ' | SKU ' + i.sku + ' | ' + i.quantidade + ' un. | ' + window.AQV.formatBRL(i.price * i.quantidade)),
+        'Subtotal indicativo: ' + window.AQV.formatBRL(Cart.getSubtotal()),
+        'Frete e pagamento a confirmar diretamente com a loja.',
+        '',
+        'Estes dados foram processados apenas no seu navegador.'
+      ].join('\n');
+
+      const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+      const link = document.createElement('a');
+      const url = URL.createObjectURL(blob);
+      link.href = url;
+      link.download = 'arte-que-veste-resumo.txt';
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+      document.getElementById('btn-submit-text').textContent = 'Baixar novamente';
+      document.getElementById('download-status').textContent =
+        'Arquivo arte-que-veste-resumo.txt gerado localmente. Nenhum dado foi transmitido.';
     }
 
-    document.addEventListener('DOMContentLoaded', init);
-    </script>
+    const items = Cart.get();
+    if (items.length === 0) {
+      document.getElementById('checkout-empty').style.display = 'block';
+      return;
+    }
 
-<!-- FRONT-UPGRADE: Lenis + GSAP -->
-<script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js" defer></script>
-<script>
-(function(){try{
-if(window.Lenis){var l=new Lenis({duration:1.1});var r=function(t){l.raf(t);requestAnimationFrame(r)};requestAnimationFrame(r);}
-if(window.gsap&&window.ScrollTrigger){gsap.registerPlugin(ScrollTrigger);
-document.querySelectorAll('section,h1,h2,.card,img').forEach(function(el){
-gsap.from(el,{opacity:0,y:26,duration:0.8,ease:'power2.out',scrollTrigger:{trigger:el,start:'top 90%'}});
-});
-}}catch(e){}})();
-</script>
+    document.getElementById('checkout-content').style.display = 'block';
+    renderCheckoutItems();
+    updateTotals();
+
+    document.getElementById('btn-step1').addEventListener('click', () => goToStep(2));
+    document.getElementById('btn-step2').addEventListener('click', () => goToStep(3));
+    document.getElementById('btn-back-1').addEventListener('click', () => goToStep(1));
+    document.getElementById('btn-back-2').addEventListener('click', () => goToStep(2));
+    document.getElementById('btn-submit').addEventListener('click', submitOrder);
+    document.getElementById('f-cep').addEventListener('blur', lookupCEP);
+    document.querySelectorAll('.step[data-step]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        const target = Number(btn.dataset.step);
+        if (target >= 1 && target <= 3) goToStep(target);
+      });
+    });
+  });
+  </script>
 </body>
 </html>

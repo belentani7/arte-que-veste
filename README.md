@@ -13,23 +13,30 @@ catálogo, ficha de producto, carrito y checkout propios.
 ## Qué hay en el repositorio
 
 ```
-frontend/                 tienda + servidor Node mínimo
-  index.html              portada
-  loja.html               catálogo
-  produto.html            ficha de producto
-  carrinho.html           carrito
-  checkout.html           checkout (demo, sin procesamiento de pagos)
-  pedido-sucesso.html     confirmación
-  pedido-pendente.html    pago pendiente
-  pedido-falha.html       pago fallido
+frontend/                 tienda + servidor Node mínimo (zero-dependency)
+  index.html              portada editorial con shader WebGL de xilogravura
+  loja.html               catálogo con búsqueda, filtros y ordenación
+  produto.html            ficha de producto con galería y guía de tallas
+  carrinho.html           carrito local (localStorage)
+  checkout.html           resumo local sin cobro (CEP BrasilAPI v2 + descarga .txt)
+  pedido-sucesso.html     confirmación (demostración)
+  pedido-pendente.html    pago pendiente (demostración)
+  pedido-falha.html       pago fallido (demostración)
   politica-envio.html · politica-trocas.html · politica-privacidade.html
   termos-de-uso.html · sobre.html · contato.html · faq.html
+  css/store.css           sistema de diseño nativo (zero-CDN, WCAG AA/AAA)
+  js/store-ui.js          navegación móvil accesible y helpers XSS-safe
+  js/cart.js              estado del carrito local
+  js/xilogravura-shader.js shader WebGL1 propio con pausa y fallback 2D/CSS
   products.json           catálogo de productos
-  server.js               servidor estático (node server.js)
-  scripts/verify.mjs      validador de HTML y enlaces locales
-  scripts/export.mjs      export de datos del catálogo (npm run export)
-  test/basic.test.mjs     tests (node --test): servidor, carrito y datos
-  assets/img/produtos/    imágenes de producto
+  server.js               servidor estático seguro con gzip y HOST/PORT configurables
+  scripts/verify.mjs      validador de HTML, scripts inline, accesibilidad y enlaces (--help)
+  scripts/audit.mjs       auditor de presupuesto de peso, CDNs y contraste WCAG (--help)
+  scripts/export.mjs      export del catálogo en JSON o CSV (--help)
+  scripts/optimize-images.mjs auditor y optimizador de imágenes (--help)
+  test/basic.test.mjs     tests unitarios e integración (node --test)
+  test/e2e.test.mjs       test end-to-end del flujo completo de compra
+  assets/img/produtos/    imágenes optimizadas de producto
 backend/seed.json         datos seed del catálogo — sin servicio activo: la tienda sirve frontend/products.json
 magic/                    piezas experimentales (shader, sfx, lore, plugin)
 transferencia-nuvemshop/  guía de migración a Nuvemshop, identidad visual y CSV de productos
@@ -40,11 +47,22 @@ ecosistema.html           índice del ecosistema
 
 ```bash
 cd frontend
-npm ci            # instala según package-lock.json
-npm start         # node server.js  (http://127.0.0.1:5500)
-npm run check     # node --check de todos los JS
-npm test          # validador de HTML + tests (node --test)
-npm run export    # imprime el catálogo consolidado en JSON
+npm ci                  # instala según package-lock.json (0 dependencias externas)
+npm start               # node server.js (http://127.0.0.1:5500; soporta HOST=0.0.0.0 PORT=5500)
+npm run check           # node --check de todos los JS/MJS
+npm test                # validador de HTML + tests unitarios y E2E (node --test)
+npm run audit           # auditoría de peso, cero CDNs y contraste WCAG 2.1
+npm run optimize:images # verifica tamaños y ausencia de duplicados en imágenes
+npm run export          # imprime el catálogo consolidado en JSON (--format csv disponible)
+```
+
+Todas las herramientas bajo `frontend/scripts/` aceptan `--help`:
+
+```bash
+node frontend/scripts/verify.mjs --help
+node frontend/scripts/audit.mjs --help
+node frontend/scripts/export.mjs --help
+node frontend/scripts/optimize-images.mjs --help
 ```
 
 ## Utilidad

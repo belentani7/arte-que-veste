@@ -152,20 +152,43 @@
     gl.uniform3f(colorALoc, rgbA.r, rgbA.g, rgbA.b);
     gl.uniform3f(colorBLoc, rgbB.r, rgbB.g, rgbB.b);
 
+    var prefersReduced = Boolean(
+      window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    );
+    var tabHidden = Boolean(document.hidden);
+
     function resize() {
       var dpr = Math.min(window.devicePixelRatio || 1, dprCap);
-      canvas.width = canvas.clientWidth * dpr;
-      canvas.height = canvas.clientHeight * dpr;
+      canvas.width = Math.max(1, canvas.clientWidth * dpr);
+      canvas.height = Math.max(1, canvas.clientHeight * dpr);
       gl.viewport(0, 0, canvas.width, canvas.height);
       gl.uniform2f(resolutionLoc, canvas.width, canvas.height);
+    }
+
+    function drawStatic() {
+      gl.uniform1f(timeLoc, time);
+      gl.uniform2f(mouseLoc, mouse.x, mouse.y);
+      gl.drawArrays(gl.TRIANGLES, 0, 6);
     }
 
     window.addEventListener('mousemove', function (e) {
       mouse.x = e.clientX / window.innerWidth;
       mouse.y = 1.0 - e.clientY / window.innerHeight;
+    }, { passive: true });
+
+    window.addEventListener('resize', function () {
+      resize();
+      if (prefersReduced) drawStatic();
+    }, { passive: true });
+
+    document.addEventListener('visibilitychange', function () {
+      tabHidden = Boolean(document.hidden);
     });
 
-    window.addEventListener('resize', resize);
+    canvas.addEventListener('webglcontextlost', function (e) {
+      e.preventDefault();
+      paused = true;
+    }, false);
 
     var observer = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
@@ -175,17 +198,18 @@
     observer.observe(canvas);
 
     resize();
+    drawStatic();
 
     function loop(t) {
-      if (!paused) {
+      if (!paused && !tabHidden) {
         time = t * speed;
-        gl.uniform1f(timeLoc, time);
-        gl.uniform2f(mouseLoc, mouse.x, mouse.y);
-        gl.drawArrays(gl.TRIANGLES, 0, 6);
+        drawStatic();
       }
       raf = requestAnimationFrame(loop);
     }
-    raf = requestAnimationFrame(loop);
+    if (!prefersReduced) {
+      raf = requestAnimationFrame(loop);
+    }
 
     return {
       destroy: function () {

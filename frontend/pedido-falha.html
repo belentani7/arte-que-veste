@@ -1,59 +1,51 @@
 <!DOCTYPE html>
 <html dir="ltr" lang="pt-BR">
 <head>
-    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pagamento Não Aprovado | Arte Que Veste — demonstração | Arte Que Veste</title>
-    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-    <script src="https://cdn.tailwindcss.com" defer></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/playfair-display@latest/latin-400-normal.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/inter@latest/latin-400-normal.css">
-    <style>
-        body{font-family:'Inter',sans-serif;background:#faf9f6;color:#1a1a1a}
-        .font-display{font-family:'Playfair Display',serif}
-        .btn-primary{background:#40E0D0;color:#1a1a1a;padding:14px 32px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;border:2px solid #40E0D0;cursor:pointer;font-size:13px;transition:all .3s}
-        .btn-primary:hover{background:transparent;color:#40E0D0}
-    </style>
-<meta name="theme-color" content="#0b0b0f">
-  <meta name="description" content="Pagamento Não Aprovado | Arte Que Veste — demonstração | Arte Que Veste">
-<meta name="color-scheme" content="light dark">
-<meta property="og:title" content="Pagamento Não Aprovado | Arte Que Veste — demonstração | Arte Que Veste">
-<meta property="og:description" content="Pagamento Não Aprovado | Arte Que Veste — demonstração | Arte Que Veste">
-<meta name="robots" content="index,follow">
-<meta property="og:type" content="website">
-<meta name="twitter:card" content="summary_large_image">
-<meta property="og:locale" content="es_ES">
-<meta name="twitter:title" content="Pagamento Não Aprovado | Arte Que Veste — demonstração | Arte Que Veste">
-<meta name="referrer" content="strict-origin-when-cross-origin">
-<meta name="format-detection" content="telephone=no">
-<meta name="apple-mobile-web-app-capable" content="yes">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pagamento Não Aprovado (Demonstração) | Arte Que Veste</title>
+  <meta name="description" content="Tela ilustrativa de pagamento não aprovado da demonstração Arte Que Veste — sem transações reais.">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="stylesheet" href="css/store.css">
+  <meta name="theme-color" content="#1a1a1a">
+  <meta name="color-scheme" content="light">
+  <meta property="og:title" content="Pagamento Não Aprovado (Demonstração) | Arte Que Veste">
+  <meta property="og:description" content="Tela ilustrativa de pagamento não aprovado da demonstração Arte Que Veste.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="pt_BR">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Pagamento Não Aprovado (Demonstração) | Arte Que Veste">
+  <meta name="robots" content="noindex,follow">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
 </head>
-<body class="min-h-screen flex items-center justify-center px-4">
-<div role="status" style="padding:12px 20px;text-align:center;background:#fff3df;color:#302014;font-weight:600">Demonstração: esta página não comprova pagamento nem confirma pedido. Não há transações reais nesta versão.</div>
-    <div class="max-w-md w-full text-center bg-white p-8 shadow-sm">
-        <div class="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
-            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-        </div>
-        <h1 class="font-display text-3xl font-black mb-3">Pagamento Não Aprovado</h1>
-        <p class="text-gray-500 mb-6">Não se preocupe! Você pode tentar novamente ou escolher outra forma de pagamento.</p>
-        <div class="flex flex-col sm:flex-row gap-3 justify-center">
-            <a href="carrinho.html" class="btn-primary">TENTAR NOVAMENTE</a>
-            <a href="loja.html" class="btn-primary" style="background:transparent;color:#1a1a1a;border-color:#ddd">VOLTAR À LOJA</a>
-        </div>
-        <p class="text-xs text-gray-400 mt-6">Se o problema persistir, fale conosco no <a href="contato.html#formulario" class="underline text-[#40E0D0]">Contato</a>.</p>
-    </div>
+<body>
+  <div class="demo-banner" role="status">
+    Demonstração: esta página não comprova pagamento nem confirma pedido. Não há transações reais nesta versão.
+  </div>
 
-<!-- FRONT-UPGRADE: Lenis + GSAP -->
-<script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js" defer></script>
-<script>
-(function(){try{
-if(window.Lenis){var l=new Lenis({duration:1.1});var r=function(t){l.raf(t);requestAnimationFrame(r)};requestAnimationFrame(r);}
-if(window.gsap&&window.ScrollTrigger){gsap.registerPlugin(ScrollTrigger);
-document.querySelectorAll('section,h1,h2,.card,img').forEach(function(el){
-gsap.from(el,{opacity:0,y:26,duration:0.8,ease:'power2.out',scrollTrigger:{trigger:el,start:'top 90%'}});
-});
-}}catch(e){}})();
-</script>
+  <main id="conteudo" class="status-wrap">
+    <div class="surface-card status-card">
+      <div class="status-icon" style="background:#fee2e2;">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#b91c1c" stroke-width="3" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </div>
+      <h1 class="section-title" style="margin-bottom:0.5rem;">Pagamento Não Aprovado</h1>
+      <p class="muted" style="margin-bottom:1.5rem;">Você pode revisar seu carrinho ou entrar em contato pelo formulário oficial.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:0.75rem;justify-content:center;">
+        <a href="carrinho.html" class="btn btn-primary">Revisar Carrinho</a>
+        <a href="loja.html" class="btn btn-secondary">Voltar à Loja</a>
+      </div>
+      <p class="muted" style="font-size:0.8rem;margin-top:1.25rem;">Dúvidas? Fale conosco no <a href="contato.html#formulario" class="accent-link">Contato</a>.</p>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom" style="border-top:none;padding-top:0;">
+        <p>© 2026 Arte Que Veste. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/store-ui.js" defer></script>
 </body>
 </html>

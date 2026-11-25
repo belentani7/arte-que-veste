@@ -17,6 +17,10 @@
     "category": "masculino",
     "stock": 30,
     "img": "assets/img/produtos/masculino-1.jpg",
+    "gallery": [
+      "assets/img/produtos/masculino-1.jpg",
+      "assets/img/produtos/masculino-2.jpg"
+    ],
     "alt": "Camiseta Bumba Meu Boi - Arte Que Veste"
   },
   {

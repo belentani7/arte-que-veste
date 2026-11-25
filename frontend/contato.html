@@ -1,146 +1,158 @@
 <!DOCTYPE html>
 <html dir="ltr" lang="pt-BR">
 <head>
-    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contato | Arte Que Veste</title>
-    <meta name="description" content="Entre em contato com a Arte Que Veste. Prepare uma mensagem para enviar pelo canal oficial.">
-    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-    <script src="https://cdn.tailwindcss.com" defer></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/playfair-display@latest/latin-400-normal.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/inter@latest/latin-400-normal.css">
-    <script src="https://unpkg.com/lucide@latest" defer></script>
-    <style>
-        body{font-family:'Inter',sans-serif;background:#faf9f6;color:#1a1a1a}.font-display{font-family:'Playfair Display',serif}
-        .nav-link{position:relative;transition:color .3s;font-size:12px;text-transform:uppercase}
-        .nav-link::after{content:'';position:absolute;bottom:-5px;left:0;width:0;height:2px;background:#40E0D0;transition:width .3s}
-        .nav-link:hover::after{width:100%}
-        .contact-card{transition:all .3s;border:2px solid transparent}
-        .contact-card:hover{border-color:#40E0D0;transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,0.08)}
-        .form-input{width:100%;border:1.5px solid #ddd;padding:12px 16px;font-size:14px;transition:border-color .2s;background:white;font-family:'Inter',sans-serif}
-        .form-input:focus{outline:none;border-color:#40E0D0}
-        .btn-primary{background:#40E0D0;color:#1a1a1a;padding:14px 32px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;transition:all .3s;border:2px solid #40E0D0;cursor:pointer;font-size:13px;width:100%}
-        .btn-primary:hover{background:transparent;color:#40E0D0}
-    </style>
-<meta name="theme-color" content="#0b0b0f">
-<meta name="color-scheme" content="light dark">
-<meta property="og:title" content="Contato | Arte Que Veste">
-<meta property="og:description" content="Entre em contato com a Arte Que Veste. Prepare uma mensagem para enviar pelo canal oficial.">
-<meta name="robots" content="index,follow">
-<meta property="og:type" content="website">
-<meta name="twitter:card" content="summary_large_image">
-<meta property="og:locale" content="es_ES">
-<meta name="twitter:title" content="Contato | Arte Que Veste">
-<meta name="referrer" content="strict-origin-when-cross-origin">
-<meta name="format-detection" content="telephone=no">
-<meta name="apple-mobile-web-app-capable" content="yes">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contato | Arte Que Veste</title>
+  <meta name="description" content="Entre em contato com a Arte Que Veste. Prepare uma mensagem local para enviar pelo canal oficial.">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="stylesheet" href="css/store.css">
+  <meta name="theme-color" content="#1a1a1a">
+  <meta name="color-scheme" content="light">
+  <meta property="og:title" content="Contato | Arte Que Veste">
+  <meta property="og:description" content="Entre em contato com a Arte Que Veste. Prepare uma mensagem para enviar pelo canal oficial.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="pt_BR">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Contato | Arte Que Veste">
+  <meta name="robots" content="index,follow">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
 </head>
 <body>
-    <nav class="fixed top-0 left-0 right-0 bg-white z-50 shadow-sm" aria-label="Principal">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-20">
-                <a href="index.html" class="font-display text-xl md:text-2xl font-black">ARTE QUE VESTE</a>
-                <div class="hidden lg:flex space-x-6">
-                    <a href="index.html" class="nav-link">Início</a>
-                    <a href="loja.html" class="nav-link">Loja</a>
-                    <a href="sobre.html" class="nav-link">Sobre</a>
-                    <a href="contato.html" class="nav-link border-b-2 border-[#40E0D0] pb-1">Contato</a>
-                </div>
+  <a class="skip-link" href="#conteudo">Pular para o formulário de contato</a>
+
+  <nav class="site-nav" aria-label="Principal">
+    <div class="container site-nav-inner">
+      <a href="index.html" class="brand-logo">ARTE QUE VESTE</a>
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link">Início</a></li>
+        <li><a href="loja.html" class="nav-link">Loja</a></li>
+        <li><a href="sobre.html" class="nav-link">História</a></li>
+        <li><a href="faq.html" class="nav-link">FAQ</a></li>
+        <li><a href="contato.html" class="nav-link" aria-current="page">Contato</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="carrinho.html" class="icon-btn" aria-label="Abrir carrinho de compras">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+          <span class="cart-badge">0</span>
+        </a>
+        <button type="button" class="icon-btn menu-toggle" data-menu-toggle aria-controls="mobile-menu" aria-expanded="false" aria-label="Abrir menu de navegação">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+    <div id="mobile-menu" class="mobile-menu">
+      <ul>
+        <li><a href="index.html">Início</a></li>
+        <li><a href="loja.html">Loja</a></li>
+        <li><a href="sobre.html">História</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="contato.html" aria-current="page">Contato</a></li>
+        <li><a href="carrinho.html">Carrinho</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <header class="page-hero">
+    <div class="hero-canvas-layer" aria-hidden="true"></div>
+    <div class="hero-scrim" aria-hidden="true"></div>
+    <div class="hero-content">
+      <span class="eyebrow">Fale Conosco</span>
+      <h1 class="hero-title">Contato</h1>
+      <p class="hero-subtitle" style="margin-bottom:0;">Dúvidas, encomendas ou parcerias — prepare sua mensagem e envie pelo canal de sua preferência.</p>
+    </div>
+  </header>
+
+  <main id="conteudo" class="section">
+    <div class="container-md">
+      <div class="grid-3" style="margin-bottom:3rem;">
+        <a href="#formulario" class="surface-card" style="text-align:center;text-decoration:none;">
+          <h2 class="font-display" style="font-size:1.15rem;margin-bottom:0.35rem;">Mensagem</h2>
+          <p class="muted" style="font-size:0.88rem;">Prepare a mensagem abaixo</p>
+          <p class="muted" style="font-size:0.76rem;margin-top:0.4rem;">Canal WhatsApp ainda não configurado</p>
+        </a>
+        <a href="mailto:contato@artequeveste.com.br" class="surface-card" style="text-align:center;text-decoration:none;">
+          <h2 class="font-display" style="font-size:1.15rem;margin-bottom:0.35rem;">E-mail</h2>
+          <p class="accent-link" style="font-size:0.88rem;">contato@artequeveste.com.br</p>
+          <p class="muted" style="font-size:0.76rem;margin-top:0.4rem;">Resposta em até 24h úteis</p>
+        </a>
+        <a href="https://instagram.com/artequeveste" target="_blank" rel="noopener noreferrer" class="surface-card" style="text-align:center;text-decoration:none;">
+          <h2 class="font-display" style="font-size:1.15rem;margin-bottom:0.35rem;">Instagram</h2>
+          <p class="accent-link" style="font-size:0.88rem;">@artequeveste</p>
+          <p class="muted" style="font-size:0.76rem;margin-top:0.4rem;">Direct aberto</p>
+        </a>
+      </div>
+
+      <section class="container-sm" id="formulario" style="padding-inline:0;">
+        <h2 class="section-title" style="text-align:center;margin-bottom:1.5rem;">Prepare sua mensagem</h2>
+        <form id="contact-form" class="surface-card" style="display:flex;flex-direction:column;gap:1rem;">
+          <div class="form-grid form-grid-2">
+            <div>
+              <label class="form-label" for="c-name">Nome *</label>
+              <input type="text" id="c-name" class="form-input" autocomplete="name" required>
             </div>
-        </div>
-    </nav>
+            <div>
+              <label class="form-label" for="c-email">E-mail *</label>
+              <input type="email" id="c-email" class="form-input" autocomplete="email" required>
+            </div>
+          </div>
+          <div>
+            <label class="form-label" for="c-subject">Assunto</label>
+            <select id="c-subject" class="form-select">
+              <option>Dúvida sobre produto</option>
+              <option>Sobre minha encomenda</option>
+              <option>Troca ou devolução</option>
+              <option>Parceria / Atacado</option>
+              <option>Outro assunto</option>
+            </select>
+          </div>
+          <div>
+            <label class="form-label" for="c-message">Mensagem *</label>
+            <textarea id="c-message" class="form-textarea" rows="5" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">Baixar mensagem (.txt)</button>
+          <p id="message-status" role="status" aria-live="polite" class="muted" style="font-size:0.8rem;text-align:center;">
+            A mensagem será baixada no dispositivo; esta página não envia dados a terceiros.
+          </p>
+        </form>
+      </section>
+    </div>
+  </main>
 
-    <header class="pt-40 pb-16 bg-[#1a1a1a] text-white text-center">
-        <div class="max-w-4xl mx-auto px-4">
-            <span class="text-[#40E0D0] uppercase tracking-widest text-xs font-semibold mb-4 block">Fale Conosco</span>
-            <h1 class="font-display text-5xl md:text-7xl font-black mb-6">Contato</h1>
-            <p class="text-gray-300 max-w-2xl mx-auto">Estamos prontos para ajudar. Dúvidas, encomendas, parcerias — entre em contato!</p>
-        </div>
-    </header>
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom" style="border-top:none;padding-top:0;">
+        <p>© 2026 Arte Que Veste. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
 
-    <main class="max-w-5xl mx-auto px-4 py-16">
-        <!-- CANAIS -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-            <a href="#formulario" class="contact-card bg-white p-6 shadow-sm text-center">
-                <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4"><i data-lucide="message-circle" class="w-6 h-6 text-green-600"></i></div>
-                <h3 class="font-display text-lg font-bold mb-1">Mensagem</h3>
-                <p class="text-sm text-gray-500">Prepare a mensagem abaixo</p>
-                <p class="text-xs text-gray-400 mt-2">Canal WhatsApp ainda não configurado</p>
-            </a>
-            <a href="mailto:contato@artequeveste.com.br" class="contact-card bg-white p-6 shadow-sm text-center">
-                <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4"><i data-lucide="mail" class="w-6 h-6 text-blue-600"></i></div>
-                <h3 class="font-display text-lg font-bold mb-1">E-mail</h3>
-                <p class="text-sm text-gray-500">contato@artequeveste.com.br</p>
-                <p class="text-xs text-gray-400 mt-2">Resposta em até 24h</p>
-            </a>
-            <a href="https://instagram.com/artequeveste" target="_blank" class="contact-card bg-white p-6 shadow-sm text-center" rel="noopener noreferrer">
-                <div class="w-12 h-12 bg-pink-100 rounded-full flex items-center justify-center mx-auto mb-4"><i data-lucide="instagram" class="w-6 h-6 text-pink-600"></i></div>
-                <h3 class="font-display text-lg font-bold mb-1">Instagram</h3>
-                <p class="text-sm text-gray-500">@artequeveste</p>
-                <p class="text-xs text-gray-400 mt-2">DM aberto</p>
-            </a>
-        </div>
-
-        <!-- FORMULÁRIO -->
-        <div class="max-w-2xl mx-auto" id="formulario">
-            <h2 class="font-display text-2xl font-black mb-6 text-center">Prepare sua mensagem</h2>
-            <form onsubmit="sendMessage(event)" class="bg-white p-8 shadow-sm space-y-4">
-                <div class="grid grid-cols-2 gap-4">
-                    <div><label class="block text-xs font-semibold uppercase tracking-wider text-gray-500 mb-2">Nome *</label><input type="text" id="c-name" class="form-input" required></div>
-                    <div><label class="block text-xs font-semibold uppercase tracking-wider text-gray-500 mb-2">E-mail *</label><input type="email" id="c-email" class="form-input" required></div>
-                </div>
-                <div><label class="block text-xs font-semibold uppercase tracking-wider text-gray-500 mb-2">Assunto</label>
-                    <select id="c-subject" class="form-input">
-                        <option>Dúvida sobre produto</option>
-                        <option>Sobre minha encomenda</option>
-                        <option>Troca ou devolução</option>
-                        <option>Parceria / Atacado</option>
-                        <option>Outro assunto</option>
-                    </select>
-                </div>
-                <div><label class="block text-xs font-semibold uppercase tracking-wider text-gray-500 mb-2">Mensagem *</label><textarea id="c-message" class="form-input" rows="5" required></textarea></div>
-                <button type="submit" class="btn-primary">BAIXAR MENSAGEM</button>
-                <p id="message-status" role="status" aria-live="polite" class="text-xs text-gray-600 text-center">A mensagem será baixada no dispositivo; esta página não envia dados a terceiros.</p>
-            </form>
-        </div>
-    </main>
-
-    <footer class="bg-[#1a1a1a] text-white py-8 mt-12"><div class="max-w-7xl mx-auto px-4 text-center"><p class="text-gray-400 text-sm">© 2026 Arte Que Veste. Todos os direitos reservados.</p></div></footer>
-
-    <script>
-    function sendMessage(e) {
-        e.preventDefault();
-        const name = document.getElementById('c-name').value;
-        const email = document.getElementById('c-email').value;
-        const subject = document.getElementById('c-subject').value;
-        const message = document.getElementById('c-message').value;
-        const text = `Olá! Meu nome é ${name}.\n\nAssunto: ${subject}\n\n${message}\n\n(E-mail: ${email})`;
-        const blob = new Blob([text], {type: 'text/plain;charset=utf-8'});
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = 'arte-que-veste-mensagem.txt';
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-        setTimeout(() => URL.revokeObjectURL(url), 1000);
-        document.getElementById('message-status').textContent =
-            'Mensagem baixada. Envie pelo seu canal de contato de preferência; nenhum envio foi realizado.';
-    }
-    lucide.createIcons();
-    </script>
-
-<!-- FRONT-UPGRADE: Lenis + GSAP -->
-<script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js" defer></script>
-<script>
-(function(){try{
-if(window.Lenis){var l=new Lenis({duration:1.1});var r=function(t){l.raf(t);requestAnimationFrame(r)};requestAnimationFrame(r);}
-if(window.gsap&&window.ScrollTrigger){gsap.registerPlugin(ScrollTrigger);
-document.querySelectorAll('section,h1,h2,.card,img').forEach(function(el){
-gsap.from(el,{opacity:0,y:26,duration:0.8,ease:'power2.out',scrollTrigger:{trigger:el,start:'top 90%'}});
-});
-}}catch(e){}})();
-</script>
+  <script src="js/store-ui.js" defer></script>
+  <script src="js/cart.js" defer></script>
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('contact-form');
+    if (!form) return;
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const name = document.getElementById('c-name').value.trim();
+      const email = document.getElementById('c-email').value.trim();
+      const subject = document.getElementById('c-subject').value;
+      const message = document.getElementById('c-message').value.trim();
+      const text = 'Olá! Meu nome é ' + name + '.\n\nAssunto: ' + subject + '\n\n' + message + '\n\n(E-mail: ' + email + ')';
+      const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'arte-que-veste-mensagem.txt';
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+      document.getElementById('message-status').textContent =
+        'Mensagem baixada localmente. Envie pelo seu canal de contato de preferência; nenhum envio automático foi realizado.';
+    });
+  });
+  </script>
 </body>
 </html>
